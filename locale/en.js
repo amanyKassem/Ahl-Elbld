@@ -17,6 +17,8 @@ const en = {
     'confirmPass'               : 'confirm password',
     'confirmNewPass'            : 'Confirm new password',
     'register'                  : 'Register',
+    'asUser'                    : 'As user',
+    'asDelegate'                : 'As delegate',
     'haveAcc'                   : 'Already have an account?',
     'loginNow'                  : 'Login now',
     'username'                  : 'Username',
@@ -37,7 +39,8 @@ const en = {
     'passError'                 : 'The new password does not match the password confirmation',
     'createAcc'                 : 'Create account',
     'promoCode'                 : 'promo code',
-    'agreeTo'                   : 'By registering you will be agree to all terms and conditions',
+    'agreeTo'                   : 'By registering for the application you agree to ',
+    'terms'                     : 'terms and conditions',
     'activateAcc'               : 'Activate account',
     'orderPrice'                : 'Order price',
     'watchOffer'                : 'Watch all offers from here',
@@ -137,6 +140,12 @@ const en = {
     'comp&sug'                  : 'Complaints and suggestions',
     'subject'                   : 'Subject',
     'orderData'                 : 'Order data',
+    'delegateName'              : 'Delegate name',
+    'idNum'                     : 'ID Number',
+    'licenseImg'                : 'License image',
+    'idImg'                     : 'ID image',
+    'plateNumbers'              : 'Car plate numbers',
+    'nationality'               : 'Nationality',
 };
 
 export default en;

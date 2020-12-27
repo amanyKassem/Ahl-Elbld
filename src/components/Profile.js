@@ -137,7 +137,7 @@ function Profile({navigation,route}) {
                         <View style={[styles.icon70 , styles.Radius_50 , styles.borderGray , styles.marginBottom_7 ,{ padding: 7 }]}>
                             <Image source={userImage ? { uri: userImage } : require('../../assets/images/image_placeholder.png')} style={[styles.Width_100 , styles.heightFull , styles.Radius_50]} resizeMode='cover' />
                             <TouchableOpacity onPress={_pickImage} style={{position:'absolute' , bottom:0 , zIndex:1 , right:0}}>
-                                <Image source={require('../../assets/images/camera_add.png')} style={[styles.icon25]} resizeMode='contain' />
+                                <Image source={require('../../assets/images/camera.png')} style={[styles.icon25]} resizeMode='contain' />
                             </TouchableOpacity>
                         </View>
                         <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , styles.marginBottom_5]}>أماني قاسم</Text>

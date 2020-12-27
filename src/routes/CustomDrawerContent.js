@@ -72,7 +72,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_Home.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/home_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -91,30 +91,11 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_profile.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/user_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
                     onPress={() => props.navigation.navigate('profile')}
-                />
-
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('basket') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/noun_myOrders.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('basket')}
                 />
 
                 <DrawerItem
@@ -129,30 +110,11 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_order_box.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/order_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
                     onPress={() => props.navigation.navigate('myOrders')}
-                />
-
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('wallet') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/wallet.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('wallet')}
                 />
 
                 <DrawerItem
@@ -167,7 +129,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_order.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/special_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -179,18 +141,18 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('bills') }</Text>
+                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('wallet') }</Text>
                             )
                         }
                     }
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/bill.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/account_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
-                    onPress={() => props.navigation.navigate('bills')}
+                    onPress={() => props.navigation.navigate('wallet')}
                 />
 
                 <DrawerItem
@@ -205,7 +167,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/about.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/info_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -224,7 +186,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_Policy.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/policy_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -243,7 +205,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_contact_us.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/contact us_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -262,11 +224,30 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_complaint.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/noun_complain_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
                     onPress={() => props.navigation.navigate('compAndSug')}
+                />
+
+                <DrawerItem
+                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
+                    label={
+                        ({ focused, color }) => {
+                            return (
+                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('faq') }</Text>
+                            )
+                        }
+                    }
+                    icon={
+                        ({ focused, color }) => {
+                            return (
+                                <Image source={require('../../assets/images/conversation_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                            )
+                        }
+                    }
+                    onPress={() => props.navigation.navigate('faq')}
                 />
 
                 <DrawerItem
@@ -281,7 +262,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/noun_share.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/share_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -319,7 +300,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/logoout_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/logout_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }

@@ -61,7 +61,7 @@ function ActivationCode({navigation}) {
                             <Icon type={'AntDesign'} name={"arrowleft"} style={[styles.textSize_28,styles.text_gray]} />
                         </TouchableOpacity>
 
-                        <Image source={require('../../assets/images/logo_sofri.png')} style={[styles.icon160 ,styles.SelfCenter , styles.marginTop_25]} resizeMode={'contain'} />
+                        {/*<Image source={require('../../assets/images/logo_sofri.png')} style={[styles.icon160 ,styles.SelfCenter , styles.marginTop_25]} resizeMode={'contain'} />*/}
                         <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_18 ,styles.SelfCenter , styles.marginBottom_25]}>{ i18n.t('activateAcc') }</Text>
 
                         <View style={[styles.directionRowSpace]}>

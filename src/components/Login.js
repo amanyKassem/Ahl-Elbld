@@ -18,6 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {userLogin} from '../actions';
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
+import AuthHeader from '../common/AuthHeader'
 
 
 const isIOS = Platform.OS === 'ios';
@@ -112,12 +113,14 @@ function Login({navigation}) {
             {/*{renderLoader()}*/}
             <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
-                    <View style={[styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_25]}>
+                    <View style={[styles.bgFullWidth, styles.Width_100]}>
 
-                        <Image source={require('../../assets/images/logo_sofri.png')} style={[styles.icon160 ,styles.SelfCenter , styles.marginTop_25]} resizeMode={'contain'} />
+                        <AuthHeader navigation={navigation}/>
+
                         <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_18 ,styles.SelfCenter , styles.marginBottom_25]}>{ i18n.t('login') }</Text>
 
-                       <View style={[styles.directionRowSpace]}>
+                       <View style={[styles.directionRowSpace , styles.paddingHorizontal_25]}>
+
                            <KeyboardAvoidingView style={[styles.Width_100]}>
                                <Form style={[styles.Width_100 , styles.flexCenter]}>
 
@@ -156,7 +159,7 @@ function Login({navigation}) {
                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ i18n.t('forgetPassword') }</Text>
                                    </TouchableOpacity>
 
-                                   <TouchableOpacity onPress={() => navigation.navigate('register')} style={[styles.marginBottom_10 , styles.directionRow]}>
+                                   <TouchableOpacity onPress={() => navigation.navigate('registerAs')} style={[styles.marginBottom_35 , styles.directionRow]}>
                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginRight:5}]}>{ i18n.t('haveNoAcc') }</Text>
                                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14]}>{ i18n.t('clickHere') }</Text>
                                    </TouchableOpacity>

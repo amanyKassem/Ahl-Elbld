@@ -11,7 +11,7 @@ const RootStack = createStackNavigator();
 
 function renderScreens() {
 	// const auth = useSelector(state => state.auth);
-	const auth = true;
+	const auth = false;
 
 	// if (auth.user !== null) {
 	if (auth) {

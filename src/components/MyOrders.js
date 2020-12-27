@@ -19,12 +19,12 @@ function MyOrders({navigation,route}) {
     // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
     const [active, setActive] = useState(0);
-    const myOrders =[
-        {id :'0',name:'مطاعم'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/restu_image.png")},
-        {id :'1',name:'محلات'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/depart_two.png")},
-        {id :'2',name:'مخابز'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/depart_four.png")},
-        {id :'3',name:'حلويات'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/depart_six.png")},
-    ]
+    // const myOrders =[
+    //     {id :'0',name:'مطاعم'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/restu_image.png")},
+    //     {id :'1',name:'محلات'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/depart_two.png")},
+    //     {id :'2',name:'مخابز'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/depart_four.png")},
+    //     {id :'3',name:'حلويات'  , price:'25 ر.س' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/depart_six.png")},
+    // ]
     function Item({ name , image , price , orderNum , invoiceAmount , id , index }) {
         return (
             <TouchableOpacity onPress={() => navigation.navigate(active === 1 ? 'productDetails' : 'orderDetails', {orderType:active , pathName:'myOrders'})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:15}]}>
@@ -66,23 +66,23 @@ function MyOrders({navigation,route}) {
                         </ScrollView>
                     </View>
 
-                    <View style={[styles.paddingHorizontal_20 , styles.marginTop_20]}>
-                        <FlatList
-                            data={myOrders}
-                            horizontal={false}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                id={item.id}
-                                name={item.name}
-                                image={item.image}
-                                price={item.price}
-                                orderNum={item.orderNum}
-                                invoiceAmount={item.invoiceAmount}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
-                    </View>
+                    {/*<View style={[styles.paddingHorizontal_20 , styles.marginTop_20]}>*/}
+                    {/*    <FlatList*/}
+                    {/*        data={myOrders}*/}
+                    {/*        horizontal={false}*/}
+                    {/*        showsVerticalScrollIndicator={false}*/}
+                    {/*        renderItem={({ item , index}) => <Item*/}
+                    {/*            id={item.id}*/}
+                    {/*            name={item.name}*/}
+                    {/*            image={item.image}*/}
+                    {/*            price={item.price}*/}
+                    {/*            orderNum={item.orderNum}*/}
+                    {/*            invoiceAmount={item.invoiceAmount}*/}
+                    {/*            index={index}*/}
+                    {/*        />}*/}
+                    {/*        keyExtractor={item => item.id}*/}
+                    {/*    />*/}
+                    {/*</View>*/}
 
                 </View>
 

@@ -89,40 +89,40 @@ function Header({navigation , title}) {
 
             </View>
 
-            <Modal
-                onBackdropPress                 ={toggleModal}
-                onBackButtonPress               = {toggleModal}
-                isVisible                       = {showModal}
-                style                           = {styles.bgModel}
-                avoidKeyboard                    = {true}
-            >
+            {/*<Modal*/}
+            {/*    onBackdropPress                 ={toggleModal}*/}
+            {/*    onBackButtonPress               = {toggleModal}*/}
+            {/*    isVisible                       = {showModal}*/}
+            {/*    style                           = {styles.bgModel}*/}
+            {/*    avoidKeyboard                    = {true}*/}
+            {/*>*/}
 
-                <View style={[styles.bg_White, styles.overHidden, styles.Width_100, styles.paddingHorizontal_20 , styles.flexCenter , styles.paddingVertical_20]}>
+            {/*    <View style={[styles.bg_White, styles.overHidden, styles.Width_100, styles.paddingHorizontal_20 , styles.flexCenter , styles.paddingVertical_20]}>*/}
 
-                    <Image source={require('../../assets/images/student.png')} style={[styles.icon100  , styles.marginVertical_20]} resizeMode={'contain'} />
+            {/*        <Image source={require('../../assets/images/student.png')} style={[styles.icon100  , styles.marginVertical_20]} resizeMode={'contain'} />*/}
 
-                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_18 , styles.marginBottom_5]}>{ i18n.t('howUrOrder') }</Text>
+            {/*        <Text style={[styles.textBold , styles.text_gray , styles.textSize_18 , styles.marginBottom_5]}>{ i18n.t('howUrOrder') }</Text>*/}
 
-                    <Textarea
-                        style={[styles.input , styles.height_150 , styles.paddingVertical_10 , styles.bg_light_gray ,
-                            {borderTopRightRadius :10 , borderRadius :10  , lineHeight:22}]}
-                        placeholder={ i18n.t('addComment') }
-                        onChangeText={(comment) => setComment(comment)}
-                        value={comment}
-                    />
+            {/*        <Textarea*/}
+            {/*            style={[styles.input , styles.height_150 , styles.paddingVertical_10 , styles.bg_light_gray ,*/}
+            {/*                {borderTopRightRadius :10 , borderRadius :10  , lineHeight:22}]}*/}
+            {/*            placeholder={ i18n.t('addComment') }*/}
+            {/*            onChangeText={(comment) => setComment(comment)}*/}
+            {/*            value={comment}*/}
+            {/*        />*/}
 
-                    <TouchableOpacity style={[styles.mstrdaBtn , styles.Width_95  , styles.marginTop_40]}>
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('add') }</Text>
-                    </TouchableOpacity>
+            {/*        <TouchableOpacity style={[styles.mstrdaBtn , styles.Width_95  , styles.marginTop_40]}>*/}
+            {/*            <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('add') }</Text>*/}
+            {/*        </TouchableOpacity>*/}
 
 
-                    <TouchableOpacity onPress={() => {navigation.navigate('home') ; setShowModal(false)}} style={[styles.mstrdaBtn , styles.Width_95  , styles.marginTop_10 , styles.marginBottom_15]}>
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('home') }</Text>
-                    </TouchableOpacity>
+            {/*        <TouchableOpacity onPress={() => {navigation.navigate('home') ; setShowModal(false)}} style={[styles.mstrdaBtn , styles.Width_95  , styles.marginTop_10 , styles.marginBottom_15]}>*/}
+            {/*            <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('home') }</Text>*/}
+            {/*        </TouchableOpacity>*/}
 
-                </View>
+            {/*    </View>*/}
 
-            </Modal>
+            {/*</Modal>*/}
         </View>
     );
 }

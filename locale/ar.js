@@ -16,7 +16,9 @@ const ar = {
     'code'                      : 'كود التحقق',
     'confirmPass'               : 'تأكيد كلمه المرور',
     'confirmNewPass'            : 'تأكيد كلمه المرور الجديدة',
-    'register'                  : 'تسجيل',
+    'register'                  : 'التسجيل',
+    'asUser'                    : 'كمستخدم',
+    'asDelegate'                : 'انضم كمندوب',
     'haveAcc'                   : 'لديك حساب بالفعل ؟',
     'loginNow'                  : 'دخول الآن',
     'username'                  : 'اسم المستخدم',
@@ -37,7 +39,8 @@ const ar = {
     'passError'                 : 'كلمة المرور الجديده غير مطابقه لتأكيد كلمه المرور',
     'createAcc'                 : 'انشاء حساب',
     'promoCode'                 : 'الرمز الترويجي',
-    'agreeTo'                   : 'بالتسجيل يتم الموافقه علي جميع الشروط والآحكام',
+    'agreeTo'                   : 'بالتسجيل في التطبيق فإنك توافق علي ',
+    'terms'                     : 'الشروط والآحكام',
     'activateAcc'               : 'تفعيل الحساب',
     'orderPrice'                : 'سعر الطلب',
     'watchOffer'                : 'مشاهده كافة العروض من هنا',
@@ -137,6 +140,12 @@ const ar = {
     'comp&sug'                  : 'الشكاوي والاقتراحات',
     'subject'                   : 'موضوع الرسالة',
     'orderData'                 : 'بيانات الطلب',
+    'delegateName'              : 'اسم المندوب',
+    'idNum'                     : 'رقم الهوية',
+    'licenseImg'                : 'صورة الرخصة',
+    'idImg'                     : 'صورة الهوية',
+    'plateNumbers'              : 'أرقام لوحة السيارة',
+    'nationality'               : 'الجنسية',
 };
 
 export default ar;

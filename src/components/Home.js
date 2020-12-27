@@ -19,12 +19,12 @@ function Home({navigation,route}) {
     // const lang = useSelector(state => state.lang.lang);
     // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const [search, setSearch] = useState('');
-    const categories =[
-        {id :'0',title:'مطاعم' , image:require("../../assets/images/restu_image.png")},
-        {id :'1',title:'محلات' , image:require("../../assets/images/depart_two.png")},
-        {id :'2',title:'مخابز' , image:require("../../assets/images/depart_four.png")},
-        {id :'3',title:'حلويات' , image:require("../../assets/images/depart_six.png")},
-    ]
+    // const categories =[
+    //     {id :'0',title:'مطاعم' , image:require("../../assets/images/restu_image.png")},
+    //     {id :'1',title:'محلات' , image:require("../../assets/images/depart_two.png")},
+    //     {id :'2',title:'مخابز' , image:require("../../assets/images/depart_four.png")},
+    //     {id :'3',title:'حلويات' , image:require("../../assets/images/depart_six.png")},
+    // ]
 
     function Item({ title , image , id , index }) {
         return (
@@ -59,38 +59,38 @@ function Home({navigation,route}) {
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , {overflow:'hidden'}]}>
 
                    <View style={[styles.marginVertical_20, styles.paddingHorizontal_20]}>
-                       <Swiper key={2} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
-                               containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
+                       {/*<Swiper key={2} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}*/}
+                       {/*        containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>*/}
 
-                           <TouchableOpacity onPress={() => navigation.navigate('offerDetails')}>
-                               <Image source={require("../../assets/images/banner_home.png")} style={styles.swiperImg} resizeMode={'cover'}/>
-                           </TouchableOpacity>
+                       {/*    <TouchableOpacity onPress={() => navigation.navigate('offerDetails')}>*/}
+                       {/*        <Image source={require("../../assets/images/banner_home.png")} style={styles.swiperImg} resizeMode={'cover'}/>*/}
+                       {/*    </TouchableOpacity>*/}
 
-                           <TouchableOpacity onPress={() => navigation.navigate('offerDetails')}>
-                               <Image source={require("../../assets/images/banner_red.png")} style={styles.swiperImg} resizeMode={'cover'}/>
-                           </TouchableOpacity>
+                       {/*    <TouchableOpacity onPress={() => navigation.navigate('offerDetails')}>*/}
+                       {/*        <Image source={require("../../assets/images/banner_red.png")} style={styles.swiperImg} resizeMode={'cover'}/>*/}
+                       {/*    </TouchableOpacity>*/}
 
-                       </Swiper>
+                       {/*</Swiper>*/}
                    </View>
 
                     <TouchableOpacity onPress={() => navigation.navigate('offers')} style={[styles.marginTop_10, styles.paddingHorizontal_20 , styles.marginBottom_25]}>
                         <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_16 , styles.flexCenter , styles.textDecoration]}>{i18n.t('watchOffer')}</Text>
                     </TouchableOpacity>
 
-                    <FlatList
-                        data={categories}
-                        horizontal={false}
-                        numColumns={2}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({ item , index}) => <Item
-                            title={item.title}
-                            image={item.image}
-                            id={item.id}
-                            index={index}
-                        />}
-                        keyExtractor={item => item.id}
-                        columnWrapperStyle={[styles.directionRowSpace , styles.paddingHorizontal_10]}
-                    />
+                    {/*<FlatList*/}
+                    {/*    data={categories}*/}
+                    {/*    horizontal={false}*/}
+                    {/*    numColumns={2}*/}
+                    {/*    showsVerticalScrollIndicator={false}*/}
+                    {/*    renderItem={({ item , index}) => <Item*/}
+                    {/*        title={item.title}*/}
+                    {/*        image={item.image}*/}
+                    {/*        id={item.id}*/}
+                    {/*        index={index}*/}
+                    {/*    />}*/}
+                    {/*    keyExtractor={item => item.id}*/}
+                    {/*    columnWrapperStyle={[styles.directionRowSpace , styles.paddingHorizontal_10]}*/}
+                    {/*/>*/}
 
                 </View>
 
