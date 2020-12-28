@@ -1,3 +1,5 @@
+import RestWithdrawal from "../src/components/RestWithdrawal";
+
 const en = {
     'startNow'                  : 'Start now',
     'login'                     : 'Login',
@@ -146,6 +148,20 @@ const en = {
     'idImg'                     : 'ID image',
     'plateNumbers'              : 'Car plate numbers',
     'nationality'               : 'Nationality',
+    'selectLoc'                 : 'Select location',
+    'currentLoc'                : 'Current location',
+    'changeLoc'                 : 'Change location',
+    'selectNewLoc'              : 'Select new location',
+    'newLoc'                    : 'New location',
+    'favourite'                 : 'Favourite',
+    'faq'                       : 'FAQ',
+    'categories'                : 'Categories',
+    'fastingBreakfast'          : 'Fasting breakfast',
+    'away'                      : 'Away',
+    'deliveryCost'              : 'Delivery cost',
+    'deliveryTime'              : 'Delivery time',
+    'restWithdrawal'            : 'We regret the restaurant withdrew from the order',
+    'tryWithRest'               : 'Try again with another restaurant',
 };
 
 export default en;

@@ -784,6 +784,10 @@ const styles = ({
         width               : 10,
         height              : 10,
     },
+    icon12 : {
+        width               : 12,
+        height              : 12,
+    },
     icon15 : {
         width               : 15,
         height              : 15,
@@ -1055,18 +1059,18 @@ const styles = ({
         paddingVertical:5
     },
     eventdoteStyle:{
-        backgroundColor:'#fee5b9',
-        borderRadius: 3,
-        width: 10,
-        height: 4,
+        backgroundColor:'#ddd',
+        borderRadius: 50,
+        width: 8,
+        height: 8,
         bottom:-45
     },
     eventactiveDot:{
-        borderRadius: 3,
+        borderRadius: 50,
         borderColor: COLORS.mstarda,
         backgroundColor: COLORS.mstarda,
-        width: 20,
-        height: 4,
+        width: 8,
+        height: 8,
         bottom:-45
     },
     eventswiper:{
@@ -1076,6 +1080,7 @@ const styles = ({
     swiperImg:{
         height:'100%' ,
         width:'100%' ,
+        borderRadius:10,
     },
     imgOverLay:{
         backgroundColor     : "rgba(0, 0, 0, 0.5)",
@@ -1101,15 +1106,14 @@ const styles = ({
         right:0,
         bottom: 40,
         width: 15,
-        height: 4,
+        height: 15,
     },
     activeDot:{
         borderRadius: 5,
-        borderWidth: 2,
         borderColor: COLORS.orange,
         backgroundColor: COLORS.orange,
-        width: 25,
-        height: 4,
+        width: 15,
+        height: 15,
         left: 0,
         right:0,
         bottom: 40
@@ -1404,15 +1408,13 @@ const styles = ({
     footerStyle:{
         backgroundColor:'#fff',
         height: isIOS ? 100 : 60,
-        paddingHorizontal:15,
-        borderTopLeftRadius:25,
-        borderTopRightRadius:25,
+        paddingHorizontal:4,
         position:'absolute',
     },
     activeTab : {
         paddingVertical:10 ,
         paddingHorizontal      : 7,
-        backgroundColor:COLORS.babyblue,
+        backgroundColor:COLORS.mstarda,
         borderRadius:20
     },
     unActiveTab : {
@@ -1569,6 +1571,8 @@ const styles = ({
         shadowRadius: 3.84,
         elevation: 5,
         borderRadius: 2,
+        width:'103%',
+        left:-4
     },
     wrapText: {
         flexDirection: 'column', top: 450, position: 'absolute', width: '100%' , paddingHorizontal:25 , justifyContent:'center' , alignItems:'center'

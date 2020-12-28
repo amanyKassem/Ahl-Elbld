@@ -18,17 +18,17 @@ function Home({navigation,route}) {
 
     // const lang = useSelector(state => state.lang.lang);
     // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
-    const [search, setSearch] = useState('');
-    // const categories =[
-    //     {id :'0',title:'مطاعم' , image:require("../../assets/images/restu_image.png")},
-    //     {id :'1',title:'محلات' , image:require("../../assets/images/depart_two.png")},
-    //     {id :'2',title:'مخابز' , image:require("../../assets/images/depart_four.png")},
-    //     {id :'3',title:'حلويات' , image:require("../../assets/images/depart_six.png")},
-    // ]
+
+    const categories =[
+        {id :'0',title:'الاسر المنتجة' , image:require("../../assets/images/banner1.png")},
+        {id :'1',title:'الولائم والمناسبات' , image:require("../../assets/images/banner2.png")},
+        {id :'2',title:'سوق الخضار المركزي' , image:require("../../assets/images/banner3.png")},
+        {id :'3',title:'البقالة' , image:require("../../assets/images/banner4.png")},
+    ]
 
     function Item({ title , image , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('category')} style={[styles.height_130,styles.marginBottom_10 , styles.marginHorizontal_10 , {flex:1}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('category')} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
                 <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:5}]}>
                     <Text style={[styles.textBold , styles.text_White , styles.textSize_15, styles.textCenter ]}>{title}</Text>
                 </View>
@@ -38,59 +38,60 @@ function Home({navigation,route}) {
     }
 
     return (
-        <Container style={[styles.bg_black]}>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('home') }/>
 
-                <View style={[styles.Width_90,styles.SelfCenter , styles.marginBottom_20 , styles.marginTop_15]}>
-                    <Input style={[styles.inputSearch , styles.Width_100 , {flex:0}]}
-                           placeholder={i18n.t('search')}
-                           placeholderTextColor={'#fff'}
-                           onChangeText={(search) => setSearch(search)}
-                           value={search}
-                    />
+                <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.marginTop_55 , {paddingBottom:35}]}>
 
-                    <TouchableOpacity onPress={() => navigation.push('searchResults' , {keyword:search})} style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
-                        <Image source={require("../../assets/images/search.png")} style={[styles.icon17]} resizeMode={'cover'} />
-                    </TouchableOpacity>
-                </View>
+                   <View style={[styles.marginVertical_20, styles.paddingHorizontal_20 , {top:-70}]}>
+                       <Swiper key={2} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
+                               containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
 
-                <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , {overflow:'hidden'}]}>
+                           <TouchableOpacity>
+                               <Image source={require("../../assets/images/banner1.png")} style={styles.swiperImg} resizeMode={'cover'}/>
+                           </TouchableOpacity>
 
-                   <View style={[styles.marginVertical_20, styles.paddingHorizontal_20]}>
-                       {/*<Swiper key={2} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}*/}
-                       {/*        containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>*/}
+                           <TouchableOpacity>
+                               <Image source={require("../../assets/images/banner2.png")} style={styles.swiperImg} resizeMode={'cover'}/>
+                           </TouchableOpacity>
 
-                       {/*    <TouchableOpacity onPress={() => navigation.navigate('offerDetails')}>*/}
-                       {/*        <Image source={require("../../assets/images/banner_home.png")} style={styles.swiperImg} resizeMode={'cover'}/>*/}
-                       {/*    </TouchableOpacity>*/}
+                           <TouchableOpacity>
+                               <Image source={require("../../assets/images/banner3.png")} style={styles.swiperImg} resizeMode={'cover'}/>
+                           </TouchableOpacity>
 
-                       {/*    <TouchableOpacity onPress={() => navigation.navigate('offerDetails')}>*/}
-                       {/*        <Image source={require("../../assets/images/banner_red.png")} style={styles.swiperImg} resizeMode={'cover'}/>*/}
-                       {/*    </TouchableOpacity>*/}
-
-                       {/*</Swiper>*/}
+                       </Swiper>
                    </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('offers')} style={[styles.marginTop_10, styles.paddingHorizontal_20 , styles.marginBottom_25]}>
-                        <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_16 , styles.flexCenter , styles.textDecoration]}>{i18n.t('watchOffer')}</Text>
-                    </TouchableOpacity>
+                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_15, styles.marginBottom_15 , styles.marginHorizontal_15 , {top:-30}]}>{ i18n.t('categories') }</Text>
 
-                    {/*<FlatList*/}
-                    {/*    data={categories}*/}
-                    {/*    horizontal={false}*/}
-                    {/*    numColumns={2}*/}
-                    {/*    showsVerticalScrollIndicator={false}*/}
-                    {/*    renderItem={({ item , index}) => <Item*/}
-                    {/*        title={item.title}*/}
-                    {/*        image={item.image}*/}
-                    {/*        id={item.id}*/}
-                    {/*        index={index}*/}
-                    {/*    />}*/}
-                    {/*    keyExtractor={item => item.id}*/}
-                    {/*    columnWrapperStyle={[styles.directionRowSpace , styles.paddingHorizontal_10]}*/}
-                    {/*/>*/}
+
+                   <View style={{top:-30}}>
+                       <FlatList
+                           data={categories}
+                           horizontal={false}
+                           numColumns={2}
+                           showsVerticalScrollIndicator={false}
+                           renderItem={({ item , index}) => <Item
+                               title={item.title}
+                               image={item.image}
+                               id={item.id}
+                               index={index}
+                           />}
+                           keyExtractor={item => item.id}
+                           columnWrapperStyle={[styles.directionRowSpace , styles.paddingHorizontal_15]}
+                       />
+
+                       <View style={[styles.paddingHorizontal_15]}>
+                           <TouchableOpacity onPress={() => navigation.navigate('fastingBreakfast')} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
+                               <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:5}]}>
+                                   <Text style={[styles.textBold , styles.text_White , styles.textSize_15, styles.textCenter ]}>{i18n.t('fastingBreakfast')}</Text>
+                               </View>
+                               <Image source={require("../../assets/images/banner4.png")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
+                           </TouchableOpacity>
+                       </View>
+                   </View>
 
                 </View>
 

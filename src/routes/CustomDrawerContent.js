@@ -122,7 +122,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('specialOrder') }</Text>
+                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('specialOrders') }</Text>
                             )
                         }
                     }
@@ -205,7 +205,7 @@ export default function CustomDrawerContent(props) {
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/contact us_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/contactUs_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }

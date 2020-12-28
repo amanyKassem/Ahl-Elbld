@@ -25,104 +25,61 @@ function Header({navigation , title}) {
     };
 
     return (
-        <View style={[styles.marginTop_40 , styles.marginHorizontal_15 , styles.directionRowSpace , styles.marginBottom_20]}>
+        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,  title !== i18n.t('selectNewLoc') ?styles.marginTop_20 : null , styles.height_80
+            ,styles.Width_100 , title === i18n.t('selectNewLoc')  ? styles.shadow : null,  {
+            borderBottomWidth:title === i18n.t('selectNewLoc')  ? 1 : 0,
+            borderBottomColor:title === i18n.t('selectNewLoc')  ? '#ddd' : 0,
+        }]}>
 
-            <View style={[styles.directionRowSpace , styles.Width_100]}>
-
-                <View style={[styles.directionRow]}>
-                    <TouchableOpacity onPress={() => navigation.openDrawer()} style={{marginRight:15}}>
-                        <Image source={require('../../assets/images/menu.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
-                    </TouchableOpacity>
-                    {
-                        title === i18n.t('home')  || title === i18n.t('restaurantDetails')  ?
-                            <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:15}}>
-                                <Image source={require('../../assets/images/notification_non_active.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
-                            </TouchableOpacity>
-                            :
-                          null
-                    }
-
-                </View>
-
+            <View style={[styles.directionRow]}>
                 {
-                    title !== i18n.t('home')  ?
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_16]}>{title}</Text>
+                    title !== i18n.t('selectLoc') ?
+                        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{marginRight:15}}>
+                            <Image source={require('../../assets/images/menu.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
+                        </TouchableOpacity>
+                        :
+                        null
+                }
+                {
+                    title === i18n.t('home') ?
+                        <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:15}}>
+                            <Image source={require('../../assets/images/notification_non_active.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
+                        </TouchableOpacity>
                         :
                         null
                 }
 
-
-                {
-                    title === i18n.t('home')  ?
-                        <View style={[styles.directionRow]}>
-                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_13]}>{i18n.t('orderPrice')} ٤٠٠ ريال</Text>
-                           <TouchableOpacity onPress={() => navigation.navigate('basket')} >
-                               <View style={{marginLeft:15}}>
-                                   <Image source={require('../../assets/images/basket.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
-                               </View>
-                               <View style={[styles.icon17 , styles.Radius_50 , styles.bg_mstarda , styles.justifyCenter ,{position:'absolute' , left:8 , top:0}]}>
-                                   <Text style={[styles.textRegular , styles.text_White , styles.textSize_10 , styles.flexCenter]}>1</Text>
-                               </View>
-                           </TouchableOpacity>
-
-                        </View>
-                        :
-                            title === i18n.t('restaurantDetails')?
-                                <View style={[styles.directionRow]}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('basket')} style={{marginRight:15}}>
-                                        <View>
-                                            <Image source={require('../../assets/images/basket.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
-                                        </View>
-                                        <View style={[styles.icon17 , styles.Radius_50 , styles.bg_mstarda , styles.justifyCenter ,{position:'absolute' , left:-5 , top:0}]}>
-                                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_10 , styles.flexCenter]}>1</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.goBack()} >
-                                        <Image source={require('../../assets/images/arrow_left.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
-                                    </TouchableOpacity>
-                                </View>
-                                :
-                                <TouchableOpacity onPress={() => navigation.goBack()} >
-                                    <Image source={require('../../assets/images/arrow_left.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
-                                </TouchableOpacity>
-                }
-
             </View>
 
-            {/*<Modal*/}
-            {/*    onBackdropPress                 ={toggleModal}*/}
-            {/*    onBackButtonPress               = {toggleModal}*/}
-            {/*    isVisible                       = {showModal}*/}
-            {/*    style                           = {styles.bgModel}*/}
-            {/*    avoidKeyboard                    = {true}*/}
-            {/*>*/}
-
-            {/*    <View style={[styles.bg_White, styles.overHidden, styles.Width_100, styles.paddingHorizontal_20 , styles.flexCenter , styles.paddingVertical_20]}>*/}
-
-            {/*        <Image source={require('../../assets/images/student.png')} style={[styles.icon100  , styles.marginVertical_20]} resizeMode={'contain'} />*/}
-
-            {/*        <Text style={[styles.textBold , styles.text_gray , styles.textSize_18 , styles.marginBottom_5]}>{ i18n.t('howUrOrder') }</Text>*/}
-
-            {/*        <Textarea*/}
-            {/*            style={[styles.input , styles.height_150 , styles.paddingVertical_10 , styles.bg_light_gray ,*/}
-            {/*                {borderTopRightRadius :10 , borderRadius :10  , lineHeight:22}]}*/}
-            {/*            placeholder={ i18n.t('addComment') }*/}
-            {/*            onChangeText={(comment) => setComment(comment)}*/}
-            {/*            value={comment}*/}
-            {/*        />*/}
-
-            {/*        <TouchableOpacity style={[styles.mstrdaBtn , styles.Width_95  , styles.marginTop_40]}>*/}
-            {/*            <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('add') }</Text>*/}
-            {/*        </TouchableOpacity>*/}
+            <Text style={[styles.textBold , title === i18n.t('selectNewLoc')  ? styles.text_gray : styles.text_White , styles.textSize_16 , styles.textCenter ,
+                    {flex:title === i18n.t('selectLoc') ?1:0  , right : title === i18n.t('home') ? 10 : 0}]}>
+                {title}
+            </Text>
 
 
-            {/*        <TouchableOpacity onPress={() => {navigation.navigate('home') ; setShowModal(false)}} style={[styles.mstrdaBtn , styles.Width_95  , styles.marginTop_10 , styles.marginBottom_15]}>*/}
-            {/*            <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('home') }</Text>*/}
-            {/*        </TouchableOpacity>*/}
+            {
+                title === i18n.t('home')  ?
+                    <View style={[styles.directionRow]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('basket')} >
+                            <View style={{marginLeft:15}}>
+                                <Image source={require('../../assets/images/basket.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
+                            </View>
+                            <View style={[styles.icon17 , styles.Radius_50 , styles.bg_mstarda , styles.justifyCenter ,{position:'absolute' , left:8 , top:0}]}>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_10 , styles.flexCenter]}>1</Text>
+                            </View>
+                        </TouchableOpacity>
 
-            {/*    </View>*/}
+                    </View>
+                    :
 
-            {/*</Modal>*/}
+                    title !== i18n.t('selectLoc') ?
+                        <TouchableOpacity onPress={() => navigation.goBack()} >
+                            <Image source={require('../../assets/images/arrow_left.png')} style={[styles.icon23 , styles.transform]} resizeMode={'contain'} />
+                        </TouchableOpacity>
+                        :
+                        null
+            }
+
         </View>
     );
 }

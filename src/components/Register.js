@@ -47,7 +47,7 @@ function Register({navigation , route}) {
     const [idBase64, setIdBase64] = useState('');
 
     function renderSubmit() {
-        if (phone == '' || username == '' || mail == '' || promoCode == '' || password == '' || !isChecked) {
+        if (phone == '' || username == '' || mail == '' || password == '' || !isChecked) {
             return (
                 <View
                     style={[styles.mstrdaBtn , styles.Width_100  , styles.marginBottom_10 , {
@@ -140,94 +140,94 @@ function Register({navigation , route}) {
 
                                     </Item>
 
-                                    {
-                                        userType === 'delegate' ?
-                                            <View style={[styles.Width_100]}>
-                                                <Item style={[styles.item]}>
-                                                    <Label style={[styles.label]}>{ i18n.t('idNum') }</Label>
-                                                    <Input style={[styles.input]}
-                                                           onChangeText={(idNum) => setIdName(idNum)}
-                                                           keyboardType={'number-pad'}
-                                                    />
+                                    {/*{*/}
+                                    {/*    userType === 'delegate' ?*/}
+                                    {/*        <View style={[styles.Width_100]}>*/}
+                                    {/*            <Item style={[styles.item]}>*/}
+                                    {/*                <Label style={[styles.label]}>{ i18n.t('idNum') }</Label>*/}
+                                    {/*                <Input style={[styles.input]}*/}
+                                    {/*                       onChangeText={(idNum) => setIdName(idNum)}*/}
+                                    {/*                       keyboardType={'number-pad'}*/}
+                                    {/*                />*/}
 
-                                                </Item>
+                                    {/*            </Item>*/}
 
-                                                <Item style={[styles.item]}>
-                                                    <Label style={[styles.label]}>{ i18n.t('licenseImg') }</Label>
-                                                    <Input style={[styles.input , {paddingRight:35}]}
-                                                           value={licenseImg}
-                                                           disabled={true}
-                                                    />
-                                                    <TouchableOpacity onPress={() => _pickImage('licenseImg')} style={[{position:'absolute' , right:10  , bottom:15}]}>
-                                                        <Icon type={'FontAwesome'} name={"camera"}
-                                                              style={[styles.textSize_13,styles.text_gray]} />
-                                                    </TouchableOpacity>
+                                    {/*            <Item style={[styles.item]}>*/}
+                                    {/*                <Label style={[styles.label]}>{ i18n.t('licenseImg') }</Label>*/}
+                                    {/*                <Input style={[styles.input , {paddingRight:35}]}*/}
+                                    {/*                       value={licenseImg}*/}
+                                    {/*                       disabled={true}*/}
+                                    {/*                />*/}
+                                    {/*                <TouchableOpacity onPress={() => _pickImage('licenseImg')} style={[{position:'absolute' , right:10  , bottom:15}]}>*/}
+                                    {/*                    <Icon type={'FontAwesome'} name={"camera"}*/}
+                                    {/*                          style={[styles.textSize_13,styles.text_gray]} />*/}
+                                    {/*                </TouchableOpacity>*/}
 
-                                                </Item>
+                                    {/*            </Item>*/}
 
-                                                <Item style={[styles.item]}>
-                                                    <Label style={[styles.label]}>{ i18n.t('idImg') }</Label>
-                                                    <Input style={[styles.input , {paddingRight:35}]}
-                                                           value={idImg}
-                                                           disabled={true}
-                                                    />
-                                                    <TouchableOpacity onPress={() => _pickImage('idImg')} style={[{position:'absolute' , right:10  , bottom:15}]}>
-                                                        <Icon type={'FontAwesome'} name={"camera"}
-                                                              style={[styles.textSize_13,styles.text_gray]} />
-                                                    </TouchableOpacity>
+                                    {/*            <Item style={[styles.item]}>*/}
+                                    {/*                <Label style={[styles.label]}>{ i18n.t('idImg') }</Label>*/}
+                                    {/*                <Input style={[styles.input , {paddingRight:35}]}*/}
+                                    {/*                       value={idImg}*/}
+                                    {/*                       disabled={true}*/}
+                                    {/*                />*/}
+                                    {/*                <TouchableOpacity onPress={() => _pickImage('idImg')} style={[{position:'absolute' , right:10  , bottom:15}]}>*/}
+                                    {/*                    <Icon type={'FontAwesome'} name={"camera"}*/}
+                                    {/*                          style={[styles.textSize_13,styles.text_gray]} />*/}
+                                    {/*                </TouchableOpacity>*/}
 
-                                                </Item>
+                                    {/*            </Item>*/}
 
-                                                <Item style={[styles.item , styles.marginBottom_40]}>
-                                                    <Label style={[styles.label]}>{ i18n.t('plateNumbers') }</Label>
-                                                    <Input style={[styles.input , {paddingRight:35}]}
-                                                           keyboardType={'number-pad'}
-                                                           onChangeText={(plateNumbers) => setPlateNumbers(plateNumbers)}
-                                                    />
+                                    {/*            <Item style={[styles.item , styles.marginBottom_40]}>*/}
+                                    {/*                <Label style={[styles.label]}>{ i18n.t('plateNumbers') }</Label>*/}
+                                    {/*                <Input style={[styles.input , {paddingRight:35}]}*/}
+                                    {/*                       keyboardType={'number-pad'}*/}
+                                    {/*                       onChangeText={(plateNumbers) => setPlateNumbers(plateNumbers)}*/}
+                                    {/*                />*/}
 
-                                                </Item>
+                                    {/*            </Item>*/}
 
-                                                <View style={[styles.input , styles.flexCenter, styles.marginBottom_20 , styles.Width_100 , {borderTopRightRadius:20 , borderTopLeftRadius:0 , paddingLeft:7}]}>
-                                                    <Label style={[styles.label, { top:-20 , left:0}]}>{ i18n.t('nationality') }</Label>
+                                    {/*            <View style={[styles.input , styles.flexCenter, styles.marginBottom_20 , styles.Width_100 , {borderTopRightRadius:20 , borderTopLeftRadius:0 , paddingLeft:7}]}>*/}
+                                    {/*                <Label style={[styles.label, { top:-20 , left:0}]}>{ i18n.t('nationality') }</Label>*/}
 
-                                                    <RNPickerSelect
-                                                        style={{
-                                                            inputAndroid: {
-                                                                fontFamily: 'flatRegular',
-                                                                color:COLORS.gray,
-                                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                                                fontSize            : 14,
-                                                                top:-12,
-                                                            },
-                                                            inputIOS: {
-                                                                fontFamily: 'flatRegular',
-                                                                color:COLORS.gray,
-                                                                alignSelf:'flex-start',
-                                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                                                fontSize            : 14,
-                                                                top:-12,
-                                                            },
-                                                        }}
-                                                        placeholder={{
-                                                            // label: i18n.t('nationality') ,
-                                                        }}
-                                                        onValueChange={(nationality) => setNationality(nationality)}
-                                                        items={[
-                                                            { label: 'مصري', value: 'Egyptian' },
-                                                            { label: 'امريكي', value: 'American' },
-                                                        ]}
-                                                        Icon={() => {
-                                                            return <Icon type={'AntDesign'} name={"down"}
-                                                                         style={[styles.textSize_14,styles.text_gray , {top:7 , right:-5}]} />
-                                                        }}
-                                                    />
-                                                </View>
+                                    {/*                <RNPickerSelect*/}
+                                    {/*                    style={{*/}
+                                    {/*                        inputAndroid: {*/}
+                                    {/*                            fontFamily: 'flatRegular',*/}
+                                    {/*                            color:COLORS.gray,*/}
+                                    {/*                            textAlign           : I18nManager.isRTL ? 'right' : 'left',*/}
+                                    {/*                            fontSize            : 14,*/}
+                                    {/*                            top:-12,*/}
+                                    {/*                        },*/}
+                                    {/*                        inputIOS: {*/}
+                                    {/*                            fontFamily: 'flatRegular',*/}
+                                    {/*                            color:COLORS.gray,*/}
+                                    {/*                            alignSelf:'flex-start',*/}
+                                    {/*                            textAlign           : I18nManager.isRTL ? 'right' : 'left',*/}
+                                    {/*                            fontSize            : 14,*/}
+                                    {/*                            top:-12,*/}
+                                    {/*                        },*/}
+                                    {/*                    }}*/}
+                                    {/*                    placeholder={{*/}
+                                    {/*                        // label: i18n.t('nationality') ,*/}
+                                    {/*                    }}*/}
+                                    {/*                    onValueChange={(nationality) => setNationality(nationality)}*/}
+                                    {/*                    items={[*/}
+                                    {/*                        { label: 'مصري', value: 'Egyptian' },*/}
+                                    {/*                        { label: 'امريكي', value: 'American' },*/}
+                                    {/*                    ]}*/}
+                                    {/*                    Icon={() => {*/}
+                                    {/*                        return <Icon type={'AntDesign'} name={"down"}*/}
+                                    {/*                                     style={[styles.textSize_14,styles.text_gray , {top:7 , right:-5}]} />*/}
+                                    {/*                    }}*/}
+                                    {/*                />*/}
+                                    {/*            </View>*/}
 
 
-                                            </View>
-                                            :
-                                            null
-                                    }
+                                    {/*        </View>*/}
+                                    {/*        :*/}
+                                    {/*        null*/}
+                                    {/*}*/}
 
 
 

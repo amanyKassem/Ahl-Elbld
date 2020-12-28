@@ -21,73 +21,32 @@ function Notifications({navigation,route}) {
     const type = 'edit';
 
     return (
-        <Container style={[styles.bg_black]}>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('notifications') } />
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.paddingHorizontal_20 , {overflow:'hidden' , paddingBottom:20}]}>
 
-
-                    <View style={[styles.borderGray , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
-                        <View style={[styles.directionRow]}>
-                            <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                            <View style={[styles.directionRow]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10}]}>تم قبول الطلب</Text>
-                            </View>
-                        </View>
-                    </View>
-
-
-                    <View style={[styles.borderGray , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
-                        <View style={[styles.directionRow]}>
-                            <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                            <View style={[styles.directionRow]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10}]}>تم تعديل الطلب</Text>
-                                {
-                                    type === 'edit' ?
-                                        <TouchableOpacity>
-                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , {marginLeft:10}]}>( { i18n.t('watchUrOrder') } )</Text>
-                                        </TouchableOpacity>
-                                        :
-                                        null
-                                }
-                            </View>
-                        </View>
-
-                        {
-                            type === 'edit' ?
-                                <View style={[styles.directionRow , styles.Width_70 , styles.flexCenter  , styles.marginTop_10 , styles.marginBottom_20]}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('myOrders')} style={[styles.mstrdaBtn , styles.Width_50 , {marginRight:20}]}>
-                                        <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('confirmOrder') }</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => navigation.navigate('myOrders')} style={[styles.mstrdaBtn , styles.Width_50 , styles.bg_black]}>
-                                        <Text style={[styles.textBold , styles.text_White , styles.textSize_13]}>{ i18n.t('cancelOrder') }</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                :
-                                null
-                        }
-
-                    </View>
-
-                    <TouchableOpacity onPress={() => navigation.navigate('offerPrice')} style={[styles.borderGray , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
-                        <View style={[styles.directionRow]}>
-                            <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                            <View style={[styles.directionRow]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10}]}>تم ارسال سعر 122 مقابل طلبك الخاص</Text>
-                            </View>
-                        </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('offerPrice')} style={[styles.borderGray, styles.directionRow  , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
+                        <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22, flex:1}]}>وصول عروض توصيل من المطعم</Text>
                     </TouchableOpacity>
 
-                    <View style={[styles.borderGray , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
-                        <View style={[styles.directionRow]}>
-                            <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                            <View style={[styles.directionRow]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10}]}>تم قبول الطلب</Text>
-                            </View>
-                        </View>
-                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('restWithdrawal')} style={[styles.borderGray , styles.directionRow , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
+                        <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22, flex:1}]}>انسحاب المطعم من الطلب</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.borderGray , styles.directionRow  , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
+                        <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22, flex:1}]}>تم الموافقة علي الطلب من قبل الاسرة</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.borderGray , styles.directionRow , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
+                        <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22 , flex:1}]}>تم توصيل الطلب من قبل المندوب سكر</Text>
+                    </TouchableOpacity>
 
                 </View>
 
