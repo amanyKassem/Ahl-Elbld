@@ -118,10 +118,10 @@ const ar = {
     'ratedSuccessfully'         : 'تم ارسال تقييمك بنجاح',
     'products'                  : 'المنتجات',
     'details'                   : 'التفاصيل',
-    'addCoupon'                 : 'اضافة كوبون',
+    'addCoupon'                 : 'اضافة رمز كوبون ؟',
     'bankTransfer'              : 'حوالة بنكية',
     'online'                    : 'اونلاين',
-    'enterCode'                 : 'ادخل الرمز',
+    'discountCode'              : 'كود الخصم',
     'totalProducts'             : 'مجموع المنتجات',
     'tax'                       : 'سعر الضريبة',
     'payMethods'                : 'طرق الدفع',
@@ -160,6 +160,10 @@ const ar = {
     'deliveryTime'              : 'وقت التوصيل',
     'restWithdrawal'            : 'نأسف لانسحاب المطعم من الطلب',
     'tryWithRest'               : 'جرب مرة أخري  مع مطعم آخر',
+    'discPrice'                 : 'السعر بعد الخصم',
+    'declaredFamilies'          : 'الأسر المعلنة',
+    'sortBy'                    : 'صنف حسب',
+    'providerDetails'           : 'تفاصيل المقدم',
 };
 
 export default ar;

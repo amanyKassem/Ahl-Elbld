@@ -120,10 +120,10 @@ const en = {
     'ratedSuccessfully'         : 'Your review has been submitted successfully',
     'products'                  : 'Products',
     'details'                   : 'Details',
-    'addCoupon'                 : 'Add coupon',
+    'addCoupon'                 : 'Add a coupon code ?',
     'bankTransfer'              : 'Bank transfer',
     'online'                    : 'Online',
-    'enterCode'                 : 'Enter code',
+    'discountCode'              : 'Discount code',
     'totalProducts'             : 'Total products',
     'tax'                       : 'Tax',
     'payMethods'                : 'Pay methods',
@@ -162,6 +162,10 @@ const en = {
     'deliveryTime'              : 'Delivery time',
     'restWithdrawal'            : 'We regret the restaurant withdrew from the order',
     'tryWithRest'               : 'Try again with another restaurant',
+    'discPrice'                 : 'The price after discount',
+    'declaredFamilies'          : 'Declared families',
+    'sortBy'                    : 'Sort by',
+    'providerDetails'           : 'Provider details',
 };
 
 export default en;

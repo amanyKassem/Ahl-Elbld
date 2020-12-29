@@ -65,7 +65,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('home') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('home') }</Text>
                             )
                         }
                     }
@@ -84,7 +84,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('profile') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('profile') }</Text>
                             )
                         }
                     }
@@ -103,7 +103,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('myOrders') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('myOrders') }</Text>
                             )
                         }
                     }
@@ -122,7 +122,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('specialOrders') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('specialOrders') }</Text>
                             )
                         }
                     }
@@ -133,7 +133,7 @@ export default function CustomDrawerContent(props) {
                             )
                         }
                     }
-                    onPress={() => props.navigation.navigate('specialOrder')}
+                    onPress={() => props.navigation.navigate('specialOrders')}
                 />
 
                 <DrawerItem
@@ -141,7 +141,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('wallet') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('wallet') }</Text>
                             )
                         }
                     }
@@ -160,7 +160,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('aboutApp') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('aboutApp') }</Text>
                             )
                         }
                     }
@@ -179,7 +179,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('appPolicy') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('appPolicy') }</Text>
                             )
                         }
                     }
@@ -198,7 +198,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('contactUs') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('contactUs') }</Text>
                             )
                         }
                     }
@@ -217,7 +217,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('comp&sug') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('comp&sug') }</Text>
                             )
                         }
                     }
@@ -236,7 +236,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('faq') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('faq') }</Text>
                             )
                         }
                     }
@@ -255,7 +255,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('shareApp') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('shareApp') }</Text>
                             )
                         }
                     }
@@ -274,7 +274,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('settings') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('settings') }</Text>
                             )
                         }
                     }
@@ -293,7 +293,7 @@ export default function CustomDrawerContent(props) {
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('logout') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('logout') }</Text>
                             )
                         }
                     }

@@ -28,9 +28,9 @@ function Home({navigation,route}) {
 
     function Item({ title , image , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('category')} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
-                <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:5}]}>
-                    <Text style={[styles.textBold , styles.text_White , styles.textSize_15, styles.textCenter ]}>{title}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('category' , {title})} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
+                <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:7}]}>
+                    <Text style={[styles.textBold , styles.text_White , styles.textSize_13, styles.textCenter ]}>{title}</Text>
                 </View>
                 <Image source={image} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
             </TouchableOpacity>
@@ -85,8 +85,8 @@ function Home({navigation,route}) {
 
                        <View style={[styles.paddingHorizontal_15]}>
                            <TouchableOpacity onPress={() => navigation.navigate('fastingBreakfast')} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
-                               <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:5}]}>
-                                   <Text style={[styles.textBold , styles.text_White , styles.textSize_15, styles.textCenter ]}>{i18n.t('fastingBreakfast')}</Text>
+                               <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:7}]}>
+                                   <Text style={[styles.textBold , styles.text_White , styles.textSize_13, styles.textCenter ]}>{i18n.t('fastingBreakfast')}</Text>
                                </View>
                                <Image source={require("../../assets/images/banner4.png")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
                            </TouchableOpacity>

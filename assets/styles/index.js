@@ -731,6 +731,9 @@ const styles = ({
     height_250 : {
         height              : 250
     },
+    height_300 : {
+        height              : 300
+    },
     height_320 : {
         height              : 320
     },
@@ -1226,7 +1229,7 @@ const styles = ({
         borderRadius        :30,
         height              :45,
         marginRight         :15,
-        backgroundColor     :'#131313'
+        backgroundColor     :'#2e2e2e'
     },
     searchInput : {
         borderRadius        : 10,

@@ -20,8 +20,6 @@ import  Modal  from "react-native-modal";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function Profile({navigation,route}) {
 
