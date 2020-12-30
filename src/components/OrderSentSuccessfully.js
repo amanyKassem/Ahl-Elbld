@@ -22,7 +22,7 @@ import StarRating from "react-native-star-rating";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function RestWithdrawal({navigation,route}) {
+function OrderSentSuccessfully({navigation,route}) {
 
 
     return (
@@ -31,12 +31,15 @@ function RestWithdrawal({navigation,route}) {
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_25 , styles.flexCenter]}>
 
-                        <Image source={require('../../assets/images/sad_emotion.png')} style={[styles.icon100 , styles.marginBottom_40]} resizeMode={'contain'} />
+                        <Image source={require('../../assets/images/success_icon.png')} style={[styles.icon100 , styles.marginBottom_40]} resizeMode={'contain'} />
 
-                        <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_18 ,styles.SelfCenter , styles.textCenter , styles.marginBottom_5 , {lineHeight:24}]}>{ i18n.t('restWithdrawal') }</Text>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ,styles.SelfCenter , styles.textCenter , styles.marginBottom_25 , {lineHeight:24}]}>{ i18n.t('tryWithRest') }</Text>
+                        <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_18 ,styles.SelfCenter , styles.textCenter , styles.marginBottom_5 , {lineHeight:24}]}>{ i18n.t('OrderSentSuccessfully') }</Text>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('home')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginTop_60]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginTop_60]}>
+                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('followOrder') }</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => navigation.navigate('home')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginTop_10 , styles.bg_gray]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('home') }</Text>
                         </TouchableOpacity>
 
@@ -47,6 +50,6 @@ function RestWithdrawal({navigation,route}) {
     );
 }
 
-export default RestWithdrawal;
+export default OrderSentSuccessfully;
 
 

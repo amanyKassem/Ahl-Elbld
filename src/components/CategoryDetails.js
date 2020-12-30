@@ -41,7 +41,7 @@ function CategoryDetails({navigation,route}) {
 
     function Item({ name , desc , image , price , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('productDetails')} style={[styles.bg_light_gray,styles.marginBottom_10 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('productDetails' , {pathName:'categoryDetails'})} style={[styles.bg_light_gray,styles.marginBottom_10 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <Image source={image} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
                 <View style={[{marginLeft:15 , flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.marginBottom_5]}>
@@ -81,7 +81,7 @@ function CategoryDetails({navigation,route}) {
                             <View style={[styles.icon70 , styles.Radius_50 , styles.overlay_white, styles.marginBottom_7 ,{ padding: 5 }]}>
                                 <Image source={require('../../assets/images/image_placeholder.png')} style={[styles.Width_100 , styles.heightFull , styles.Radius_50]} resizeMode='cover' />
                             </View>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_14 , styles.textCenter , styles.marginBottom_5]}>اسم الأسره المنتج</Text>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_14 , styles.textCenter , styles.marginBottom_5]}>اسم الأسره</Text>
 
                             <View style={[styles.directionRow , styles.marginTop_5]}>
                                 <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />

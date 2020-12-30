@@ -49,7 +49,7 @@ function BasketDetails({navigation,route}) {
 
 
                     <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.height_45 , styles.marginBottom_5 , styles.directionRow]}>
-                        <Text style={[styles.textBold , styles.text_gray , styles.textSize_14 ]}>{i18n.t('products') }</Text>
+                        <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14 ]}>{i18n.t('products') }</Text>
                     </View>
 
                     {
@@ -85,7 +85,7 @@ function BasketDetails({navigation,route}) {
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_14]}>233 ر.س</Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('payMethods')} style={[styles.mstrdaBtn , styles.Width_90 , styles.SelfCenter  , styles.marginTop_40 , styles.marginBottom_25]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('orderData')} style={[styles.mstrdaBtn , styles.Width_90 , styles.SelfCenter  , styles.marginTop_40 , styles.marginBottom_25]}>
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('confirm') }</Text>
                     </TouchableOpacity>
 

@@ -91,18 +91,23 @@ function GetLocation({ navigation, route }) {
             console.log(e);
         }
     };
+
     function getLoc() {
         console.log("mapRegion button", mapRegion);
         console.log("city3 ", city);
 
+        navigation.navigate(pathName, { cityName: city, mapRegion, pathName: 'getLoc' })
+
+
     }
+
     return (
         <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ i18n.t('storeLocation')} />
+                <Header navigation={navigation} title={ i18n.t('selectUrLoc')} />
 
-                <View style={{ flex: 1 , height, width: '100%'}}>
+                <View style={{ flex: 1 , height : height-80, width: '100%'}}>
                     {
                         !initMap && mapRegion.latitude != null ? (
                             <MapView
@@ -120,10 +125,13 @@ function GetLocation({ navigation, route }) {
                         ) : (<View />)
                     }
 
-                    {/*<View style={[{ position: 'absolute', bottom: 70, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '100%' }]}>*/}
+                    <View style={[{ position: 'absolute', bottom: 70, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '100%' }]}>
 
+                        <TouchableOpacity onPress={() => getLoc()} style={[styles.mstrdaBtn , styles.SelfCenter , styles.Width_80 ]}>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_14]}>{ i18n.t('select') }</Text>
+                        </TouchableOpacity>
 
-                    {/*</View>*/}
+                    </View>
                 </View>
             </Content>
         </Container>

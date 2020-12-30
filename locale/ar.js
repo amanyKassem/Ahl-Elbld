@@ -1,3 +1,5 @@
+import OrderSentSuccessfully from "../src/components/OrderSentSuccessfully";
+
 const ar = {
     'startNow'                  : 'ابدأ الآن',
     'login'                     : 'تسجيل الدخول',
@@ -158,12 +160,23 @@ const ar = {
     'away'                      : 'يبعد',
     'deliveryCost'              : 'تكلفة التوصيل',
     'deliveryTime'              : 'وقت التوصيل',
+    'deliveryPrice'             : 'سعر التوصيل',
     'restWithdrawal'            : 'نأسف لانسحاب المطعم من الطلب',
     'tryWithRest'               : 'جرب مرة أخري  مع مطعم آخر',
     'discPrice'                 : 'السعر بعد الخصم',
     'declaredFamilies'          : 'الأسر المعلنة',
     'sortBy'                    : 'صنف حسب',
     'providerDetails'           : 'تفاصيل المقدم',
+    'generalSettings'           : 'اعدادات عامة',
+    'additions'                 : 'اضافات',
+    'optional'                  : 'اختياري',
+    'reserveLater'              : 'حجز في وقت آخر',
+    'deliveryLoc'               : 'موقع التسليم',
+    'select'                    : 'حدد',
+    'selectUrLoc'               : 'تحديد موقعك',
+    'OrderSentSuccessfully'     : 'تم ارسال طلبك بنجاح',
+    'banquetDay'                : 'يوم الوليمة',
+    'banquetTime'               : 'وقت الوليمة',
 };
 
 export default ar;

@@ -160,12 +160,23 @@ const en = {
     'away'                      : 'Away',
     'deliveryCost'              : 'Delivery cost',
     'deliveryTime'              : 'Delivery time',
+    'deliveryPrice'             : 'Delivery price',
     'restWithdrawal'            : 'We regret the restaurant withdrew from the order',
     'tryWithRest'               : 'Try again with another restaurant',
     'discPrice'                 : 'The price after discount',
     'declaredFamilies'          : 'Declared families',
     'sortBy'                    : 'Sort by',
     'providerDetails'           : 'Provider details',
+    'generalSettings'           : 'General settings',
+    'additions'                 : 'Additions',
+    'optional'                  : 'Optional',
+    'reserveLater'              : 'Reserve at another time',
+    'deliveryLoc'               : 'Delivery location',
+    'select'                    : 'Select',
+    'selectUrLoc'               : 'Select your location',
+    'OrderSentSuccessfully'     : 'Your order has been sent successfully',
+    'banquetDay'                : 'Day of the banquet',
+    'banquetTime'               : 'Time of the banquet',
 };
 
 export default en;
