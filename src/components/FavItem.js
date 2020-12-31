@@ -9,7 +9,7 @@ function FavItem({navigation , data , onToggleFavorite , isFav}) {
 
     return (
 
-        <TouchableOpacity style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+        <TouchableOpacity onPress={() => navigation.navigate('categoryDetails')} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
             <Image source={data.image} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
             <TouchableOpacity style={[styles.touchFav , styles.marginTop_10]}>
                 <Icon style={[isFav ? styles.text_red : styles.text_midGray, styles.textSize_18]} type="AntDesign" name={ 'heart' } />

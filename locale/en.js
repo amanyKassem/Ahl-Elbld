@@ -177,6 +177,11 @@ const en = {
     'OrderSentSuccessfully'     : 'Your order has been sent successfully',
     'banquetDay'                : 'Day of the banquet',
     'banquetTime'               : 'Time of the banquet',
+    'presence'                  : 'Presence',
+    'mealsAval'                 : 'The number of meals available',
+    'eventDate'                 : 'Event date',
+    'eventTime'                 : 'Event time',
+    'eventDetails'              : 'Event details',
 };
 
 export default en;

@@ -30,7 +30,7 @@ function SelectLoc({navigation,route}) {
                         <Image source={require('../../assets/images/home_order_vector.png')} style={[styles.icon150 , styles.marginBottom_50]} resizeMode='contain' />
 
 
-                        <TouchableOpacity onPress={() => navigation.navigate('tabs', {screen: 'userStack'})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('myDrawer', {screen: 'tabs'})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('currentLoc') }</Text>
                         </TouchableOpacity>
 

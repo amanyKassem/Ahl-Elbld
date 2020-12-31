@@ -177,6 +177,11 @@ const ar = {
     'OrderSentSuccessfully'     : 'تم ارسال طلبك بنجاح',
     'banquetDay'                : 'يوم الوليمة',
     'banquetTime'               : 'وقت الوليمة',
+    'presence'                  : 'حضور',
+    'mealsAval'                 : 'عدد الوجبات المتاحة',
+    'eventDate'                 : 'تاريخ الحدث',
+    'eventTime'                 : 'وقت الحدث',
+    'eventDetails'              : 'تفاصيل الحدث',
 };
 
 export default ar;

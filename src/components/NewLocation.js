@@ -25,7 +25,7 @@ function NewLocation({navigation,route}) {
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.paddingHorizontal_25 , styles.paddingVertical_20 , {overflow:'hidden'}]}>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('tabs', {screen: 'userStack'})} style={[styles.directionRowSpace , styles.paddingVertical_15 , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('myDrawer', {screen: 'tabs'})} style={[styles.directionRowSpace , styles.paddingVertical_15 , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
 
                         <View style={[styles.directionRow , {flex:1}]}>
                             <Image source={require('../../assets/images/circle_location.png')} style={[styles.icon12 , {marginRight:7}]} resizeMode='contain' />
@@ -43,7 +43,7 @@ function NewLocation({navigation,route}) {
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('tabs', {screen: 'userStack'})} style={[styles.directionRowSpace  , styles.paddingVertical_15 , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('myDrawer', {screen: 'tabs'})} style={[styles.directionRowSpace  , styles.paddingVertical_15 , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
 
                         <View style={[styles.directionRow , {flex:1}]}>
                             <Image source={require('../../assets/images/circle_location.png')} style={[styles.icon12 , {marginRight:7}]} resizeMode='contain' />
@@ -61,7 +61,7 @@ function NewLocation({navigation,route}) {
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('tabs', {screen: 'userStack'})} style={[styles.directionRowSpace  , styles.paddingVertical_15 , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('myDrawer', {screen: 'tabs'})} style={[styles.directionRowSpace  , styles.paddingVertical_15 , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
 
                         <View style={[styles.directionRow , {flex:1}]}>
                             <Image source={require('../../assets/images/circle_location.png')} style={[styles.icon12 , {marginRight:7}]} resizeMode='contain' />
