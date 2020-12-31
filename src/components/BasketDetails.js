@@ -36,10 +36,10 @@ function BasketDetails({navigation,route}) {
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100, {overflow:'hidden'}]}>
 
-                    <View style={[styles.borderGray,styles.marginVertical_10 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+                    <View style={[styles.borderGray,styles.marginVertical_10 , styles.directionRow , styles.Radius_5 , {padding:10}]}>
                         <Image source={require("../../assets/images/banner1.png")} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
                         <View style={[{marginLeft:15 , flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>مقدم الخدمة</Text>
+                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.alignStart]}>مقدم الخدمة</Text>
                             <View style={[styles.directionRow , styles.marginTop_5]}>
                                 <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />
                                 <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, {lineHeight:20}]}>الرياض - السعودية</Text>

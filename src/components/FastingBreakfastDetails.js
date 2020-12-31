@@ -43,7 +43,7 @@ function FastingBreakfastDetails({navigation,route}) {
             <TouchableOpacity onPress={() => navigation.navigate('eventDetails')} style={[styles.bg_light_gray,styles.marginBottom_10 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <Image source={image} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
                 <View style={[{marginLeft:15 , flex:1}]}>
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.marginBottom_5]}>{ name }</Text>
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.marginBottom_5 , styles.alignStart]}>{ name }</Text>
                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12 , styles.alignStart , styles.writingDir , {lineHeight:18}]}>{ desc }</Text>
                 </View>
             </TouchableOpacity>

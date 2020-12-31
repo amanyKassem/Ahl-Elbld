@@ -7,7 +7,7 @@ import {
     Dimensions,
     FlatList,
     I18nManager,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, Platform
 } from "react-native";
 import {Container, Content, Form, Icon, Input , Item, Label} from 'native-base'
 import styles from '../../assets/styles'
@@ -20,8 +20,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.0922;
-const longitudeDelta = 0.0421;
+const IS_IPHONE_X 	= (height === 812 || height === 896) && Platform.OS === 'ios';
 
 function EventPayMethod({navigation,route}) {
 
@@ -39,7 +38,7 @@ function EventPayMethod({navigation,route}) {
 
                     <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ,styles.marginBottom_25 , styles.alignStart]}>{ i18n.t('selectPayMethod') }</Text>
 
-                    <View style={[styles.rowGroup , styles.Width_100]}>
+                    <View style={[IS_IPHONE_X ? styles.directionRowCenter : styles.rowGroup , styles.Width_100 , {flexWrap: 'wrap'}]}>
 
                         <TouchableOpacity onPress={() => setPayType('0')} style={[payType === '0' ?styles.bg_light_gray : null, styles.marginBottom_10  , styles.Radius_10 , styles.overHidden , styles.width_90 , styles.height_70 , styles.centerContext]}>
                             <Image source={require('../../assets/images/money_cash.png')} style={[styles.icon50 ]} resizeMode={'contain'} />

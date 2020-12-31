@@ -4,6 +4,7 @@ import COLORS from '../../src/consts/colors'
 const width     = Dimensions.get('window').width;
 const height    = Dimensions.get('window').height;
 const isIOS      = Platform.OS === 'ios';
+const IS_IPHONE_X 	= (height === 812 || height === 896) && Platform.OS === 'ios';
 
 const styles = ({
 
@@ -1410,7 +1411,7 @@ const styles = ({
     },
     footerStyle:{
         backgroundColor:'#fff',
-        height: isIOS ? 100 : 60,
+        height: IS_IPHONE_X ? 100 : 60,
         paddingHorizontal:4,
         position:'absolute',
     },

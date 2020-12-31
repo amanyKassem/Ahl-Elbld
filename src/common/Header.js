@@ -26,7 +26,9 @@ function Header({navigation , title , filteration , likeIcon}) {
     }
 
     return (
-        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,  title !== i18n.t('selectNewLoc') ?styles.marginTop_20 : null , styles.height_80
+        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,  title !== i18n.t('selectNewLoc') ?styles.marginTop_20 : null ,
+            isIOS ? styles.height_50 : styles.height_80 ,
+            isIOS ? styles.marginBottom_10 : null ,
             ,styles.Width_100 , title === i18n.t('selectNewLoc')  ? styles.shadow : null,  {
             borderBottomWidth:title === i18n.t('selectNewLoc')  ? 1 : 0,
             borderBottomColor:title === i18n.t('selectNewLoc')  ? '#ddd' : 0,

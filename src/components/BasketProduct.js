@@ -63,7 +63,7 @@ function BasketProduct({pro}) {
             </View>
 
             <View style={[styles.directionRow]}>
-                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12 , styles.alignStart]}>{pro.price}</Text>
+                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12]}>{pro.price}</Text>
                 <TouchableOpacity>
                     <Image source={require('../../assets/images/delete_red.png')} style={[styles.icon25 , {marginLeft:10}]} resizeMode={'contain'} />
                 </TouchableOpacity>
@@ -80,13 +80,13 @@ function BasketProduct({pro}) {
                 <View style={[styles.bg_White, styles.overHidden, styles.Width_100, {borderTopStartRadius:5 , borderTopEndRadius:5}]}>
 
                     <View style={[styles.bg_gray , styles.Width_100 , styles.paddingVertical_15 , styles.paddingHorizontal_20]}>
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('details') }</Text>
+                        <Text style={[styles.textBold , styles.text_White , styles.textSize_15 , styles.alignStart]}>{ i18n.t('details') }</Text>
                     </View>
 
                     <View style={[styles.paddingHorizontal_20 , styles.paddingVertical_20]}>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10]}>- كولا</Text>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10]}>- بطاطس</Text>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10]}>- صوص جبنة</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- كولا</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- بطاطس</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- صوص جبنة</Text>
                     </View>
 
 

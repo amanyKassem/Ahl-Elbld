@@ -26,8 +26,8 @@ function Language({ navigation }) {
 
     return (
         <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
-           <View style={[ styles.marginTop_40 , {height:600}]}>
-               <ScrollView contentContainerStyle={[styles.flexCenter]} >
+           <View style={[ styles.heightFull , styles.centerContext ]}>
+               <ScrollView contentContainerStyle={[styles.flexCenter , styles.heightFull , styles.Width_100]} >
                    <Image source={require('../../assets/images/logo.png')} style={[styles.icon110 , styles.marginBottom_20]} resizeMode='contain' />
                    <Text style={[styles.textRegular , styles.text_black , styles.textSize_18, styles.marginBottom_25]}>{ i18n.t('chooseLang') }</Text>
 

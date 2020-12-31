@@ -18,7 +18,8 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 
 
 const isIOS = Platform.OS === 'ios';
-const { width } = Dimensions.get('window');
+const { width , height } = Dimensions.get('window');
+const IS_IPHONE_X 	= (height === 812 || height === 896) && Platform.OS === 'ios';
 
 function Intro({navigation}) {
 
@@ -45,7 +46,7 @@ function Intro({navigation}) {
                                 intro.map((intr, i) => (
                                     <View style={[styles.heightFull , {width}]} key={i}>
                                         <Image source={intr.image} style={[{width , height:'100%'}]} resizeMode={'cover'} />
-                                        <View style={styles.wrapText}>
+                                        <View style={[styles.wrapText , IS_IPHONE_X ? styles.marginTop_120 : null]}>
                                             <Text style={[styles.text_black , styles.textBold , styles.textSize_18 , styles.textCenter]}>{intr.title}</Text>
                                             <Text numberOfLines={4} style={[styles.text_gray , styles.textRegular , styles.textSize_14 , styles.marginTop_10 , styles.textCenter , {lineHeight:24}]}> {intr.details} </Text>
                                         </View>

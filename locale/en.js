@@ -65,6 +65,7 @@ const en = {
     'orderInProgress'           : 'Orders in progress',
     'finishedOrders'            : 'Finished orders',
     'canceledOrders'            : 'Canceled orders',
+    'pendingOrders'             : 'Pending orders',
     'orderNum'                  : 'Order number',
     'basket'                    : 'Shopping basket',
     'category'                  : 'Category',
@@ -182,6 +183,9 @@ const en = {
     'eventDate'                 : 'Event date',
     'eventTime'                 : 'Event time',
     'eventDetails'              : 'Event details',
+    'prepCompleted'             : 'Preparation completed',
+    'orderDelegate'             : 'Order at the delegate',
+    'orderDelivered'            : 'The order has been delivered',
 };
 
 export default en;

@@ -65,6 +65,7 @@ const ar = {
     'orderInProgress'           : 'طلبات قيد التنفيذ',
     'finishedOrders'            : 'طلبات منتهية',
     'canceledOrders'            : 'طلبات ملغية',
+    'pendingOrders'             : 'طلبات معلقة',
     'orderNum'                  : 'رقم الطلب',
     'basket'                    : 'سلة المشتريات',
     'category'                  : 'القسم',
@@ -182,6 +183,9 @@ const ar = {
     'eventDate'                 : 'تاريخ الحدث',
     'eventTime'                 : 'وقت الحدث',
     'eventDetails'              : 'تفاصيل الحدث',
+    'prepCompleted'             : 'تم الانتهاء من التجهيز',
+    'orderDelegate'             : 'الطلب عند المندوب',
+    'orderDelivered'            : 'تم توصيل الطلب',
 };
 
 export default ar;

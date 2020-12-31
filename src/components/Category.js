@@ -59,7 +59,7 @@ function Category({navigation,route}) {
 
                 <Header navigation={navigation} title={ title } filteration={true} />
 
-                <View style={[styles.Width_90,styles.SelfCenter , styles.marginBottom_20 , styles.marginTop_15]}>
+                <View style={[styles.Width_90,styles.SelfCenter , styles.marginBottom_20 , styles.marginTop_15 , {zIndex:-1}]}>
                     <Input style={[styles.inputSearch , styles.Width_100 , {flex:0}]}
                            placeholder={i18n.t('search')}
                            placeholderTextColor={'#fff'}
@@ -72,7 +72,7 @@ function Category({navigation,route}) {
                     </TouchableOpacity>
                 </View>
 
-                <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden'}]}>
+                <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden' , zIndex:-1}]}>
 
                     <View style={[styles.marginTop_20]}>
                         <FlatList

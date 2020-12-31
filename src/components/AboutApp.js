@@ -21,8 +21,8 @@ function AboutApp({navigation,route}) {
 
 
     return (
-        <Container style={[styles.bg_black]}>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('aboutApp') } />
 

@@ -15,8 +15,8 @@ function FavItem({navigation , data , onToggleFavorite , isFav}) {
                 <Icon style={[isFav ? styles.text_red : styles.text_midGray, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
             </TouchableOpacity>
             <View style={[{marginLeft:15 , flex:1}]}>
-                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ data.name }</Text>
-                <View style={[styles.directionRow , styles.marginTop_5]}>
+                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.alignStart]}>{ data.name }</Text>
+                <View style={[styles.directionRow , styles.marginTop_7]}>
                     <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />
                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ data.location }</Text>
                 </View>

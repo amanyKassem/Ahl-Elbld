@@ -34,7 +34,7 @@ function Offers({navigation,route}) {
     ]
     function ItemOrder({ name , image , location , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('categoryDetails')} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+            <TouchableOpacity onPress={() => {navigation.navigate('categoryDetails') , setShowModal(false)}} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <Image source={image} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
                 <View style={[{marginLeft:15 , flex:1}]}>
                     <View style={styles.directionRowSpace}>

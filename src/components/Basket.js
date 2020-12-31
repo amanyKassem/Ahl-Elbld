@@ -28,7 +28,7 @@ function Basket({navigation,route}) {
             <TouchableOpacity onPress={() => navigation.navigate('basketDetails')} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <Image source={image} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
                 <View style={[{marginLeft:15 , flex:1}]}>
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ name }</Text>
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.alignStart]}>{ name }</Text>
                     <View style={[styles.directionRow , styles.marginTop_5]}>
                         <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, {lineHeight:20}]}>{ location }</Text>

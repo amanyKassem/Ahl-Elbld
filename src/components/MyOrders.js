@@ -21,15 +21,15 @@ function MyOrders({navigation,route}) {
     const [active, setActive] = useState(0);
 
     const myOrders =[
-        {id :'0',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/banner1.png")},
-        {id :'1',name:'اسم الأسرة'  , date:'9/7/2019' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/banner2.png")},
-        {id :'2',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/banner3.png")},
-        {id :'3',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', invoiceAmount:'123456', image:require("../../assets/images/banner4.png")},
+        {id :'0',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner1.png")},
+        {id :'1',name:'اسم الأسرة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner2.png")},
+        {id :'2',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner3.png")},
+        {id :'3',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner4.png")},
     ]
 
     function Item({ name , image , date , orderNum , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate(active === 1 ? 'productDetails' : 'orderDetails', {orderType:active , pathName:'myOrders'})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:15}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('orderDetails', {orderType:active , pathName:'myOrders'})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:15}]}>
                 <View style={[styles.directionRow , {flex:1}]}>
                     <Image source={image} style={[styles.icon60 , styles.Radius_7]} resizeMode={'cover'} />
                     <View style={[{marginLeft:15 , flex:1}]}>
@@ -38,7 +38,7 @@ function MyOrders({navigation,route}) {
                     </View>
                 </View>
                 <View style={[{borderLeftWidth:1 , borderLeftColor:'#ddd' , paddingLeft:15} , styles.heightFull , styles.centerContext]}>
-                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.marginBottom_5]}>{ active === 1 ? i18n.t('invoiceAmount') : i18n.t('orderNum') }</Text>
+                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.marginBottom_5]}>{ i18n.t('orderNum') }</Text>
                     <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>{ orderNum }</Text>
                 </View>
             </TouchableOpacity>
@@ -55,11 +55,14 @@ function MyOrders({navigation,route}) {
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100, {overflow:'hidden'}]}>
 
                     <View>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.directionRowSpace , {width:'100%'}]} style={[styles.scrollView , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
-                            <TouchableOpacity onPress={() => setActive(0)} style={[styles.paddingVertical_15 , styles.Width_50 , styles.paddingHorizontal_15 , {borderBottomWidth:2 , borderBottomColor:active === 0 ? COLORS.mstarda : 'transparent'}]}>
-                                <Text style={[styles.textBold , styles.text_gray, styles.textCenter , styles.textSize_13]}>{ i18n.t('orderInProgress') }</Text>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.directionRowSpace , styles.paddingHorizontal_15, {minWidth:'100%'}]} style={[styles.scrollView , {borderBottomWidth:1 , borderBottomColor:'#ddd'}]}>
+                            <TouchableOpacity onPress={() => setActive(0)} style={[styles.paddingVertical_15, styles.paddingHorizontal_15 , {borderBottomWidth:2 , borderBottomColor:active === 0 ? COLORS.mstarda : 'transparent'}]}>
+                                <Text style={[styles.textBold , styles.text_gray, styles.textCenter , styles.textSize_13]}>{ i18n.t('pendingOrders') }</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setActive(1)} style={[styles.paddingVertical_15 , styles.Width_50 , styles.paddingHorizontal_15 , {borderBottomWidth:2 , borderBottomColor:active === 1 ? COLORS.mstarda : 'transparent'}]}>
+                            <TouchableOpacity onPress={() => setActive(1)} style={[styles.paddingVertical_15 , styles.paddingHorizontal_15 , {borderBottomWidth:2 , borderBottomColor:active === 1 ? COLORS.mstarda : 'transparent'}]}>
+                                <Text style={[styles.textBold , styles.text_gray , styles.textCenter , styles.textSize_13]}>{ i18n.t('orderInProgress') }</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setActive(2)} stle={[styles.paddingVertical_15 , styles.paddingHorizontal_15 , {borderBottomWidth:2 , borderBottomColor:active === 2 ? COLORS.mstarda : 'transparent'}]}>
                                 <Text style={[styles.textBold , styles.text_gray , styles.textCenter , styles.textSize_13]}>{ i18n.t('finishedOrders') }</Text>
                             </TouchableOpacity>
                         </ScrollView>

@@ -64,7 +64,7 @@ function Home({navigation,route}) {
                        </Swiper>
                    </View>
 
-                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_15, styles.marginBottom_15 , styles.marginHorizontal_15 , {top:-30}]}>{ i18n.t('categories') }</Text>
+                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_15, styles.marginBottom_15 , styles.marginHorizontal_15 , styles.alignStart , {top:-30}]}>{ i18n.t('categories') }</Text>
 
 
                    <View style={{top:-30}}>

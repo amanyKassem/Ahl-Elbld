@@ -68,7 +68,7 @@ function OfferPrice({navigation,route}) {
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('accept') }</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('specialOrder')} style={[styles.mstrdaBtn , styles.Width_90  , styles.marginTop_15, styles.SelfCenter ]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('specialOrders')} style={[styles.mstrdaBtn , styles.Width_90  , styles.marginTop_15, styles.SelfCenter ]}>
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('refuse') }</Text>
                     </TouchableOpacity>
 

@@ -30,22 +30,22 @@ function Notifications({navigation,route}) {
 
                     <TouchableOpacity onPress={() => navigation.navigate('offerPrice')} style={[styles.borderGray, styles.directionRow  , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
                         <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22, flex:1}]}>وصول عروض توصيل من المطعم</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.writingDir , {marginLeft:10 , lineHeight:22, flex:1}]}>وصول عروض توصيل من المطعم</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('restWithdrawal')} style={[styles.borderGray , styles.directionRow , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
                         <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22, flex:1}]}>انسحاب المطعم من الطلب</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.writingDir , {marginLeft:10 , lineHeight:22, flex:1}]}>انسحاب المطعم من الطلب</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.borderGray , styles.directionRow  , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
                         <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22, flex:1}]}>تم الموافقة علي الطلب من قبل الاسرة</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.writingDir , {marginLeft:10 , lineHeight:22, flex:1}]}>تم الموافقة علي الطلب من قبل الاسرة</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.borderGray , styles.directionRow , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
                         <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {marginLeft:10 , lineHeight:22 , flex:1}]}>تم توصيل الطلب من قبل المندوب سكر</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.writingDir , {marginLeft:10 , lineHeight:22 , flex:1}]}>تم توصيل الطلب من قبل المندوب سكر</Text>
                     </TouchableOpacity>
 
                 </View>
