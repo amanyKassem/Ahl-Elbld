@@ -31,7 +31,7 @@ export default function CustomDrawerContent(props) {
         try {
             const result = await Share.share({
                 message:
-                    'OPA App',
+                    'Ahl-Elbld App',
             });
 
             if (result.action === Share.sharedAction) {

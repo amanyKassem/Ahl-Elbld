@@ -115,7 +115,7 @@ function GetLocation({ navigation, route }) {
                                 style={{ width: '100%', height: '100%', flex: 1 }}
                                 initialRegion={mapRegion}>
                                 <MapView.Marker
-                                    draggable={pathName !==  'OrderDetails'}
+                                    draggable={pathName !==  'orderDetails'}
                                     coordinate={mapRegion}
                                     onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
                                 >
@@ -125,13 +125,23 @@ function GetLocation({ navigation, route }) {
                         ) : (<View />)
                     }
 
-                    <View style={[{ position: 'absolute', bottom: 70, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '100%' }]}>
+                    {
+                        pathName !== 'orderDetails'?
 
-                        <TouchableOpacity onPress={() => getLoc()} style={[styles.mstrdaBtn , styles.SelfCenter , styles.Width_80 ]}>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_14]}>{ i18n.t('select') }</Text>
-                        </TouchableOpacity>
+                            <View style={[{ position: 'absolute', bottom: 70, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', width: '100%' }]}>
 
-                    </View>
+                                <TouchableOpacity onPress={() => getLoc()} style={[styles.mstrdaBtn , styles.SelfCenter , styles.Width_80 ]}>
+                                    <Text style={[styles.textBold , styles.text_White , styles.textSize_14]}>{ i18n.t('select') }</Text>
+                                </TouchableOpacity>
+
+                            </View>
+
+                            :
+                            null
+
+                    }
+
+
                 </View>
             </Content>
         </Container>

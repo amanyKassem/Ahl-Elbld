@@ -27,7 +27,7 @@ function EventDetails({navigation,route}) {
     // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
     return (
-        <Container style={[styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_White]}>
                 <ImageBackground source={require('../../assets/images/banner1.png')} resizeMode={'cover'} style={[styles.Width_100 , styles.height_230 , {borderBottomRightRadius:25 , borderBottomLeftRadius:25 , overflow:'hidden'}]}>
                     <View style={[styles.overlay_black , styles.heightFull , styles.Width_100]}>

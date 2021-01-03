@@ -186,6 +186,20 @@ const en = {
     'prepCompleted'             : 'Preparation completed',
     'orderDelegate'             : 'Order at the delegate',
     'orderDelivered'            : 'The order has been delivered',
+    'deliveryDetails'           : 'Delivery details',
+    'delegateInfo'              : 'Delegate info',
+    'delegateTracking'          : 'Watch Delegate Tracking',
+    'writeComment'              : 'Write comment',
+    'rateDetails'               : 'Rate details',
+    'quality'                   : 'Quality',
+    'cleanliness'               : 'Cleanliness',
+    'good'                      : 'Good',
+    'excellent'                 : 'Excellent',
+    'bad'                       : 'Bad',
+    'delegateRate'              : 'Delegate rate',
+    'handlingWay'               : 'Handling way',
+    'deliverySpeed'             : 'Delivery speed',
+    'delete'                    : 'Delete',
 };
 
 export default en;

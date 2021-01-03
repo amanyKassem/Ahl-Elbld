@@ -64,7 +64,7 @@ function OfferPrice({navigation,route}) {
                     </View>
 
 
-                    <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.mstrdaBtn , styles.Width_90 , styles.marginTop_65 , styles.SelfCenter , styles.bg_black]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('orderDetails', {orderType:0 , pathName:'offerPrice'})} style={[styles.mstrdaBtn , styles.Width_90 , styles.marginTop_65 , styles.SelfCenter , styles.bg_black]}>
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('accept') }</Text>
                     </TouchableOpacity>
 

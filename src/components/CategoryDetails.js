@@ -70,7 +70,7 @@ function CategoryDetails({navigation,route}) {
 
 
     return (
-        <Container style={[styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth]} scrollEnabled={false}>
                 <ImageBackground source={require('../../assets/images/banner1.png')} resizeMode={'cover'} style={[styles.Width_100 ,  activeType != null? styles.height_340 : styles.height_300]}>
                     <View style={[styles.overlay_black , styles.heightFull , styles.Width_100]}>

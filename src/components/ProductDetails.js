@@ -75,7 +75,7 @@ function ProductDetails({navigation,route}) {
     }
 
     return (
-        <Container style={[styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_White]}>
                 <ImageBackground source={require('../../assets/images/banner1.png')} resizeMode={'cover'} style={[styles.Width_100 , styles.height_230 , {borderBottomRightRadius:25 , borderBottomLeftRadius:25 , overflow:'hidden'}]}>
                     <View style={[styles.overlay_black , styles.heightFull , styles.Width_100]}>
@@ -87,10 +87,18 @@ function ProductDetails({navigation,route}) {
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20 , styles.marginTop_10, {overflow:'hidden'}]}>
 
-                    {/*<View style={[styles.bg_lightMstarda,styles.paddingHorizontal_15  , styles.height_45 , styles.directionRowSpace]}>*/}
-                    {/*    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>{i18n.t('orderNum') }</Text>*/}
-                    {/*    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>12345</Text>*/}
-                    {/*</View>*/}
+                    {
+                        pathName === 'specialOrders' ?
+
+                            <View style={[styles.bg_lightMstarda,styles.paddingHorizontal_15 , styles.marginVertical_10  , styles.height_45 , styles.directionRowSpace]}>
+                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>{i18n.t('orderNum') }</Text>
+                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>12345</Text>
+                            </View>
+                            :
+                            null
+                    }
+
+
 
                     <View style={[styles.directionRowSpace, styles.marginTop_5]}>
                         <Text style={[styles.textBold , styles.text_gray , styles.textSize_16]}>اسم المنتج</Text>
@@ -106,30 +114,64 @@ function ProductDetails({navigation,route}) {
 
                     <View style={[styles.line , styles.marginVertical_20]}/>
 
-                    <View style={[styles.directionRow, styles.marginBottom_20]}>
-                        <Text style={[styles.textBold , styles.text_gray , styles.textSize_16 , {marginRight:5}]}>{i18n.t('additions') }</Text>
-                        <Text style={[styles.textBold , styles.text_midGray , styles.textSize_13]}>( {i18n.t('optional') } )</Text>
-                    </View>
+                    {
+                        pathName === 'specialOrders' ?
+                            <View style={[styles.Width_100]}>
+                                <Text style={[styles.textBold , styles.text_gray , styles.textSize_16 ,styles.marginBottom_15 , styles.alignStart]}>{i18n.t('ingredients') }</Text>
 
-                    <FlatList
-                        data={ingredients}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item, index }) =>
-                            (
-                                <View style={[styles.directionRowSpace , styles.marginBottom_10]}>
-                                    <TouchableOpacity onPress={() => toggleChecked(item.id)} style={[styles.directionRow]}>
-                                        <CheckBox
-                                            checked={checkedArr.indexOf(item.id) !== -1} color={checkedArr.indexOf(item.id) !== -1 ? COLORS.mstarda : '#ddd'}
-                                            style={[ styles.checkBox , styles.Radius_3 , { backgroundColor: checkedArr.indexOf(item.id) !== -1 ? COLORS.mstarda : '#ddd' }]}
-                                            onPress={() => toggleChecked(item.id)}
-                                        />
-
-                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>{item.name}</Text>
-                                    </TouchableOpacity>
-                                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 ]}>{item.price}</Text>
+                                <View style={[styles.bg_light_gray,styles.paddingHorizontal_15 , styles.marginBottom_10  , styles.height_40 , styles.directionRowSpace]}>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>بصل</Text>
+                                    <View style={[styles.directionRow]}>
+                                        <TouchableOpacity>
+                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 ]}>{i18n.t('add') }</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={{borderLeftWidth:1 , borderColor:'#ddd' , paddingLeft:8 , marginLeft:8}}>
+                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 ]}>{i18n.t('delete') }</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            )}
-                    />
+                                <View style={[styles.bg_light_gray,styles.paddingHorizontal_15 , styles.marginBottom_10  , styles.height_40 , styles.directionRowSpace]}>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>بصل</Text>
+                                    <View style={[styles.directionRow]}>
+                                        <TouchableOpacity>
+                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 ]}>{i18n.t('add') }</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={{borderLeftWidth:1 , borderColor:'#ddd' , paddingLeft:8 , marginLeft:8}}>
+                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 ]}>{i18n.t('delete') }</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+
+                            </View>
+                            :
+                            <View style={[styles.Width_100]}>
+                                <View style={[styles.directionRow, styles.marginBottom_20]}>
+                                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_16 , {marginRight:5}]}>{i18n.t('additions') }</Text>
+                                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_13]}>( {i18n.t('optional') } )</Text>
+                                </View>
+
+                                <FlatList
+                                    data={ingredients}
+                                    keyExtractor={(item) => item.id}
+                                    renderItem={({ item, index }) =>
+                                        (
+                                            <View style={[styles.directionRowSpace , styles.marginBottom_10]}>
+                                                <TouchableOpacity onPress={() => toggleChecked(item.id)} style={[styles.directionRow]}>
+                                                    <CheckBox
+                                                        checked={checkedArr.indexOf(item.id) !== -1} color={checkedArr.indexOf(item.id) !== -1 ? COLORS.mstarda : '#ddd'}
+                                                        style={[ styles.checkBox , styles.Radius_3 , { backgroundColor: checkedArr.indexOf(item.id) !== -1 ? COLORS.mstarda : '#ddd' }]}
+                                                        onPress={() => toggleChecked(item.id)}
+                                                    />
+
+                                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 ]}>{item.price}</Text>
+                                            </View>
+                                        )}
+                                />
+                            </View>
+                    }
+
                     <View style={[styles.line , styles.marginVertical_20]}/>
 
                     <Text style={[styles.textBold , styles.text_gray , styles.textSize_16 , styles.alignStart , styles.marginBottom_20]}>{i18n.t('selectQuantity') }</Text>
@@ -160,7 +202,12 @@ function ProductDetails({navigation,route}) {
                                 </TouchableOpacity>
                             </View>
                             :
-                            null
+                            pathName === 'specialOrders' ?
+                                <TouchableOpacity onPress={() => navigation.navigate('basket')} style={[styles.mstrdaBtn , styles.Width_90 , styles.SelfCenter  , styles.marginBottom_20]}>
+                                    <Text style={[styles.textBold , styles.text_White , styles.textSize_14]}>{ i18n.t('reOrder') }</Text>
+                                </TouchableOpacity>
+                                :
+                                null
                     }
 
 

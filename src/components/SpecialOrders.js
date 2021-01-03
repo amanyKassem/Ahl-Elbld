@@ -27,7 +27,7 @@ function SpecialOrders({navigation,route}) {
     ]
     function Item({ name , image , date , orderNum , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate(active === 0 ? 'offerPrice' :'orderDetails', {orderType:active , pathName:'specialOrder'})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+            <TouchableOpacity onPress={() => navigation.navigate(active === 0 ? 'offerPrice' : active === 0 ? 'specialOrderDetails' : 'productDetails', {orderType:active , pathName:'specialOrders'})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <View style={[styles.directionRow , {flex:1}]}>
                     <Image source={image} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
                     <View style={[{marginLeft:15}]}>
@@ -45,8 +45,8 @@ function SpecialOrders({navigation,route}) {
 
 
     return (
-        <Container style={[styles.bg_black]}>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_black]}>
+        <Container style={[styles.bg_gray]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('specialOrders') } />
 
