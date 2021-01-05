@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager, ImageBackground} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
-import styles from '../../assets/styles'
-import i18n from "../../locale/i18n";
+import styles from '../../../assets/styles'
+import i18n from "../../../locale/i18n";
 import Swiper from 'react-native-swiper';
 import {useSelector, useDispatch} from 'react-redux';
-import Header from '../common/Header';
-import COLORS from "../consts/colors";
+import Header from '../../common/Header';
+import COLORS from "../../consts/colors";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -27,7 +27,7 @@ function SelectLoc({navigation,route}) {
                     <View style={[styles.directionColumnCenter , styles.bgFullWidth]}>
 
 
-                        <Image source={require('../../assets/images/home_order_vector.png')} style={[styles.icon150 , styles.marginBottom_50]} resizeMode='contain' />
+                        <Image source={require('../../../assets/images/vector_delivery.png')} style={[styles.icon150 , styles.marginBottom_50]} resizeMode='contain' />
 
 
                         <TouchableOpacity onPress={() => navigation.navigate('myDrawer', {screen: 'tabs'})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>

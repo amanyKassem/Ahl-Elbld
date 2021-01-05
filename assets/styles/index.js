@@ -454,11 +454,11 @@ const styles = ({
     // Style Search
 
     checkBox : {
-        paddingLeft             : I18nManager.isRTL ? 0 : 2,
+        paddingLeft             : !I18nManager.isRTL && IS_IPHONE_X ? 7 : I18nManager.isRTL ? 0 : 2,
         paddingBottom           : 0,
         borderRadius            : 5,
-        paddingRight            : I18nManager.isRTL ? 2 : 0,
-        marginRight             :20,
+        paddingRight            : I18nManager.isRTL && IS_IPHONE_X? 7 : I18nManager.isRTL ? 2 : 0,
+        marginRight             : 20,
     },
 
     // Style Shadow

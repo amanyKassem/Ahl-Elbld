@@ -1,5 +1,3 @@
-import OrderSentSuccessfully from "../src/components/OrderSentSuccessfully";
-
 const ar = {
     'startNow'                  : 'ابدأ الآن',
     'login'                     : 'تسجيل الدخول',
@@ -200,6 +198,20 @@ const ar = {
     'handlingWay'               : 'طريقة التعامل',
     'deliverySpeed'             : 'سرعة التوصيل',
     'delete'                    : 'حذف',
+    'orders'                    : 'الطلبات',
+    'comments'                  : 'التعليقات',
+    'delegateStatus'            : 'حالة المندوب',
+    'recoverBalance'            : 'استرجاع رصيد',
+    'orderSentToClient'         : 'تم تسليم الطلب إلى العميل',
+    'orderLocation'             : 'موقع الطلب',
+    'desiredPlace'              : 'المكان المرغوب التوصيل اليه',
+    'clientInfo'                : 'معلومات العميل',
+    'clientName'                : 'اسم العميل',
+    'finish'                    : 'انهاء',
+    'orderHasDelivered'         : 'تم تسليم الطلب',
+    'backToOrders'              : 'العودة للطلبات',
+    'iWillDeliver'              : 'سأوصل هذا الطلب',
+    'refuseOrder'               : 'رفض الطلب',
 };
 
 export default ar;

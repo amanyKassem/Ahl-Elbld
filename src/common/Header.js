@@ -11,7 +11,7 @@ import {Textarea} from "native-base";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function Header({navigation , title , filteration , likeIcon}) {
+function Header({navigation , title , filteration , likeIcon , delegate}) {
 
     // const lang          = useSelector(state => state.lang.lang);
     // const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
@@ -55,13 +55,13 @@ function Header({navigation , title , filteration , likeIcon}) {
             </View>
 
             <Text style={[styles.textBold , title === i18n.t('selectNewLoc')  ? styles.text_gray : styles.text_White , styles.textSize_16 , styles.textCenter ,
-                    {flex:title === i18n.t('selectLoc') ?1:0  , right : title === i18n.t('home') ? 10 : 0}]}>
+                    {flex:title === i18n.t('selectLoc') || delegate ?1:0  , right : title === i18n.t('home') && delegate ? 30 : title === i18n.t('home') ? 10 : 0}]}>
                 {title}
             </Text>
 
 
             {
-                title === i18n.t('home')  ?
+                title === i18n.t('home') && !delegate  ?
                     <View style={[styles.directionRow]}>
                         <TouchableOpacity onPress={() => navigation.navigate('basket')} >
                             <View style={{marginLeft:15}}>
@@ -129,7 +129,7 @@ function Header({navigation , title , filteration , likeIcon}) {
                             </View>
                             :
 
-                            title !== i18n.t('selectLoc') ?
+                            title !== i18n.t('selectLoc') && !delegate?
                                 <TouchableOpacity onPress={() => navigation.goBack()} >
                                     <Image source={require('../../assets/images/arrow_left.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                                 </TouchableOpacity>

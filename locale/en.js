@@ -1,5 +1,3 @@
-import RestWithdrawal from "../src/components/RestWithdrawal";
-
 const en = {
     'startNow'                  : 'Start now',
     'login'                     : 'Login',
@@ -200,6 +198,20 @@ const en = {
     'handlingWay'               : 'Handling way',
     'deliverySpeed'             : 'Delivery speed',
     'delete'                    : 'Delete',
+    'orders'                    : 'Orders',
+    'comments'                  : 'Comments',
+    'delegateStatus'            : 'Delegate status',
+    'recoverBalance'            : 'Recover a balance',
+    'orderSentToClient'         : 'The order has been delivered to the customer',
+    'orderLocation'             : 'Order location',
+    'desiredPlace'              : 'The desired place to be delivered to',
+    'clientInfo'                : 'Client info',
+    'clientName'                : 'Client name',
+    'finish'                    : 'Finish',
+    'orderHasDelivered'         : 'The order has been delivered',
+    'backToOrders'              : 'Back to orders',
+    'iWillDeliver'              : 'I will deliver this order',
+    'refuseOrder'               : 'Refuse order',
 };
 
 export default en;

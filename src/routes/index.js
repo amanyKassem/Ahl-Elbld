@@ -4,7 +4,7 @@ import { NavigationContainer  } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthStackNavigator } from './AuthStackNavigator'
 import { MainStackNavigator } from './MainStackNavigator'
-import { ProviderStackNavigator } from './ProviderStackNavigator'
+import { DelegateStackNavigator } from './DelegateStackNavigator'
 import {useSelector} from 'react-redux';
 
 
@@ -20,7 +20,7 @@ function renderScreens() {
 		if(userType === 'user')
 			return ( <RootStack.Screen name={'MainStack'} component={MainStackNavigator} /> );
 		else
-			return ( <RootStack.Screen name={'MainStack'} component={ProviderStackNavigator}/> )
+			return ( <RootStack.Screen name={'MainStack'} component={DelegateStackNavigator}/> )
 	}
 	return (<RootStack.Screen name={'AuthStack'} component={AuthStackNavigator}/>)
 }

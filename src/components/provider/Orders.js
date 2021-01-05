@@ -1,19 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
 import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager, ScrollView} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
-import styles from '../../assets/styles'
-import i18n from "../../locale/i18n";
+import styles from '../../../assets/styles'
+import i18n from "../../../locale/i18n";
 import Swiper from 'react-native-swiper';
 import {useSelector, useDispatch} from 'react-redux';
-import Header from '../common/Header';
-import COLORS from "../consts/colors";
+import Header from '../../common/Header';
+import COLORS from "../../consts/colors";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
-function MyOrders({navigation,route}) {
+function Orders({navigation,route}) {
+
 
     // const lang = useSelector(state => state.lang.lang);
     // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
@@ -21,15 +20,15 @@ function MyOrders({navigation,route}) {
     const [active, setActive] = useState(0);
 
     const myOrders =[
-        {id :'0',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner1.png")},
-        {id :'1',name:'اسم الأسرة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner2.png")},
-        {id :'2',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner3.png")},
-        {id :'3',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../assets/images/banner4.png")},
+        {id :'0',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../../assets/images/banner1.png")},
+        {id :'1',name:'اسم الأسرة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../../assets/images/banner2.png")},
+        {id :'2',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../../assets/images/banner3.png")},
+        {id :'3',name:'اسم مقدم الخدمة'  , date:'9/7/2019' , orderNum:'12345', image:require("../../../assets/images/banner4.png")},
     ]
 
     function Item({ name , image , date , orderNum , id , index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('orderDetails', {orderType:active , pathName:'myOrders'})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <View style={[styles.directionRow , {flex:1}]}>
                     <Image source={image} style={[styles.icon60 , styles.Radius_7]} resizeMode={'cover'} />
                     <View style={[styles.paddingHorizontal_10 , {flex:1}]}>
@@ -44,6 +43,7 @@ function MyOrders({navigation,route}) {
             </TouchableOpacity>
         );
     }
+
 
 
     return (
@@ -68,7 +68,7 @@ function MyOrders({navigation,route}) {
                         </ScrollView>
                     </View>
 
-                    <View style={[styles.paddingHorizontal_20 , styles.marginTop_20]}>
+                    <View style={[styles.paddingHorizontal_20 , styles.marginTop_20 , styles.marginBottom_60]}>
                         <FlatList
                             data={myOrders}
                             horizontal={false}
@@ -92,6 +92,6 @@ function MyOrders({navigation,route}) {
     );
 }
 
-export default MyOrders;
+export default Orders;
 
 
