@@ -14,15 +14,19 @@ import {Container, Content, Form, Icon, Input, Item, Label, Toast} from 'native-
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
+import { useDispatch, useSelector } from 'react-redux'
+import {activeAccount} from "../actions";
 import AuthHeader from "../common/AuthHeader";
 
 
 const isIOS = Platform.OS === 'ios';
 
-function ActivationCode({navigation}) {
+function ActivationCode({navigation , route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const auth = useSelector(state => state.auth);
+    const lang = useSelector(state => state.lang.lang);
+    const [spinner, setSpinner] = useState(false);
+    const { token } = route.params;
+    const dispatch = useDispatch();
 
     const [activationCode, setActivationCode] = useState('');
 
@@ -41,18 +45,45 @@ function ActivationCode({navigation}) {
 
         return (
             <TouchableOpacity
-                onPress={() => passReco()} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>
+                onPress={() => onConfirm()} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>
                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('confirm') }</Text>
             </TouchableOpacity>
         );
     }
 
-    function passReco() {
-        navigation.navigate('login')
+    function onConfirm() {
+        if (activationCode == 1122) {
+            setSpinner(true);
+            dispatch(activeAccount(activationCode, lang, token));
+        }
+        else {
+            Toast.show({
+                text        	: i18n.t('codeNotMatch'),
+                type			: "danger",
+                duration    	: 3000,
+                textStyle   	: {
+                    color       	: "white",
+                    fontFamily  	: 'flatRegular',
+                    textAlign   	: 'center'
+                }
+            });
+        }
     }
+
+    function renderLoader(){
+        if (spinner){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
 
     return (
         <Container >
+            {renderLoader()}
             <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100 ]}>

@@ -212,6 +212,13 @@ const ar = {
     'backToOrders'              : 'العودة للطلبات',
     'iWillDeliver'              : 'سأوصل هذا الطلب',
     'refuseOrder'               : 'رفض الطلب',
+    'namereq'                   : 'يجب إدخال رقم الجوال',
+    'categoryRequired'          : 'الرجاء اختيار القسم',
+    'notmatch'                  : 'كلمه المرور غير متطابقه',
+    'phoneValidation'           : 'رقم الهاتف غير صحيح',
+    'emailNotCorrect'           : 'الايميل غير صحيح',
+    'codeNotMatch'              : 'كود التفعيل غير صحيح',
+    'RS'                        : 'ريال',
 };
 
 export default ar;

@@ -34,12 +34,12 @@ function RegisterAs({navigation}) {
 
                         <View style={[styles.directionColumnCenter , styles.paddingHorizontal_25 , styles.marginTop_35]}>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('register' , {userType:'user'})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>
+                            <TouchableOpacity onPress={() => navigation.navigate('register' , {userType:2})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('asUser') }</Text>
                             </TouchableOpacity>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('register' , {userType:'delegate'})} style={[styles.mstrdaBtn , styles.Width_100 , styles.bg_gray , styles.marginBottom_10]}>
+                            <TouchableOpacity onPress={() => navigation.navigate('register' , {userType:3})} style={[styles.mstrdaBtn , styles.Width_100 , styles.bg_gray , styles.marginBottom_10]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('asDelegate') }</Text>
                             </TouchableOpacity>
 

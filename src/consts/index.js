@@ -1,3 +1,3 @@
 export default {
-    url: 'https://opaapp.aait-sa.com/api/',
+    url: 'https://ahlalbalad.aait-sa.com/api/v1/',
 };

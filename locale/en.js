@@ -212,6 +212,13 @@ const en = {
     'backToOrders'              : 'Back to orders',
     'iWillDeliver'              : 'I will deliver this order',
     'refuseOrder'               : 'Refuse order',
+    'namereq'                   : 'Mobile number must be entered',
+    'categoryRequired'          : 'Category is required',
+    'phoneValidation'           : 'The phone number is incorrect',
+    'emailNotCorrect'           : 'email not correct',
+    'notmatch'                  : 'password not match',
+    'codeNotMatch'              : 'Activation code not correct',
+    'RS'                        : 'RS',
 };
 
 export default en;

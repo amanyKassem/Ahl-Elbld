@@ -4,12 +4,13 @@ import {Toast} from "native-base";
 import {AsyncStorage} from "react-native";
 
 
-export const profile = (token) => {
+export const profile = (lang , token) => {
     return (dispatch) => {
         axios({
-            method      : 'POST',
+            method      : 'GET',
             url         : CONST.url + 'profile',
-            headers     : {Authorization: token}
+            params      : { lang },
+            headers     : {Authorization: 'Bearer ' + token}
         }).then(response => {
             const data = response.data;
             dispatch({type: 'profile_data', data})
@@ -17,20 +18,21 @@ export const profile = (token) => {
     }
 };
 
-export const updateProfile = (lang , name , phone ,country_id , avatar , token , navigation ) => {
-    return (dispatch) => {
-        axios({
-            url: CONST.url + 'UpdateProfile',
+export const updateProfile = (lang , name , phone ,email , avatar , token ) => {
+    return async (dispatch) => {
+       await axios({
+            url: CONST.url + 'edit-profile',
             method      : 'POST',
-            headers     : {Authorization: token },
-            data        : { lang ,name , phone ,country_id , avatar }
+            params      : { lang },
+            headers     : {Authorization: 'Bearer ' + token},
+            data        : { name , phone ,email , avatar }
         }).then(response => {
 
             dispatch({type: 'update_profile', data:response.data.data});
 
-            if (response.data.success) {
-                navigation.navigate('profile');
-            }
+            // if (response.data.success) {
+            //     navigation.navigate('profile');
+            // }
 
             Toast.show({
                 text        : response.data.message,
@@ -47,22 +49,29 @@ export const updateProfile = (lang , name , phone ,country_id , avatar , token ,
     }
 }
 
-// export const logout = (lang , token) => {
-//     return (dispatch) => {
-//         AsyncStorage.getItem('deviceID').then(device_id => {
-//             axios({
-//                 url         : CONST.url + 'Logout',
-//                 method      : 'POST',
-//                 headers     : { Authorization: token },
-//                 data        : { lang ,device_id }
-//             }).then(response => {
-//                     AsyncStorage.multiRemove(['token', 'auth', 'profile']);
-//                     dispatch({type: 'logout'})
-//                 }
-//             )
-//         });
-//     }
-// };
+export const changePass = (lang , old_password , current_password , token) => {
+    return async (dispatch) => {
+       await axios({
+            url         : CONST.url + 'edit-password',
+            method      : 'POST',
+            params      : { lang },
+            headers     : {Authorization: 'Bearer ' + token},
+            data        : {old_password , current_password }
+        }).then(response => {
+            Toast.show({
+                text        : response.data.message,
+                type        : response.data.success ? "success" : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'flatRegular',
+                    textAlign   : 'center'
+                }
+            });
+        });
+
+    }
+};
 
 export const logout = (lang , token) => {
     return (dispatch) => {
@@ -70,9 +79,9 @@ export const logout = (lang , token) => {
 
         AsyncStorage.getItem('deviceID').then(device_id => {
             axios({
-                url         : CONST.url + 'Logout',
+                url         : CONST.url + 'logout',
                 method      : 'POST',
-                headers     : { Authorization: token },
+                headers     : {Authorization: 'Bearer ' + token},
                 data        : { lang ,device_id }
             }).then(response => { });
         });

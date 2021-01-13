@@ -11,13 +11,11 @@ import {useSelector} from 'react-redux';
 const RootStack = createStackNavigator();
 
 function renderScreens() {
-	// const auth = useSelector(state => state.auth);
-	const auth = true;
-	const userType = 'user';
+	const auth = useSelector(state => state.auth);
+	const user = useSelector(state =>  state.auth.user != null ? state.auth.user.data : null );
 
-	// if (auth.user !== null) {
-	if (auth) {
-		if(userType === 'user')
+	if (auth.user !== null) {
+		if(user.user_type === 2)
 			return ( <RootStack.Screen name={'MainStack'} component={MainStackNavigator} /> );
 		else
 			return ( <RootStack.Screen name={'MainStack'} component={DelegateStackNavigator}/> )

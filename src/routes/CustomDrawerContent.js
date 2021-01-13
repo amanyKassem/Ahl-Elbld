@@ -15,17 +15,17 @@ const isIOS = Platform.OS === 'ios';
 export default function CustomDrawerContent(props) {
 
     const lang  = useSelector(state => state.lang.lang);
-    // const auth = useSelector(state => state.auth);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
-    // const user  = useSelector(state => state.auth.user ? state.auth.user.data : { avatar: '', name: null});
+    const auth = useSelector(state => state.auth);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const user  = useSelector(state => state.auth.user ? state.auth.user.data : { avatar: '', name: null});
 
 
     const dispatch  = useDispatch();
 
-    // function logoutFunc(){
-    //     dispatch(logout(lang , token));
-    //     dispatch(tempAuth(token));
-    // }
+    function logoutFunc(){
+        dispatch(logout(lang , token));
+        dispatch(tempAuth(token));
+    }
 
     const onShare = async () => {
         try {
@@ -55,9 +55,9 @@ export default function CustomDrawerContent(props) {
 
                 <View style={[styles.flexCenter , {position:'absolute' , top:45 }]}>
                     <TouchableOpacity style={[styles.icon70 , styles.marginBottom_5 , styles.Radius_50 , {overflow:'hidden' , borderWidth:5 , borderColor:'#6f6a6a1a'}]}>
-                        <Image source={require('../../assets/images/image_placeholder.png')} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
+                        <Image source={{uri:user.avatar}} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textBold , styles.text_White , styles.textSize_17, styles.textCenter ]}>أماني قاسم</Text>
+                    <Text style={[styles.textBold , styles.text_White , styles.textSize_17, styles.textCenter ]}>{user.name}</Text>
                 </View>
 
                 <DrawerItem
@@ -304,7 +304,7 @@ export default function CustomDrawerContent(props) {
                             )
                         }
                     }
-                    onPress={() => props.navigation.navigate('logout')}
+                    onPress={() => logoutFunc()}
                 />
 
             </View>

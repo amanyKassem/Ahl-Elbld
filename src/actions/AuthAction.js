@@ -9,7 +9,7 @@ export const userLogin = (phone, password, deviceId, lang, navigation) => {
         dispatch({type: 'login_user'});
 
         axios.post(
-            CONST.url + 'login',
+            CONST.url + 'sign-in',
             {phone, password, lang, device_id: deviceId})
             .then(
                 response => handelLogin(dispatch, response.data , navigation)
@@ -21,26 +21,26 @@ export const userLogin = (phone, password, deviceId, lang, navigation) => {
 };
 
 export const register = (data, navigation) => {
-	return (dispatch) => {
-		AsyncStorage.getItem('deviceID').then(device_id => {
+	return async (dispatch) => {
+		await AsyncStorage.getItem('deviceID').then(device_id => {
+			console.log('token', device_id)
 			axios({
-				url: CONST.url + 'register',
+				url: CONST.url + 'sign-up',
 				method: 'POST',
 				data: {
 					name			    : data.username,
 					phone			    : data.phone,
-					country_id			: data.country,
+					email				: data.mail,
 					password		    : data.password,
-					avatar		    	: data.base64,
-					lang 			    : data.lang,
+					user_type		    : data.userType,
 					device_id
-				}
+				},
+				params: { lang 			    : data.lang },
 			}).then(response => {
 				dispatch({type: 'register', payload: response.data});
 				if (response.data.success){
 					navigation.navigate('activationCode', {
-						sentCode			: response.data.data.code,
-						userId			: response.data.data.user_id,
+						token: response.data.data.token
 					});
 				}
 
@@ -64,22 +64,24 @@ export const register = (data, navigation) => {
 };
 
 
-export const activeAccount = (userId, lang, navigation) => {
+export const activeAccount = (code, lang, token) => {
 	return (dispatch) => {
 		axios({
-			url: CONST.url + 'activeAccount',
+			url: CONST.url + 'activate',
 			method: 'POST',
-			data: {
-				user_id	: userId,
-				lang
+			data: {code},
+			params: { lang },
+			headers: {
+				Authorization: 'Bearer ' + token,
+
 			}
 		}).then(response => {
-			dispatch({type: 'active_account', data: response.data});
 
-			// if (response.data.success){
-			// 	alert('hhaha')
-			// 	navigation.navigate('login' ,{userType:'user'});
-			// }
+			if (response.data.success) {
+				dispatch({type: 'active_account', data: response.data});
+			}
+
+
 
 			Toast.show({
 				text        	: response.data.message,
@@ -96,16 +98,18 @@ export const activeAccount = (userId, lang, navigation) => {
 
 	}
 };
+
 
 export const checkPhone = (phone, lang, navigation) => {
-	return (dispatch) => {
-		axios({
-			url: CONST.url + 'ForgetPassword',
+	return async dispatch => {
+		await axios({
+			url: CONST.url + 'forget-password',
 			method: 'POST',
-			data: { phone, lang }
+			data: { phone },
+			params: { lang },
 		}).then(response => {
 			if (response.data.success)
-				navigation.navigate('changePass', { activeCode: response.data.data.code, id: response.data.data.id });
+				navigation.navigate('changePass', { token: response.data.data.token});
 
 			Toast.show({
 				text        	: response.data.message,
@@ -120,14 +124,19 @@ export const checkPhone = (phone, lang, navigation) => {
 
 		})
 	}
-};
+}
 
-export const resetPassword = (id, password, lang, navigation) => {
-	return (dispatch) => {
-		axios({
-			url: CONST.url + 'ResetPassword',
+export const resetPassword = (password , code , token, lang, navigation) => {
+	return async (dispatch) => {
+		await axios({
+			url: CONST.url + 'reset-password',
 			method: 'POST',
-			data: { id, password, lang }
+			data: { password , code },
+			params: { lang },
+			headers: {
+				Authorization: 'Bearer ' + token,
+
+			}
 		}).then(response => {
 			if (response.data.success)
 				navigation.navigate('login');
@@ -179,10 +188,9 @@ const loginSuccess = (dispatch, data , navigation) => {
 };
 
 const loginFailed = (dispatch, error , navigation) => {
-	if(error.data.code) {
+	if(!error.data.active) {
 		navigation.navigate('activationCode', {
-			sentCode			: error.data.code,
-			userId			: error.data.user_id,
+			token: error.data.token
 		});
 	}
     dispatch({type: 'login_failed', error});

@@ -1,27 +1,52 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager} from "react-native";
+import {View, Text, Image, ActivityIndicator, Dimensions, FlatList, I18nManager} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Swiper from 'react-native-swiper';
-import {useSelector, useDispatch} from 'react-redux';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
-import StarRating from "react-native-star-rating";
+import {useSelector, useDispatch} from 'react-redux';
+import {getAbout} from '../actions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function AboutApp({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const about = useSelector(state => state.about.about)
+    const loader = useSelector(state => state.about.loader)
+
+    const dispatch = useDispatch()
+
+    function fetchData(){
+        dispatch(getAbout(lang))
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , loader]);
+
+    function renderLoader(){
+        if (loader === false){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
 
 
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('aboutApp') } />
@@ -29,12 +54,15 @@ function AboutApp({navigation,route}) {
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden'}]}>
 
                     <Image source={require('../../assets/images/logo.png')} style={[styles.icon110 ,styles.SelfCenter , styles.marginVertical_25 ]} resizeMode={'contain'} />
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ,styles.SelfCenter , styles.textCenter , styles.marginBottom_25 , {lineHeight:24}]}>
-                        أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام
-                        أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام
-                        أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام
-                        أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام أي كلااااااام
-                    </Text>
+
+                    {
+                        about ?
+                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ,styles.SelfCenter , styles.textCenter , styles.marginBottom_25 , {lineHeight:24}]}>
+                                {about.page}
+                            </Text>
+                            :
+                            null
+                    }
 
                 </View>
 

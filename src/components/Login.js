@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState , useEffect , useRef } from "react";
 import {
     View,
     Text,
@@ -18,28 +18,92 @@ import {useSelector, useDispatch} from 'react-redux';
 import {userLogin} from '../actions';
 import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 import AuthHeader from '../common/AuthHeader'
 
 
 const isIOS = Platform.OS === 'ios';
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
+
 
 function Login({navigation}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const auth = useSelector(state => state.auth);
+    const lang = useSelector(state => state.lang.lang);
+    const auth = useSelector(state => state.auth);
 
     const dispatch = useDispatch()
 
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    const [deviceId, setDeviceId] = useState('');
-    const [userId, setUserId] = useState(null);
     const [spinner, setSpinner] = useState(false);
     const [showPass, setShowPass] = useState(false);
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
 
-    // useEffect(() => {
-    //     setTimeout(() => setSpinner(false), 500);
-    // }, [auth]);
+    useEffect(() => {
+        setTimeout(() => registerForPushNotificationsAsync().then(token => setExpoPushToken(token)) , 3000)
+
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log(response);
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
+    }, []);
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+        if (Constants.isDevice) {
+            const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+
+            AsyncStorage.setItem('deviceID', token)
+
+            console.log(token);
+        } else {
+            alert('Must use physical device for Push Notifications');
+        }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        return token;
+    }
+
+    useEffect(() => {
+        setTimeout(() => setSpinner(false), 500);
+    }, [auth]);
+
 
 
     function validate() {
@@ -93,8 +157,8 @@ function Login({navigation}) {
         const err = validate();
 
         if (!err){
-            // setSpinner(true);
-            // dispatch(userLogin(phone, password, deviceId , lang , navigation));
+            setSpinner(true);
+            dispatch(userLogin(phone, password, expoPushToken , lang , navigation));
         }
     }
 
@@ -102,7 +166,7 @@ function Login({navigation}) {
         if (spinner){
             return(
                 <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
-                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
                 </View>
             );
         }
@@ -110,7 +174,7 @@ function Login({navigation}) {
 
     return (
         <Container >
-            {/*{renderLoader()}*/}
+            {renderLoader()}
             <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100]}>

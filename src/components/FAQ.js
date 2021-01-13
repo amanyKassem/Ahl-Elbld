@@ -1,27 +1,24 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager} from "react-native";
+import {View, Text, Image, ActivityIndicator, Dimensions, FlatList, I18nManager} from "react-native";
 import {Container, Content, Icon, Accordion} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Swiper from 'react-native-swiper';
-import {useSelector, useDispatch} from 'react-redux';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
-import StarRating from "react-native-star-rating";
+import {useSelector, useDispatch} from 'react-redux';
+import {getQuestions} from '../actions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function FAQ({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const questions = useSelector(state => state.questions.questions)
+    const loader = useSelector(state => state.questions.loader)
 
-    const dataArray = [
-        { question: "السوال الأول", answer: "اجابه السوال هنحطها هنا من غير مقاطعة" },
-        { question: "السوال الثاني", answer: "اجابه السوال هنحطها هنا من غير مقاطعة" },
-        { question: "السوال الثالث", answer: "اجابه السوال هنحطها هنا من غير مقاطعة" }
-    ];
+    const dispatch = useDispatch();
 
     function _renderHeader(item, expanded) {
         return (
@@ -48,22 +45,54 @@ function FAQ({navigation,route}) {
         );
     }
 
+    function fetchData(){
+        dispatch(getQuestions(lang))
+    }
+
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , loader]);
+
+    function renderLoader(){
+        if (loader === false){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
+
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('faq') } />
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden'}]}>
 
-                    <Accordion
-                        dataArray={dataArray}
-                        animation={true}
-                        expanded={true}
-                        renderHeader={_renderHeader}
-                        renderContent={_renderContent}
-                        style={{borderWidth:0 , width:'100%' , marginTop:25}}
-                    />
+                    {
+                        questions ?
+                            <Accordion
+                                dataArray={questions}
+                                animation={true}
+                                expanded={true}
+                                renderHeader={_renderHeader}
+                                renderContent={_renderContent}
+                                style={{borderWidth:0 , width:'100%' , marginTop:25}}
+                            />
+                            :
+                            null
+                    }
+
 
                 </View>
 

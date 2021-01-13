@@ -14,6 +14,8 @@ import {Container, Content, Form, Icon, Input, Item, Label, Toast} from 'native-
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
+import {useSelector, useDispatch} from 'react-redux';
+import {checkPhone} from '../actions';
 import AuthHeader from "../common/AuthHeader";
 
 
@@ -21,10 +23,12 @@ const isIOS = Platform.OS === 'ios';
 
 function ForgetPassword({navigation}) {
 
-    // const lang = useSelector(state => state.lang.lang);
+    const lang = useSelector(state => state.lang.lang);
     // const auth = useSelector(state => state.auth);
 
     const [phone, setPhone] = useState('');
+    const [spinner, setSpinner] = useState(false);
+    const dispatch = useDispatch()
 
     function renderSubmit() {
         if (phone == '') {
@@ -48,11 +52,23 @@ function ForgetPassword({navigation}) {
     }
 
     function passReco() {
-        navigation.navigate('changePass')
+        setSpinner(true);
+        dispatch(checkPhone(phone, lang, navigation)).then(() => setSpinner(false));
+    }
+
+    function renderLoader(){
+        if (spinner){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
     }
 
     return (
         <Container >
+            {renderLoader()}
             <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100]}>

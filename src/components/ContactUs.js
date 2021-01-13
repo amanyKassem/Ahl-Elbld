@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     Dimensions,
     Linking,
-    I18nManager,
+    ActivityIndicator,
     KeyboardAvoidingView
 } from "react-native";
 import {Container, Content, Form, Icon, Input, Item, Label, Textarea} from 'native-base'
@@ -14,19 +14,21 @@ import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
-import  Modal  from "react-native-modal";
+import {useSelector, useDispatch} from 'react-redux';
+import {getAppInfo, contactUs} from '../actions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function ContactUs({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const appInfo = useSelector(state => state.appInfo.appInfo)
+    const loader = useSelector(state => state.appInfo.loader)
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const dispatch = useDispatch()
 
     const [username, setUsername] = useState('');
 
@@ -35,6 +37,15 @@ function ContactUs({navigation,route}) {
     const [msg, setMsg] = useState('');
 
     function renderSubmit() {
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_20]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
         if (phone == '' || username == '' || msg == '' ) {
             return (
                 <View
@@ -56,12 +67,37 @@ function ContactUs({navigation,route}) {
     }
 
     function onConfirm() {
-        navigation.navigate('home')
+        setIsSubmitted(true);
+        dispatch(contactUs(lang , username , phone , msg)).then(() => {setIsSubmitted(false)});
     }
 
 
+    function fetchData(){
+        dispatch(getAppInfo(lang))
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , loader]);
+
+    function renderLoader(){
+        if (loader === false){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('contactUs') } />
@@ -107,23 +143,25 @@ function ContactUs({navigation,route}) {
 
                     <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_16 ,styles.SelfCenter , styles.marginBottom_25 ]}>{ i18n.t('throughSocial') }</Text>
 
-                    <View style={[styles.directionRowSpace , styles.Width_70 , styles.SelfCenter , styles.marginBottom_40]}>
-                        <TouchableOpacity onPress={() => Linking.openURL('https://wwww.telegram.com')}>
-                            <Image source={require('../../assets/images/telegram.png')} style={[styles.icon33 , styles.Radius_50]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => Linking.openURL('https://wwww.facebook.com')}>
-                            <Image source={require('../../assets/images/facebook.png')} style={[styles.icon33 , styles.Radius_50]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => Linking.openURL('https://wwww.twitter.com')}>
-                            <Image source={require('../../assets/images/twitter.png')} style={[styles.icon33 , styles.Radius_50]} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => Linking.openURL('https://wwww.instagram.com')}>
-                            <Image source={require('../../assets/images/instagram.png')} style={[styles.icon33 , styles.Radius_50]} />
-                        </TouchableOpacity>
-                        {/*<TouchableOpacity onPress={() => Linking.openURL('https://api.whatsapp.com/send?phone='+'01023456789')}>*/}
-                        {/*    <Image source={require('../../assets/images/whatsapp.png')} style={[styles.icon33 , styles.Radius_50]} />*/}
-                        {/*</TouchableOpacity>*/}
-                    </View>
+                    {
+                        appInfo ?
+                            <View style={[styles.directionRowSpace , styles.Width_70 , styles.SelfCenter , styles.marginBottom_40]}>
+                                <TouchableOpacity onPress={() => Linking.openURL(appInfo.telegram)}>
+                                    <Image source={require('../../assets/images/telegram.png')} style={[styles.icon33 , styles.Radius_50]} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => Linking.openURL(appInfo.facebook)}>
+                                    <Image source={require('../../assets/images/facebook.png')} style={[styles.icon33 , styles.Radius_50]} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => Linking.openURL(appInfo.twitter)}>
+                                    <Image source={require('../../assets/images/twitter.png')} style={[styles.icon33 , styles.Radius_50]} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => Linking.openURL(appInfo.instagram)}>
+                                    <Image source={require('../../assets/images/instagram.png')} style={[styles.icon33 , styles.Radius_50]} />
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            null
+                    }
 
 
                 </View>

@@ -5,11 +5,10 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    FlatList,
     I18nManager,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, ActivityIndicator
 } from "react-native";
-import {Container, Content, Form, Icon, Input, Item, Label} from 'native-base'
+import {Container, Content, Form, Icon, Input, Item, Label , Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Header from '../common/Header';
@@ -17,24 +16,33 @@ import COLORS from "../consts/colors";
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import  Modal  from "react-native-modal";
+import {useSelector, useDispatch} from "react-redux";
+import {profile, updateProfile , changePass} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function Profile({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+
+    const userData = useSelector(state => state.profile.user);
+    const userDataLoader = useSelector(state => state.profile.loader);
+    const [spinner, setSpinner] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
     const [base64, setBase64] = useState(null);
     const [userImage, setUserImage] = useState("");
 
-    const [username, setUsername] = useState('أماني قاسم');
+    const [username, setUsername] = useState(userData && userData.name ? userData.name : '');
     const [editName, setEditName] = useState(false);
 
-    const [phone, setPhone] = useState('01234485764');
+    const [phone, setPhone] = useState(userData && userData.phone ? userData.phone : '');
     const [editPhone, setEditPhone] = useState(false);
 
-    const [mail, setMail] = useState('amany@gmail.com');
+    const [mail, setMail] = useState(userData && userData.email ? userData.email : '');
     const [editMail, setEditMail] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
@@ -46,6 +54,21 @@ function Profile({navigation,route}) {
     const [showNewPass, setShowNewPass] = useState(false);
     const [confirmNewPass, setConfirmNewPass] = useState('');
     const [showConPass, setShowConPass] = useState(false);
+
+
+    const dispatch = useDispatch();
+
+    function fetchData(){
+        dispatch(profile(lang, token))
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+        return unsubscribe;
+    }, [navigation , userDataLoader]);
 
     function toggleModal () {
         setShowModal(!showModal);
@@ -95,11 +118,21 @@ function Profile({navigation,route}) {
     }
 
     function onConfirm() {
-        navigation.navigate('home')
+        setSpinner(true);
+        dispatch(updateProfile(lang , username , phone ,mail , base64 , token)).then(() => {setSpinner(false) ; setUserImage(null)});
     }
 
     function renderSubmitPass() {
-        if ([password] == '' || newpass == '' || confirmNewPass == '') {
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginTop_10, styles.marginBottom_10]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        if (password == '' || newpass == '' || confirmNewPass == '') {
             return (
                 <View
                     style={[styles.mstrdaBtn , styles.Width_100  , styles.marginTop_10 , styles.marginBottom_10 , {
@@ -120,77 +153,123 @@ function Profile({navigation,route}) {
     }
 
     function onConfirmPass() {
-        setShowModal(false);
+
+        if (newpass.length < 6){
+            Toast.show({
+                text        : i18n.t('passreq'),
+                type        : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'cairo',
+                    textAlign   : 'center'
+                }
+            });
+            return false
+        }else if(newpass !== confirmNewPass){
+            Toast.show({
+                text        : i18n.t('passError'),
+                type        : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'cairo',
+                    textAlign   : 'center'
+                }
+            });
+            return false
+        } else {
+            setIsSubmitted(true);
+            dispatch(changePass(lang , password , newpass , token)).then(() => {setIsSubmitted(false) ; setShowModal(false)});
+        }
+
+    }
+
+    function renderLoader(){
+        if (spinner){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
     }
 
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('profile') } />
 
-                <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden' , paddingBottom:70}]}>
+                {
+                    userData ?
+                        <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden' , paddingBottom:70}]}>
 
-                    <View style={[styles.directionColumnCenter , styles.marginTop_35]}>
-                        <View style={[styles.icon70 , styles.Radius_50 , styles.borderGray , styles.marginBottom_7 ,{ padding: 7 }]}>
-                            <Image source={userImage ? { uri: userImage } : require('../../assets/images/image_placeholder.png')} style={[styles.Width_100 , styles.heightFull , styles.Radius_50]} resizeMode='cover' />
-                            <TouchableOpacity onPress={_pickImage} style={{position:'absolute' , bottom:0 , zIndex:1 , right:0}}>
-                                <Image source={require('../../assets/images/camera.png')} style={[styles.icon25]} resizeMode='contain' />
+                            <View style={[styles.directionColumnCenter , styles.marginTop_35]}>
+                                <View style={[styles.icon70 , styles.Radius_50 , styles.borderGray , styles.marginBottom_7 ,{ padding: 7 }]}>
+                                    <Image source= {userImage? {uri:userImage} : {uri:userData.avatar}} style={[styles.Width_100 , styles.heightFull , styles.Radius_50]} resizeMode='cover' />
+                                    <TouchableOpacity onPress={_pickImage} style={{position:'absolute' , bottom:0 , zIndex:1 , right:0}}>
+                                        <Image source={require('../../assets/images/camera.png')} style={[styles.icon25]} resizeMode='contain' />
+                                    </TouchableOpacity>
+                                </View>
+                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , styles.marginBottom_5]}>{userData.name}</Text>
+                            </View>
+
+                            <KeyboardAvoidingView style={[styles.Width_100 , styles.marginTop_35 , styles.marginBottom_25]}>
+                                <Form style={[styles.Width_100 , styles.flexCenter]}>
+
+                                    <Item style={[styles.item]}>
+                                        <Label style={[styles.label]}>{ i18n.t('username') }</Label>
+                                        <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:username ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:username ? '#fff' : '#eee'}]}
+                                               onChangeText={(username) => setUsername(username)}
+                                               value={username}
+                                               editable={editName}
+                                        />
+                                        <TouchableOpacity onPress={() =>setEditName(!editName)} style={{position:'absolute' , right:10 , bottom:10}}>
+                                            <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon25]} resizeMode='contain' />
+                                        </TouchableOpacity>
+                                    </Item>
+
+                                    <Item style={[styles.item]}>
+                                        <Label style={[styles.label]}>{ i18n.t('phone') }</Label>
+                                        <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:phone ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:phone ? '#fff' : '#eee'}]}
+                                               onChangeText={(phone) => setPhone(phone)}
+                                               value={phone}
+                                               editable={editPhone}
+                                        />
+                                        <TouchableOpacity onPress={() =>setEditPhone(!editPhone)} style={{position:'absolute' , right:10 , bottom:10}}>
+                                            <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon25]} resizeMode='contain' />
+                                        </TouchableOpacity>
+                                    </Item>
+
+                                    <Item style={[styles.item]}>
+                                        <Label style={[styles.label]}>{ i18n.t('mail') }</Label>
+                                        <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:mail ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:mail ? '#fff' : '#eee'}]}
+                                               onChangeText={(mail) => setMail(mail)}
+                                               value={mail}
+                                               keyboardType={'email-address'}
+                                               editable={editMail}
+                                        />
+                                        <TouchableOpacity onPress={() =>setEditMail(!editMail)} style={{position:'absolute' , right:10 , bottom:10}}>
+                                            <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon25]} resizeMode='contain' />
+                                        </TouchableOpacity>
+                                    </Item>
+
+                                </Form>
+                            </KeyboardAvoidingView>
+
+                            <TouchableOpacity onPress={toggleModal} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10 ]}>
+                                <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('changePass') }</Text>
                             </TouchableOpacity>
+
+                            {renderSubmit()}
+
                         </View>
-                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , styles.marginBottom_5]}>أماني قاسم</Text>
-                    </View>
+                        :
+                        null
+                }
 
-                    <KeyboardAvoidingView style={[styles.Width_100 , styles.marginTop_35 , styles.marginBottom_25]}>
-                        <Form style={[styles.Width_100 , styles.flexCenter]}>
-
-                            <Item style={[styles.item]}>
-                                <Label style={[styles.label]}>{ i18n.t('username') }</Label>
-                                <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:username ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:username ? '#fff' : '#eee'}]}
-                                       onChangeText={(username) => setUsername(username)}
-                                       value={username}
-                                       editable={editName}
-                                />
-                                <TouchableOpacity onPress={() =>setEditName(!editName)} style={{position:'absolute' , right:10 , bottom:10}}>
-                                    <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon25]} resizeMode='contain' />
-                                </TouchableOpacity>
-                            </Item>
-
-                            <Item style={[styles.item]}>
-                                <Label style={[styles.label]}>{ i18n.t('phone') }</Label>
-                                <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:phone ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:phone ? '#fff' : '#eee'}]}
-                                       onChangeText={(phone) => setPhone(phone)}
-                                       value={phone}
-                                       editable={editPhone}
-                                />
-                                <TouchableOpacity onPress={() =>setEditPhone(!editPhone)} style={{position:'absolute' , right:10 , bottom:10}}>
-                                    <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon25]} resizeMode='contain' />
-                                </TouchableOpacity>
-                            </Item>
-
-                            <Item style={[styles.item]}>
-                                <Label style={[styles.label]}>{ i18n.t('mail') }</Label>
-                                <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:mail ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:mail ? '#fff' : '#eee'}]}
-                                       onChangeText={(mail) => setMail(mail)}
-                                       value={mail}
-                                       keyboardType={'email-address'}
-                                       editable={editMail}
-                                />
-                                <TouchableOpacity onPress={() =>setEditMail(!editMail)} style={{position:'absolute' , right:10 , bottom:10}}>
-                                    <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon25]} resizeMode='contain' />
-                                </TouchableOpacity>
-                            </Item>
-
-                        </Form>
-                    </KeyboardAvoidingView>
-
-                    <TouchableOpacity onPress={toggleModal} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10 ]}>
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('changePass') }</Text>
-                    </TouchableOpacity>
-
-                    {renderSubmit()}
-
-                </View>
                 <Modal
                     onBackdropPress                 ={toggleModal}
                     onBackButtonPress               = {toggleModal}

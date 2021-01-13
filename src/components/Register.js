@@ -15,36 +15,63 @@ import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
 import AuthHeader from "../common/AuthHeader";
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from "expo-permissions";
-import RNPickerSelect from 'react-native-picker-select';
+import {useDispatch, useSelector} from "react-redux";
+import {checkPhone, register} from "../actions";
 
 
 const isIOS = Platform.OS === 'ios';
 
 function Register({navigation , route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const auth = useSelector(state => state.auth);
+    const lang = useSelector(state => state.lang.lang);
+    const [spinner, setSpinner] = useState(false);
 
     const userType = route.params.userType;
+    const dispatch = useDispatch();
 
 
     const [phone, setPhone] = useState('');
     const [username, setUsername] = useState('');
     const [mail, setMail] = useState('');
-    const [plateNumbers, setPlateNumbers] = useState('');
     const [password, setPassword] = useState('');
-    const [nationality, setNationality] = useState('');
-    const [idNum, setIdName] = useState('');
     const [showPass, setShowPass] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
 
-    const [licenseImg, setLisenceImg] = useState('');
-    const [lisenceBase64, setLisenceBase64] = useState('');
 
-    const [idImg, setIdImg] = useState('');
-    const [idBase64, setIdBase64] = useState('');
+    const validate = () => {
+        let isError         = false;
+        let msg             = '';
+
+        if (username.length <= 0) {
+            isError     = true;
+            msg         = i18n.t('name');
+        } else if (phone.length <= 0 || phone.length !== 10) {
+            isError     = true;
+            msg         = i18n.t('phoneValidation');
+        } else if (phone.length <= 0) {
+            isError     = true;
+            msg         = i18n.t('namereq');
+        } else if (password.length < 6){
+            isError     = true;
+            msg         = i18n.t('passreq');
+        }
+
+        if (msg !== '') {
+            Toast.show({
+                text        : msg,
+                type        : "danger",
+                duration    : 3000,
+                textStyle   	: {
+                    color       	: "white",
+                    fontFamily  	: 'cairo',
+                    textAlign   	: 'center'
+                }
+            });
+        }
+
+        return isError;
+    };
+
 
     function renderSubmit() {
         if (phone == '' || username == '' || mail == '' || password == '' || !isChecked) {
@@ -68,40 +95,29 @@ function Register({navigation , route}) {
     }
 
     function onConfirm() {
-        navigation.navigate('activationCode')
+        const err = validate();
+
+        if (!err){
+            setSpinner(true);
+            const data = { username, phone, mail, password , userType, lang };
+            dispatch(register(data, navigation)).then(() => setSpinner(false));
+        }
     }
 
-    const askPermissionsAsync = async () => {
-        await Permissions.askAsync(Permissions.CAMERA);
-        await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-    };
-
-    const _pickImage = async (type) => {
-
-        askPermissionsAsync();
-
-        let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            aspect: [4, 3],
-            base64: true
-        });
-
-        if (!result.cancelled) {
-
-            if(type === 'licenseImg'){
-                setLisenceImg(result.uri.split('/').pop());
-                setLisenceBase64(result.base64);
-            } else if(type === 'idImg'){
-                setIdImg(result.uri.split('/').pop());
-                setIdBase64(result.base64);
-            }
-
+    function renderLoader(){
+        if (spinner){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
         }
-    };
+    }
+
 
     return (
         <Container >
+            {renderLoader()}
             <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100]}>
@@ -115,7 +131,7 @@ function Register({navigation , route}) {
                                 <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                                     <Item style={[styles.item]}>
-                                        <Label style={[styles.label]}>{ userType === 'user' ? i18n.t('username') : i18n.t('delegateName') }</Label>
+                                        <Label style={[styles.label]}>{ i18n.t('username') }</Label>
                                         <Input style={[styles.input]}
                                                onChangeText={(username) => setUsername(username)}
                                         />
@@ -139,96 +155,6 @@ function Register({navigation , route}) {
                                         />
 
                                     </Item>
-
-                                    {/*{*/}
-                                    {/*    userType === 'delegate' ?*/}
-                                    {/*        <View style={[styles.Width_100]}>*/}
-                                    {/*            <Item style={[styles.item]}>*/}
-                                    {/*                <Label style={[styles.label]}>{ i18n.t('idNum') }</Label>*/}
-                                    {/*                <Input style={[styles.input]}*/}
-                                    {/*                       onChangeText={(idNum) => setIdName(idNum)}*/}
-                                    {/*                       keyboardType={'number-pad'}*/}
-                                    {/*                />*/}
-
-                                    {/*            </Item>*/}
-
-                                    {/*            <Item style={[styles.item]}>*/}
-                                    {/*                <Label style={[styles.label]}>{ i18n.t('licenseImg') }</Label>*/}
-                                    {/*                <Input style={[styles.input , {paddingRight:35}]}*/}
-                                    {/*                       value={licenseImg}*/}
-                                    {/*                       disabled={true}*/}
-                                    {/*                />*/}
-                                    {/*                <TouchableOpacity onPress={() => _pickImage('licenseImg')} style={[{position:'absolute' , right:10  , bottom:15}]}>*/}
-                                    {/*                    <Icon type={'FontAwesome'} name={"camera"}*/}
-                                    {/*                          style={[styles.textSize_13,styles.text_gray]} />*/}
-                                    {/*                </TouchableOpacity>*/}
-
-                                    {/*            </Item>*/}
-
-                                    {/*            <Item style={[styles.item]}>*/}
-                                    {/*                <Label style={[styles.label]}>{ i18n.t('idImg') }</Label>*/}
-                                    {/*                <Input style={[styles.input , {paddingRight:35}]}*/}
-                                    {/*                       value={idImg}*/}
-                                    {/*                       disabled={true}*/}
-                                    {/*                />*/}
-                                    {/*                <TouchableOpacity onPress={() => _pickImage('idImg')} style={[{position:'absolute' , right:10  , bottom:15}]}>*/}
-                                    {/*                    <Icon type={'FontAwesome'} name={"camera"}*/}
-                                    {/*                          style={[styles.textSize_13,styles.text_gray]} />*/}
-                                    {/*                </TouchableOpacity>*/}
-
-                                    {/*            </Item>*/}
-
-                                    {/*            <Item style={[styles.item , styles.marginBottom_40]}>*/}
-                                    {/*                <Label style={[styles.label]}>{ i18n.t('plateNumbers') }</Label>*/}
-                                    {/*                <Input style={[styles.input , {paddingRight:35}]}*/}
-                                    {/*                       keyboardType={'number-pad'}*/}
-                                    {/*                       onChangeText={(plateNumbers) => setPlateNumbers(plateNumbers)}*/}
-                                    {/*                />*/}
-
-                                    {/*            </Item>*/}
-
-                                    {/*            <View style={[styles.input , styles.flexCenter, styles.marginBottom_20 , styles.Width_100 , {borderTopRightRadius:20 , borderTopLeftRadius:0 , paddingLeft:7}]}>*/}
-                                    {/*                <Label style={[styles.label, { top:-20 , left:0}]}>{ i18n.t('nationality') }</Label>*/}
-
-                                    {/*                <RNPickerSelect*/}
-                                    {/*                    style={{*/}
-                                    {/*                        inputAndroid: {*/}
-                                    {/*                            fontFamily: 'flatRegular',*/}
-                                    {/*                            color:COLORS.gray,*/}
-                                    {/*                            textAlign           : I18nManager.isRTL ? 'right' : 'left',*/}
-                                    {/*                            fontSize            : 14,*/}
-                                    {/*                            top:-12,*/}
-                                    {/*                        },*/}
-                                    {/*                        inputIOS: {*/}
-                                    {/*                            fontFamily: 'flatRegular',*/}
-                                    {/*                            color:COLORS.gray,*/}
-                                    {/*                            alignSelf:'flex-start',*/}
-                                    {/*                            textAlign           : I18nManager.isRTL ? 'right' : 'left',*/}
-                                    {/*                            fontSize            : 14,*/}
-                                    {/*                            top:-12,*/}
-                                    {/*                        },*/}
-                                    {/*                    }}*/}
-                                    {/*                    placeholder={{*/}
-                                    {/*                        // label: i18n.t('nationality') ,*/}
-                                    {/*                    }}*/}
-                                    {/*                    onValueChange={(nationality) => setNationality(nationality)}*/}
-                                    {/*                    items={[*/}
-                                    {/*                        { label: 'مصري', value: 'Egyptian' },*/}
-                                    {/*                        { label: 'امريكي', value: 'American' },*/}
-                                    {/*                    ]}*/}
-                                    {/*                    Icon={() => {*/}
-                                    {/*                        return <Icon type={'AntDesign'} name={"down"}*/}
-                                    {/*                                     style={[styles.textSize_14,styles.text_gray , {top:7 , right:-5}]} />*/}
-                                    {/*                    }}*/}
-                                    {/*                />*/}
-                                    {/*            </View>*/}
-
-
-                                    {/*        </View>*/}
-                                    {/*        :*/}
-                                    {/*        null*/}
-                                    {/*}*/}
-
 
 
                                     <Item style={[styles.item]}>

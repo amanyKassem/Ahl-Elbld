@@ -13,16 +13,20 @@ import {
 import {Container, Content, Form, Icon, Input, Item, Label, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
+import {useDispatch, useSelector} from "react-redux";
+import {checkPhone, resetPassword} from "../actions";
 import COLORS from "../consts/colors";
 import AuthHeader from "../common/AuthHeader";
 
 
 const isIOS = Platform.OS === 'ios';
 
-function ChangePass({navigation}) {
+function ChangePass({navigation , route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const auth = useSelector(state => state.auth);
+    const lang      = useSelector(state => state.lang.lang);
+    const dispatch  = useDispatch();
+    const { token }                     = route.params;
+    const [spinner, setSpinner] = useState(false);
 
     const [code, setCode] = useState('');
     const [newpass, setNewpass] = useState('');
@@ -77,12 +81,24 @@ function ChangePass({navigation}) {
             });
             return false
         } else {
-            navigation.navigate('login')
+            setSpinner(true);
+            dispatch(resetPassword(newpass , code , token, lang, navigation)).then(() => setSpinner(false));
+        }
+    }
+
+    function renderLoader(){
+        if (spinner){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
         }
     }
 
     return (
         <Container >
+            {renderLoader()}
             <ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100]}>
