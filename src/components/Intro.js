@@ -15,6 +15,8 @@ import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
 import SwiperFlatList from 'react-native-swiper-flatlist';
+import {useSelector, useDispatch} from 'react-redux';
+import {getIntro} from '../actions';
 
 
 const isIOS = Platform.OS === 'ios';
@@ -23,14 +25,42 @@ const IS_IPHONE_X 	= (height === 812 || height === 896) && Platform.OS === 'ios'
 
 function Intro({navigation}) {
 
-    const intro = [
-        {image:require('../../assets/images/intro_one.png') , title:'العنوان يابا' , details:'صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو '},
-        {image:require('../../assets/images/intro_two.png') , title:'العنوان يابا' , details:'صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو '},
-        {image:require('../../assets/images/intro_three.png') , title:'العنوان يابا' , details:'صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو صباح الخير ياسطااااا دي الانتروو '},
-    ]
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const intro = useSelector(state => state.intro.intro)
+    const loader = useSelector(state => state.intro.loader)
+
+    const dispatch = useDispatch();
+
+    function fetchData(){
+        dispatch(getIntro(lang , token))
+    }
+
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , loader]);
+
+    function renderLoader(){
+        if (loader === false){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
+
 
     return (
         <Container >
+            {renderLoader()}
             {/*<ImageBackground source={require('../../assets/images/splash_bg.png')} resizeMode={'cover'} style={styles.imageBackground}>*/}
                 <Content contentContainerStyle={[styles.bgFullWidth]}>
                     <View style={[styles.bgFullWidth, styles.Width_100]}>
@@ -45,7 +75,7 @@ function Intro({navigation}) {
                             {
                                 intro.map((intr, i) => (
                                     <View style={[styles.heightFull , {width}]} key={i}>
-                                        <Image source={intr.image} style={[{width , height:'100%'}]} resizeMode={'cover'} />
+                                        <Image source={{uri:intr.image}} style={[{width , height:'100%'}]} resizeMode={'cover'} />
                                         <View style={[styles.wrapText , IS_IPHONE_X ? styles.marginTop_120 : null]}>
                                             <Text style={[styles.text_black , styles.textBold , styles.textSize_18 , styles.textCenter]}>{intr.title}</Text>
                                             <Text numberOfLines={4} style={[styles.text_gray , styles.textRegular , styles.textSize_14 , styles.marginTop_10 , styles.textCenter , {lineHeight:24}]}> {intr.details} </Text>

@@ -7,6 +7,8 @@ import policy from './PolicyReducer';
 import wallet from './WalletReducer';
 import appInfo from './AppInfoReducer';
 import questions from './QuestionsReducer';
+import notifications from './NotificationsReducer';
+import intro from './IntroReducer';
 
 export default combineReducers({
     lang,
@@ -17,4 +19,6 @@ export default combineReducers({
     wallet,
     appInfo,
     questions,
+    notifications,
+    intro,
 });

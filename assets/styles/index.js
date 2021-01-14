@@ -803,6 +803,10 @@ const styles = ({
         width               : 17,
         height              : 17,
     },
+    icon30 : {
+        width               : 30,
+        height              : 30,
+    },
     icon33 : {
         width               : 33,
         height              : 33,

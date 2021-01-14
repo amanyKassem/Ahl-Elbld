@@ -13,3 +13,15 @@ export const getAbout = (lang , token) => {
         });
     }
 };
+
+export const getTerms = (lang , token) => {
+    return (dispatch) => {
+        axios({
+            url         : CONST.url + 'terms',
+            method      : 'GET',
+            params      : { lang },
+        }).then(response => {
+            dispatch({type: 'getTerms', payload: response.data});
+        });
+    }
+};

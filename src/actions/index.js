@@ -7,3 +7,5 @@ export * from './WalletAction';
 export * from './AppInfoAction';
 export * from './ContactUsAction';
 export * from './QuestionsAction';
+export * from './NotificationsAction';
+export * from './IntroAction';

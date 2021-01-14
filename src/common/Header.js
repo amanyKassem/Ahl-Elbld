@@ -36,7 +36,7 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
 
             <View style={[styles.directionRow]}>
                 {
-                    title !== i18n.t('selectLoc') ?
+                    title !== i18n.t('selectLoc') && title !== i18n.t('terms') ?
                         <TouchableOpacity onPress={() => navigation.openDrawer()} style={{marginRight:15}}>
                             <Image source={require('../../assets/images/menu.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                         </TouchableOpacity>
@@ -45,8 +45,8 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
                 }
                 {
                     title === i18n.t('home') ?
-                        <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:15}}>
-                            <Image source={require('../../assets/images/notification_non_active.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
+                        <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={[styles.icon30 , {marginRight:15 , padding:5}]}>
+                            <Image source={require('../../assets/images/notification_non_active.png')} style={[styles.transform , styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
                         </TouchableOpacity>
                         :
                         null

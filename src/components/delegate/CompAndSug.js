@@ -7,26 +7,26 @@ import {
     Dimensions,
     Linking,
     I18nManager,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, ActivityIndicator
 } from "react-native";
 import {Container, Content, Form, Icon, Input, Item, Label, Textarea} from 'native-base'
 import styles from '../../../assets/styles'
 import i18n from "../../../locale/i18n";
 import Header from '../../common/Header';
 import COLORS from "../../consts/colors";
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
-import  Modal  from "react-native-modal";
+import {useSelector, useDispatch} from 'react-redux';
+import {sendComplaint} from '../../actions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function CompAndSug({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const dispatch = useDispatch()
 
     const [username, setUsername] = useState('');
 
@@ -37,6 +37,16 @@ function CompAndSug({navigation,route}) {
     const [msg, setMsg] = useState('');
 
     function renderSubmit() {
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_20]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+
         if (mail == '' || username == '' || msg == '' || subject == '' ) {
             return (
                 <View
@@ -58,7 +68,8 @@ function CompAndSug({navigation,route}) {
     }
 
     function onConfirm() {
-        navigation.navigate('home')
+        setIsSubmitted(true);
+        dispatch(sendComplaint(lang , username , mail , subject , msg , token)).then(() => {setIsSubmitted(false)});
     }
 
 

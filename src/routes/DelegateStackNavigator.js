@@ -11,26 +11,26 @@ import {useDispatch, useSelector} from "react-redux";
 import {logout, tempAuth} from '../actions';
 
 
-import SelectLoc 				        from "../components/provider/SelectLoc";
-import Home                             from "../components/provider/Home";
-import Profile 					        from "../components/provider/Profile";
-import NewLocation 				        from "../components/provider/NewLocation";
-import Orders 				            from "../components/provider/Orders";
-import Comments 				        from "../components/provider/Comments";
-import AboutApp                         from "../components/provider/AboutApp";
-import AppPolicy                        from "../components/provider/AppPolicy";
-import ContactUs                        from "../components/provider/ContactUs";
-import CompAndSug                       from "../components/provider/CompAndSug";
-import Wallet                           from "../components/provider/Wallet";
-import OrderDetails                     from "../components/provider/OrderDetails";
-import GetLocation                      from "../components/provider/GetLocation";
-import OrderDeliveredSuccessfully       from "../components/provider/OrderDeliveredSuccessfully";
-import SpecialOrderDetails              from "../components/provider/SpecialOrderDetails";
-import NormalOrderDetails               from "../components/provider/NormalOrderDetails";
-import Notifications                    from "../components/provider/Notifications";
-import Recharge                         from "../components/provider/Recharge";
-import BankTransfer                     from "../components/provider/BankTransfer";
-import Settings                         from "../components/provider/Settings";
+import SelectLoc 				        from "../components/delegate/SelectLoc";
+import Home                             from "../components/delegate/Home";
+import Profile 					        from "../components/delegate/Profile";
+import NewLocation 				        from "../components/delegate/NewLocation";
+import Orders 				            from "../components/delegate/Orders";
+import Comments 				        from "../components/delegate/Comments";
+import AboutApp                         from "../components/delegate/AboutApp";
+import AppPolicy                        from "../components/delegate/AppPolicy";
+import ContactUs                        from "../components/delegate/ContactUs";
+import CompAndSug                       from "../components/delegate/CompAndSug";
+import Wallet                           from "../components/delegate/Wallet";
+import OrderDetails                     from "../components/delegate/OrderDetails";
+import GetLocation                      from "../components/delegate/GetLocation";
+import OrderDeliveredSuccessfully       from "../components/delegate/OrderDeliveredSuccessfully";
+import SpecialOrderDetails              from "../components/delegate/SpecialOrderDetails";
+import NormalOrderDetails               from "../components/delegate/NormalOrderDetails";
+import Notifications                    from "../components/delegate/Notifications";
+import Recharge                         from "../components/delegate/Recharge";
+import BankTransfer                     from "../components/delegate/BankTransfer";
+import Settings                         from "../components/delegate/Settings";
 
 
 const MainStack  	= createStackNavigator();
