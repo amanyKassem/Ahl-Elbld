@@ -9,6 +9,8 @@ import appInfo from './AppInfoReducer';
 import questions from './QuestionsReducer';
 import notifications from './NotificationsReducer';
 import intro from './IntroReducer';
+import banners from './BannersReducer';
+import categories from './CategoriesReducer';
 
 export default combineReducers({
     lang,
@@ -21,4 +23,6 @@ export default combineReducers({
     questions,
     notifications,
     intro,
+    banners,
+    categories,
 });

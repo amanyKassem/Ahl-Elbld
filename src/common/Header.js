@@ -119,7 +119,7 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
                             <View style={[styles.directionRow]}>
 
                                 <TouchableOpacity >
-                                    <Icon style={[styles.text_White, styles.textSize_20]} type="AntDesign" name={ 'heart' } />
+                                    <Icon style={[likeIcon ? styles.text_red : styles.text_White, styles.textSize_20]} type="AntDesign" name={ 'heart' } />
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => navigation.goBack()} style={{marginLeft:10}} >

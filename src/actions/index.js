@@ -9,3 +9,5 @@ export * from './ContactUsAction';
 export * from './QuestionsAction';
 export * from './NotificationsAction';
 export * from './IntroAction';
+export * from './BannersAction';
+export * from './CategoriesAction';
