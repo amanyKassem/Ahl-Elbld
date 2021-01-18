@@ -115,7 +115,7 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
                         </View>
                         :
 
-                        title !== i18n.t('selectLoc') && likeIcon ?
+                        title === i18n.t('providerDetails') ||  title ===  i18n.t('details')  ?
                             <View style={[styles.directionRow]}>
 
                                 <TouchableOpacity >

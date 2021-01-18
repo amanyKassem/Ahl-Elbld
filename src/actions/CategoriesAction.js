@@ -3,8 +3,8 @@ import CONST from "../consts";
 
 
 export const getCategories = (lang) => {
-    return (dispatch) => {
-        axios({
+    return async (dispatch) => {
+        await axios({
             url         : CONST.url + 'categories',
             method      : 'GET',
             params      : { lang },
@@ -40,3 +40,4 @@ export const getProviderDetails = (lang , id) => {
         });
     }
 };
+

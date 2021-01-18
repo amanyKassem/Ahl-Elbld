@@ -219,6 +219,9 @@ const ar = {
     'emailNotCorrect'           : 'الايميل غير صحيح',
     'codeNotMatch'              : 'كود التفعيل غير صحيح',
     'RS'                        : 'ريال',
+    'banks'                     : 'البنوك',
+    'soon'                      : 'قريبا',
+    'hwalaImg'                  : 'صورة الحوالة',
 };
 
 export default ar;

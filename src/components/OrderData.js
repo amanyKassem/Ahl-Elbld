@@ -28,6 +28,7 @@ function OrderData({navigation,route}) {
 
     // const lang = useSelector(state => state.lang.lang);
     // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const {type} = route.params;
     const [deliveryTime, setDeliveryTime] = useState('');
     const [payType, setPayType] = useState('0');
     const [cityName, setCityName]       = useState('');
@@ -118,46 +119,58 @@ function OrderData({navigation,route}) {
 
                             </Item>
 
-                            <Item style={[styles.item]}>
-                                <Label style={[styles.label]}>{ i18n.t('banquetDay') }</Label>
-                                <Input style={[styles.input , {paddingRight:35 , borderTopLeftRadius: 5 , borderTopRightRadius: 5 , borderRadius: 5}]}
-                                       value={date}
-                                       disabled={true}
-                                />
-                                <TouchableOpacity onPress={showDatePicker} style={[{position:'absolute' , right:10  , bottom:13}]}>
-                                    <Icon type={'AntDesign'} name={"calendar"}
-                                          style={[styles.textSize_18,styles.text_mstarda]} />
-                                </TouchableOpacity>
 
-                                <DateTimePickerModal
-                                    isVisible={isDatePickerVisible}
-                                    mode="date"
-                                    onConfirm={handleConfirmDate}
-                                    onCancel={hideDatePicker}
-                                />
+                            {
+                                type === 'meals'?
 
-                            </Item>
+                                    <View style={[styles.Width_100]}>
+                                        <Item style={[styles.item]}>
+                                            <Label style={[styles.label]}>{ i18n.t('banquetDay') }</Label>
+                                            <Input style={[styles.input , {paddingRight:35 , borderTopLeftRadius: 5 , borderTopRightRadius: 5 , borderRadius: 5}]}
+                                                   value={date}
+                                                   disabled={true}
+                                            />
+                                            <TouchableOpacity onPress={showDatePicker} style={[{position:'absolute' , right:10  , bottom:13}]}>
+                                                <Icon type={'AntDesign'} name={"calendar"}
+                                                      style={[styles.textSize_18,styles.text_mstarda]} />
+                                            </TouchableOpacity>
 
-                            <Item style={[styles.item]}>
-                                <Label style={[styles.label]}>{ i18n.t('banquetTime') }</Label>
-                                <Input style={[styles.input , {paddingRight:35 , borderTopLeftRadius: 5 , borderTopRightRadius: 5 , borderRadius: 5}]}
-                                       value={time}
-                                       disabled={true}
-                                />
-                                <TouchableOpacity onPress={showTimePicker} style={[{position:'absolute' , right:10  , bottom:13}]}>
-                                    <Icon type={'AntDesign'} name={"clockcircleo"}
-                                          style={[styles.textSize_18,styles.text_mstarda]} />
-                                </TouchableOpacity>
+                                            <DateTimePickerModal
+                                                isVisible={isDatePickerVisible}
+                                                mode="date"
+                                                onConfirm={handleConfirmDate}
+                                                onCancel={hideDatePicker}
+                                            />
 
-                                <DateTimePickerModal
-                                    isVisible={isTimePickerVisible}
-                                    mode="time"
-                                    date={new Date()}
-                                    onConfirm={handleConfirmTime}
-                                    onCancel={hideTimePicker}
-                                />
+                                        </Item>
 
-                            </Item>
+                                        <Item style={[styles.item]}>
+                                            <Label style={[styles.label]}>{ i18n.t('banquetTime') }</Label>
+                                            <Input style={[styles.input , {paddingRight:35 , borderTopLeftRadius: 5 , borderTopRightRadius: 5 , borderRadius: 5}]}
+                                                   value={time}
+                                                   disabled={true}
+                                            />
+                                            <TouchableOpacity onPress={showTimePicker} style={[{position:'absolute' , right:10  , bottom:13}]}>
+                                                <Icon type={'AntDesign'} name={"clockcircleo"}
+                                                      style={[styles.textSize_18,styles.text_mstarda]} />
+                                            </TouchableOpacity>
+
+                                            <DateTimePickerModal
+                                                isVisible={isTimePickerVisible}
+                                                mode="time"
+                                                date={new Date()}
+                                                onConfirm={handleConfirmTime}
+                                                onCancel={hideTimePicker}
+                                            />
+
+                                        </Item>
+                                    </View>
+                                    :
+                                    null
+
+                            }
+
+
 
                             <Item style={[styles.item]}>
                                 <Label style={[styles.label]}>{ i18n.t('deliveryTime') }</Label>

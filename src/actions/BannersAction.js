@@ -3,8 +3,8 @@ import CONST from "../consts";
 
 
 export const getBanners = (lang) => {
-    return (dispatch) => {
-        axios({
+    return async (dispatch) => {
+        await axios({
             url         : CONST.url + 'banners',
             method      : 'GET',
             params      : { lang },

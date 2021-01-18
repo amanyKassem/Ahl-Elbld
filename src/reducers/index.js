@@ -11,6 +11,12 @@ import notifications from './NotificationsReducer';
 import intro from './IntroReducer';
 import banners from './BannersReducer';
 import categories from './CategoriesReducer';
+import providerProducts from './ProviderProductsReducer';
+import product from './ProductReducer';
+import cart from './CartReducer';
+import banks from './BanksReducer';
+import offers from './OffersReducer';
+import favourites from './FavouritesReducer';
 
 export default combineReducers({
     lang,
@@ -25,4 +31,10 @@ export default combineReducers({
     intro,
     banners,
     categories,
+    providerProducts,
+    product,
+    cart,
+    banks,
+    offers,
+    favourites,
 });

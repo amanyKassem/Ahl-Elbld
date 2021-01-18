@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager, ActivityIndicator} from "react-native";
 import {Container, Content, Form, Icon, Input, Item, Label} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -9,33 +9,39 @@ import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import StarRating from "react-native-star-rating";
 import  Modal  from "react-native-modal";
+import {useIsFocused} from "@react-navigation/native";
+import {getOffers , getOfferProvider} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function Offers({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const offers = useSelector(state => state.offers.offers);
+    const offerProvider = useSelector(state => state.offers.offerProvider);
+    const [screenLoader , setScreenLoader ] = useState(true);
     const [showModal, setShowModal] = useState(false);
 
-    const offers =[
-        {id :'0',image:require("../../assets/images/banner_home.png")},
-        {id :'1',image:require("../../assets/images/banner_red.png")},
-        {id :'2',image:require("../../assets/images/banner_home.png")},
-        {id :'3',image:require("../../assets/images/banner_red.png")},
-    ]
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
 
-    const myOrders =[
-        {id :'0',name:'اسم مقدم الخدمة'  , location:'الرياض - السعودية' , image:require("../../assets/images/banner1.png")},
-        {id :'1',name:'اسم مقدم الخدمة' , location:'الرياض - السعودية' , image:require("../../assets/images/banner2.png")},
-        {id :'2',name:'اسم مقدم الخدمة'  , location:'الرياض - السعودية' , image:require("../../assets/images/banner3.png")},
-        {id :'3',name:'اسم مقدم الخدمة' , location:'الرياض - السعودية' , image:require("../../assets/images/banner4.png")},
-    ]
-    function ItemOrder({ name , image , location , id , index }) {
+    function fetchData(){
+        setScreenLoader(true)
+        dispatch(getOffers(lang)).then(() => setScreenLoader(false))
+    }
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchData();
+        }
+    }, [isFocused])
+
+    function ItemOrder({ name , image , location , id , type , rate, index }) {
         return (
-            <TouchableOpacity onPress={() => {navigation.navigate('categoryDetails') , setShowModal(false)}} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
-                <Image source={image} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
+            <TouchableOpacity onPress={() => {navigation.navigate('categoryDetails', {id , type}) ; setShowModal(false)}} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+                <Image source={{uri:image}} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
                 <View style={[{marginLeft:15 , flex:1}]}>
                     <View style={styles.directionRowSpace}>
                         <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12]}>{ name.substr(0,20) }</Text>
@@ -43,7 +49,7 @@ function Offers({navigation,route}) {
                             <StarRating
                                 disabled={false}
                                 maxStars={5}
-                                rating={4}
+                                rating={rate}
                                 fullStarColor={'#fec104'}
                                 starSize={10}
                                 starStyle={{ marginHorizontal: 2 }}
@@ -62,18 +68,43 @@ function Offers({navigation,route}) {
 
     function Item({ image , id , index }) {
         return (
-            <TouchableOpacity onPress={() => toggleModal()} style={[styles.Width_100 , styles.height_150 , styles.marginBottom_15]}>
-                <Image source={image} style={styles.swiperImg} resizeMode={'cover'}/>
+            <TouchableOpacity onPress={() => toggleModal(id)} style={[styles.Width_100 , styles.height_150 , styles.marginBottom_15]}>
+                <Image source={{uri:image}} style={styles.swiperImg} resizeMode={'cover'}/>
             </TouchableOpacity>
         );
     }
 
-    function toggleModal () {
-        setShowModal(!showModal);
-    };
+    function toggleModal (id) {
+        dispatch(getOfferProvider(lang , id)).then(() =>  setShowModal(true))
+    }
+
+    function renderLoader(){
+        if (screenLoader){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
+    function renderNoData() {
+        if (offers && (offers).length <= 0) {
+            return (
+                <View style={[styles.directionColumnCenter , styles.Width_100 , {height:height-200}]}>
+                    <Image source={require('../../assets/images/note.png')} resizeMode={'contain'}
+                           style={{alignSelf: 'center', width: 200, height: 200}}/>
+                </View>
+            );
+        }
+
+        return null
+    }
+
 
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('offers') } />
@@ -81,23 +112,30 @@ function Offers({navigation,route}) {
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden'}]}>
 
                     <View style={[styles.marginTop_20 , styles.marginBottom_60]}>
-                        <FlatList
-                            data={offers}
-                            horizontal={false}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                id={item.id}
-                                image={item.image}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+
+                        {
+                            offers && (offers).length > 0 ?
+                                <FlatList
+                                    data={offers}
+                                    horizontal={false}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        id={item.id}
+                                        image={item.image}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
+                                :
+                                renderNoData()
+                        }
+
                     </View>
 
 
                     <Modal
-                        onBackdropPress                 ={toggleModal}
-                        onBackButtonPress               = {toggleModal}
+                        onBackdropPress                 ={() => setShowModal(false)}
+                        onBackButtonPress               = {() => setShowModal(false)}
                         isVisible                       = {showModal}
                         style                           = {styles.bgModel}
                         avoidKeyboard                    = {true}
@@ -113,19 +151,29 @@ function Offers({navigation,route}) {
                             </View>
 
                            <View style={[styles.Width_100 , styles.paddingHorizontal_15 , styles.marginTop_20]}>
-                               <FlatList
-                                   data={myOrders}
-                                   horizontal={false}
-                                   showsVerticalScrollIndicator={false}
-                                   renderItem={({ item , index}) => <ItemOrder
-                                       id={item.id}
-                                       name={item.name}
-                                       image={item.image}
-                                       location={item.location}
-                                       index={index}
-                                   />}
-                                   keyExtractor={item => item.id}
-                               />
+
+                               {
+                                   offerProvider?
+                                       <FlatList
+                                           data={offerProvider}
+                                           horizontal={false}
+                                           showsVerticalScrollIndicator={false}
+                                           renderItem={({ item , index}) => <ItemOrder
+                                               id={item.id}
+                                               name={item.name}
+                                               image={item.avatar}
+                                               location={item.address}
+                                               type={item.type}
+                                               rate={item.rate}
+                                               index={index}
+                                           />}
+                                           keyExtractor={item => item.id}
+                                       />
+                                       :
+                                       null
+                               }
+
+
                            </View>
 
                         </View>

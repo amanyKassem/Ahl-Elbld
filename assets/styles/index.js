@@ -1597,7 +1597,7 @@ const styles = ({
         height: 50,
     },
     scrollTouch: {
-        width: 60,
+        // width: 60,
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',

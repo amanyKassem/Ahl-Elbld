@@ -9,7 +9,7 @@ import {
     I18nManager,
     KeyboardAvoidingView
 } from "react-native";
-import {Container, Content, Form, Icon, Input, Item, Label, Radio, Textarea} from 'native-base'
+import {Container, Content, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Swiper from 'react-native-swiper';
@@ -20,13 +20,22 @@ import StarRating from "react-native-star-rating";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function Recharge({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const payOnline = () => {
+        Toast.show({
+            text        	: i18n.t('soon'),
+            type			: "success",
+            duration    	: 3000,
+            textStyle   	: {
+                color       	: "white",
+                fontFamily  	: 'flatRegular',
+                textAlign   	: 'center'
+            }
+        });
+    }
+
 
     return (
         <Container style={[styles.bg_gray]}>
@@ -40,11 +49,11 @@ function Recharge({navigation,route}) {
                     <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_18 ,styles.SelfCenter , styles.marginBottom_40]}>{ i18n.t('recharge') }</Text>
 
 
-                    <TouchableOpacity onPress={() => navigation.navigate('bankTransfer')} style={[styles.height_40 , styles.bg_mstarda , styles.Radius_5 , styles.Width_100, styles.centerContext , styles.marginBottom_15]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('banks')} style={[styles.height_40 , styles.bg_mstarda , styles.Radius_5 , styles.Width_100, styles.centerContext , styles.marginBottom_15]}>
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_15, styles.textCenter ]}>{ i18n.t('bankTransfer') }</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.height_40 , styles.bg_mstarda , styles.Radius_5 , styles.Width_100, styles.centerContext ]}>
+                    <TouchableOpacity onPress={payOnline} style={[styles.height_40 , styles.bg_mstarda , styles.Radius_5 , styles.Width_100, styles.centerContext ]}>
                         <Text style={[styles.textBold , styles.text_White , styles.textSize_15, styles.textCenter ]}>{ i18n.t('online') }</Text>
                     </TouchableOpacity>
 

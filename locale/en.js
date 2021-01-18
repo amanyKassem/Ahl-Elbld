@@ -219,6 +219,9 @@ const en = {
     'notmatch'                  : 'password not match',
     'codeNotMatch'              : 'Activation code not correct',
     'RS'                        : 'RS',
+    'banks'                     : 'Banks',
+    'soon'                      : 'Soon',
+    'hwalaImg'                  : 'Hawala image',
 };
 
 export default en;

@@ -7,34 +7,47 @@ import {
     Dimensions,
     FlatList,
     I18nManager,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, ActivityIndicator
 } from "react-native";
 import {Container, Content, Form, Icon, Input, Item, Label, Radio, Textarea} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Swiper from 'react-native-swiper';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
+import {sendTrans} from "../actions";
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
-import StarRating from "react-native-star-rating";
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function BankTransfer({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const bank = route.params.bank;
+    const dispatch = useDispatch();
 
     const [bankName, setBankName] = useState('');
     const [accHolderName, setAccHolderName] = useState('');
     const [accNum, setAccNum] = useState('');
     const [amountToBeCharged, setAmountToBeCharged] = useState('');
+    const [base64, setBase64] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [hwalaImg, setHwalaImg] = useState('');
 
     function renderSubmit() {
-        if (bankName == '' || accHolderName == '' || accNum == ''  || amountToBeCharged == '' ) {
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginTop_40, styles.marginBottom_20]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        if (bankName == '' || accHolderName == '' || accNum == ''  || amountToBeCharged == '' || base64 == '' ) {
             return (
                 <View
                     style={[styles.mstrdaBtn , styles.Width_100  , styles.marginBottom_20 , styles.marginTop_40 , styles.Radius_5 , {
@@ -54,8 +67,27 @@ function BankTransfer({navigation,route}) {
         );
     }
 
+    const askPermissionsAsync = async () => {
+        await Permissions.askAsync(Permissions.CAMERA);
+        await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    };
+    const _pickImage = async () => {
+
+        askPermissionsAsync();
+        let result = await ImagePicker.launchImageLibraryAsync({
+            base64: true
+        });
+
+        if (!result.cancelled) {
+            setHwalaImg(result.uri);
+            setBase64(result.base64);
+        }
+    };
+
     function onConfirm() {
-        navigation.navigate('home')
+        setIsSubmitted(true);
+        dispatch(sendTrans(lang , bankName , accHolderName ,accNum , amountToBeCharged , bank.id , base64 , token, navigation)).then(() => {setIsSubmitted(false) ; setHwalaImg(null)});
     }
 
     return (
@@ -69,14 +101,21 @@ function BankTransfer({navigation,route}) {
                     <View style={[styles.Width_100]}>
                         <View style={[styles.bg_gray , styles.paddingHorizontal_20 , styles.paddingVertical_15 , styles.Width_100 , styles.marginTop_25 , styles.Radius_10]}>
 
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.alignStart]}>{ i18n.t('accName') } : اوامر الشبكة</Text>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.marginTop_10 , styles.alignStart]}>{ i18n.t('bankName') } : CIB</Text>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.marginTop_10 , styles.alignStart]}>{ i18n.t('accNum') } : 12345</Text>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.marginTop_10 , styles.alignStart]}>12345 : { i18n.t('iabn') }</Text>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.alignStart]}>{ i18n.t('accName') } : {bank.account_name}</Text>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.marginTop_10 , styles.alignStart]}>{ i18n.t('bankName') } : {bank.bank_name}</Text>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.marginTop_10 , styles.alignStart]}>{ i18n.t('accNum') } : {bank.account_number}</Text>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_13 , styles.marginTop_10 , styles.alignStart]}>{bank.iban_number} : { i18n.t('iabn') }</Text>
 
                         </View>
                         <KeyboardAvoidingView style={[styles.Width_100 , styles.marginTop_20 , styles.marginBottom_10]}>
                             <Form style={[styles.Width_100 , styles.flexCenter]}>
+
+                                <View style={[styles.directionColumnCenter , styles.marginVertical_25]}>
+                                    <TouchableOpacity style={[styles.icon80 , styles.Radius_50 , styles.borderGray , styles.marginBottom_7 ,{ padding: 3 }]} onPress={_pickImage}>
+                                        <Image source={hwalaImg ? { uri: hwalaImg } : require('../../assets/images/image_placeholder.png')} style={[styles.Width_100 , styles.heightFull , styles.Radius_50]} resizeMode='cover' />
+                                    </TouchableOpacity>
+                                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , styles.marginBottom_5]}>{ i18n.t('hwalaImg') } </Text>
+                                </View>
 
                                 <Item style={[styles.item , {marginBottom:0}]}>
                                     <Input style={[styles.input  , { borderTopLeftRadius:20 ,borderTopRightRadius:20 ,

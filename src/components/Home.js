@@ -27,8 +27,8 @@ function Home({navigation,route}) {
 
     function fetchData(){
         setScreenLoader(true);
-        dispatch(getBanners(lang));
-        dispatch(getCategories(lang));
+        dispatch(getBanners(lang)).then(() => setScreenLoader(false));
+        dispatch(getCategories(lang)).then(() => setScreenLoader(false));
     }
     useEffect(() => {
         fetchData();
@@ -38,10 +38,6 @@ function Home({navigation,route}) {
 
         return unsubscribe;
     }, [navigation , bannersLoader , categoriesLoader]);
-
-    useEffect(() => {
-        setScreenLoader(false)
-    }, [banners , categories]);
 
     function renderLoader(){
         if (screenLoader){
