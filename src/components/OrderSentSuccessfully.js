@@ -35,9 +35,9 @@ function OrderSentSuccessfully({navigation,route}) {
 
                         <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_18 ,styles.SelfCenter , styles.textCenter , styles.marginBottom_5 , {lineHeight:24}]}>{ i18n.t('OrderSentSuccessfully') }</Text>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginTop_60]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('followOrder') }</Text>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity onPress={() => navigation.navigate('orderDetails')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginTop_60]}>*/}
+                        {/*    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('followOrder') }</Text>*/}
+                        {/*</TouchableOpacity>*/}
 
                         <TouchableOpacity onPress={() => navigation.navigate('home')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginTop_10 , styles.bg_gray]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('home') }</Text>

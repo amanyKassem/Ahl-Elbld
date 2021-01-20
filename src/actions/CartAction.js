@@ -155,3 +155,58 @@ export const deleteProduct = (cart_id, id, lang, token , navigation) => {
 
     }
 }
+
+
+export const sendOrder = ( lang, provider_id, latitude , longitude , address , payment_type , coupon , time, token , navigation) => {
+    return async (dispatch,) => {
+
+
+        await axios({
+            method      : 'POST',
+            url         : CONST.url + 'send-order',
+            params      : {lang},
+            data        : {provider_id, latitude , longitude , address , payment_type , coupon, time},
+            headers     : {Authorization: 'Bearer ' + token}
+
+        }).then(response => {
+
+            if (response.data.success){
+                navigation.navigate('orderSentSuccessfully');
+            }
+
+            Toast.show({
+                text: response.data.message,
+                type: response.data.success ? "success" : "danger",
+                duration: 3000,
+                textStyle: {
+                    color: "white",
+                    fontFamily: 'flatRegular',
+                    textAlign: 'center'
+                }
+            });
+        })
+
+    }
+}
+
+export const getDeliveryPrice = ( lang, id, latitude , longitude , token ) => {
+    return async (dispatch,) => {
+
+
+        await axios({
+            method      : 'POST',
+            url         : CONST.url + 'delivery-price',
+            params      : {lang},
+            data        : {id, latitude , longitude},
+            headers     : {Authorization: 'Bearer ' + token}
+
+        }).then(response => {
+
+            if (response.data.success) {
+                dispatch({type: 'getDeliveryPrice', payload: response.data});
+            }
+
+        })
+
+    }
+}

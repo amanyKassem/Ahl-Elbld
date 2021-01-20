@@ -8,15 +8,19 @@ import {getProviders} from '../actions';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import StarRating from "react-native-star-rating";
+import { useIsFocused } from '@react-navigation/native';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
+const latitudeDelta = 0.922;
+const longitudeDelta = 0.521;
 
 function Category({navigation,route}) {
 
     const [search, setSearch] = useState('');
     const {title , type , category_id} = route.params;
-    // alert(category_id)
 
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
@@ -24,25 +28,65 @@ function Category({navigation,route}) {
     const providersLoader = useSelector(state => state.categories.loader);
     const [screenLoader , setScreenLoader ] = useState(true);
 
+    const [mapRegion, setMapRegion] = useState({
+        latitude: '',
+        longitude: '',
+        latitudeDelta,
+        longitudeDelta
+    });
+    let mapRef = useRef(null);
+    const isFocused = useIsFocused();
+
     const dispatch = useDispatch();
 
-    function fetchData(){
+    const fetchData = async () => {
         setScreenLoader(true);
-        dispatch(getProviders(lang , category_id));
+        dispatch(getProviders(lang , category_id, false , null , null , null)).then(() => setScreenLoader(false));
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        let userLocation = {};
+        if (status !== 'granted') {
+            alert('صلاحيات تحديد موقعك الحالي ملغاه');
+        } else {
+            const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
+            userLocation = { latitude, longitude, latitudeDelta, longitudeDelta };
+            setMapRegion(userLocation);
+            isIOS ? mapRef.current.animateToRegion(userLocation, 1000) : false;
+
+        }
     }
 
     useEffect(() => {
-        fetchData();
-        const unsubscribe = navigation.addListener('focus', () => {
-            fetchData();
-        });
 
-        return unsubscribe;
-    }, [navigation , providersLoader, route.params?.category_id]);
+        if (isFocused) {
+            fetchData()
+        }
+    }, [isFocused, route.params?.category_id])
 
-    useEffect(() => {
-        setScreenLoader(false)
-    }, [providers]);
+    const onSearchFilter = (keyword) => {
+        setScreenLoader(true);
+        setSearch(keyword);
+        if (keyword) {
+            dispatch(getProviders(lang , category_id, false , null , null , keyword)).then(() => setScreenLoader(false));
+        }
+        dispatch(getProviders(lang , category_id, false , null , null , null)).then(() => setScreenLoader(false));
+    }
+
+    const onNearProvider = () => {
+        setScreenLoader(true);
+        dispatch(getProviders(lang , category_id, false , mapRegion.latitude, mapRegion.longitude , null)).then(() => setScreenLoader(false));
+    }
+
+    const onFarProvider = () => {
+        setScreenLoader(true);
+        dispatch(getProviders(lang , category_id, false , null , null , null)).then(() => setScreenLoader(false));
+    }
+
+    const onRateProvider = () => {
+        setScreenLoader(true);
+        dispatch(getProviders(lang , category_id, true , null , null , null)).then(() => setScreenLoader(false));
+    }
+
+
 
     function renderLoader(){
         if (screenLoader){
@@ -81,45 +125,63 @@ function Category({navigation,route}) {
         );
     }
 
+    function renderNoData() {
+        if (providers && (providers).length <= 0) {
+            return (
+                <View style={[styles.directionColumnCenter , styles.Width_100, {height:height-200}]}>
+                    <Image source={require('../../assets/images/note.png')} resizeMode={'contain'}
+                           style={{alignSelf: 'center', width: 200, height: 200}}/>
+                </View>
+            );
+        }
+
+        return null
+    }
 
     return (
         <Container style={[styles.bg_gray]}>
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ title } filteration={true} />
+                <Header navigation={navigation} title={ title } filteration={true} onNearProvider={onNearProvider} onFarProvider={onFarProvider} onRateProvider={onRateProvider} />
 
                 <View style={[styles.Width_90,styles.SelfCenter , styles.marginBottom_20 , styles.marginTop_15 , {zIndex:-1}]}>
                     <Input style={[styles.inputSearch , styles.Width_100 , {flex:0}]}
                            placeholder={i18n.t('search')}
                            placeholderTextColor={'#fff'}
-                           onChangeText={(search) => setSearch(search)}
+                           onChangeText={(search) => onSearchFilter(search)}
                            value={search}
                     />
 
-                    <TouchableOpacity onPress={() => navigation.push('searchResults' , {keyword:search})} style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
-                        <Image source={require("../../assets/images/search.png")} style={[styles.icon17]} resizeMode={'cover'} />
-                    </TouchableOpacity>
+                    <Image source={require("../../assets/images/search.png")} style={[styles.icon17, {position:'absolute' , right:15 , top:13}]} resizeMode={'cover'} />
+
                 </View>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden' , zIndex:-1}]}>
 
-                    <View style={[styles.marginTop_20]}>
-                        <FlatList
-                            data={providers}
-                            horizontal={false}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                id={item.id}
-                                name={item.name}
-                                image={item.avatar}
-                                location={item.address}
-                                rate={item.rate}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
-                    </View>
+                    {
+                        providers && (providers).length > 0?
+                            <View style={[styles.marginTop_20]}>
+                                <FlatList
+                                    data={providers}
+                                    horizontal={false}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        id={item.id}
+                                        name={item.name}
+                                        image={item.avatar}
+                                        location={item.address}
+                                        rate={item.rate}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
+                            </View>
+                            :
+                            renderNoData()
+                    }
+
+
 
                 </View>
 

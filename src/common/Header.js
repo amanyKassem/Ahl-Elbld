@@ -11,12 +11,12 @@ import {Textarea} from "native-base";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function Header({navigation , title , filteration , likeIcon , delegate}) {
+function Header({navigation , title , onToggleFavorite , filteration , onNearProvider ,onFarProvider, onRateProvider, likeIcon , delegate}) {
 
     // const lang          = useSelector(state => state.lang.lang);
     // const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     // const user          = useSelector(state => state.auth.user ? state.auth.user.data :  {avatar: null});
-    // const notifications = useSelector(state => state.notifications.notifications);
+    const notifications = useSelector(state => state.notifications.notifications);
 
     const [showFilter, setShowFilter] = useState(false);
 
@@ -46,7 +46,7 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
                 {
                     title === i18n.t('home') ?
                         <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={[styles.icon30 , {marginRight:15 , padding:5}]}>
-                            <Image source={require('../../assets/images/notification_non_active.png')} style={[styles.transform , styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
+                            <Image source={notifications.length > 0 ? require('../../assets/images/notication_acctive.png') : require('../../assets/images/notification_non_active.png')} style={[styles.transform , styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
                         </TouchableOpacity>
                         :
                         null
@@ -96,13 +96,13 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
                                         </View>
 
                                         <View style={[styles.Width_100 , styles.directionColumnCenter]}>
-                                            <TouchableOpacity style={[styles.Width_100 , styles.centerContext , {borderBottomWidth:1 , borderColor:'#ddd' , padding:7}]}>
+                                            <TouchableOpacity onPress={() =>{ onNearProvider() ; setShowFilter(false)}} style={[styles.Width_100 , styles.centerContext , {borderBottomWidth:1 , borderColor:'#ddd' , padding:7}]}>
                                                 <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{ i18n.t('closest') }</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={[styles.Width_100 , styles.centerContext , {borderBottomWidth:1 , borderColor:'#ddd' , padding:7}]}>
+                                            <TouchableOpacity onPress={() =>{ onFarProvider() ; setShowFilter(false)}} style={[styles.Width_100 , styles.centerContext , {borderBottomWidth:1 , borderColor:'#ddd' , padding:7}]}>
                                                 <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{ i18n.t('furthest') }</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={[styles.Width_100 , styles.centerContext , {padding:7}]}>
+                                            <TouchableOpacity onPress={() =>{ onRateProvider() ; setShowFilter(false)}} style={[styles.Width_100 , styles.centerContext , {padding:7}]}>
                                                 <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{ i18n.t('rate') }</Text>
                                             </TouchableOpacity>
                                         </View>
@@ -118,7 +118,7 @@ function Header({navigation , title , filteration , likeIcon , delegate}) {
                         title === i18n.t('providerDetails') ||  title ===  i18n.t('details')  ?
                             <View style={[styles.directionRow]}>
 
-                                <TouchableOpacity >
+                                <TouchableOpacity onPress={onToggleFavorite}>
                                     <Icon style={[likeIcon ? styles.text_red : styles.text_White, styles.textSize_20]} type="AntDesign" name={ 'heart' } />
                                 </TouchableOpacity>
 

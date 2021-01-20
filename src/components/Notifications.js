@@ -73,7 +73,7 @@ function Notifications({navigation,route}) {
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ i18n.t('notifications') } />
+                <Header navigation={navigation} title={ i18n.t('notifications') } activeNoti={notifications.length > 0}/>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.paddingHorizontal_20 , {overflow:'hidden' , paddingBottom:20}]}>
 

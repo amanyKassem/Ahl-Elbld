@@ -1,215 +1,360 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager, ActivityIndicator} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Swiper from 'react-native-swiper';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from "react-redux";
+import {getOrderDetails, orderCancel} from '../actions';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import Communications from 'react-native-communications';
 import Modal from "react-native-modal";
+import {useIsFocused} from "@react-navigation/native";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function OrderDetails({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const orderDetails = useSelector(state => state.orders.orderDetails);
+    const [screenLoader , setScreenLoader ] = useState(false);
+    const [extras , setExtras ] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const id = route.params.id;
 
-    const orderType = route.params.orderType;
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
+
+    function fetchData(){
+        setScreenLoader(true)
+        dispatch(getOrderDetails(lang , id, token)).then(() => setScreenLoader(false))
+    }
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchData();
+        }
+    }, [isFocused])
+
     const pathName = route.params.pathName ? route.params.pathName : '';
 
-    const [orderStatus, setOrderStatus] = useState(3);
     const [showDetails, setShowDetails] = useState(false);
     const [showDelegateDetails, setShowDelegateDetails] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    function toggleModal () {
+    function toggleModal (proExtras) {
         setShowModal(!showModal);
+        setExtras(proExtras)
     };
+
+    function renderLoader(){
+        if (screenLoader){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
+
+    function checkOrderStatus(orderStatus, currentStatus){
+        if (currentStatus === 'PROGRESS'){
+            if (orderStatus === 'PROGRESS'
+                || orderStatus === 'READY'
+                || orderStatus === 'DELEGATEACCEPT'
+                || orderStatus === 'DELEGATEARRIVED'
+                || orderStatus === 'DELIVEREDTODELEGATE'
+                || orderStatus === 'ONWAY'
+                || orderStatus === 'ARRIVED'
+                || orderStatus === 'DELIVER'
+                || orderStatus === 'DELIVERED' ){
+                return true
+            }
+        }  else if(currentStatus === 'READY'){
+            if (orderStatus === 'READY'
+                || orderStatus === 'DELEGATEACCEPT'
+                || orderStatus === 'DELEGATEARRIVED'
+                || orderStatus === 'DELIVEREDTODELEGATE'
+                || orderStatus === 'ONWAY'
+                || orderStatus === 'ARRIVED'
+                || orderStatus === 'DELIVER'
+                || orderStatus === 'DELIVERED' ){
+                return true
+            }
+        } else if(currentStatus === 'DELEGATEACCEPT'){
+            if (orderStatus === 'DELEGATEACCEPT'
+                || orderStatus === 'DELEGATEARRIVED'
+                || orderStatus === 'DELIVEREDTODELEGATE'
+                || orderStatus === 'ONWAY'
+                || orderStatus === 'ARRIVED'
+                || orderStatus === 'DELIVER'
+                || orderStatus === 'DELIVERED' ){
+                return true
+            }
+        } else if(currentStatus === 'DELEGATEARRIVED'){
+            if (orderStatus === 'DELEGATEARRIVED'
+                || orderStatus === 'DELIVEREDTODELEGATE'
+                || orderStatus === 'ONWAY'
+                || orderStatus === 'ARRIVED'
+                || orderStatus === 'DELIVER'
+                || orderStatus === 'DELIVERED' ){
+                return true
+            }
+        }
+    }
+
+    function renderCancelOrder(){
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' }  , styles.Width_100 , styles.bg_White]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' , marginBottom:20 }} />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity onPress={onCancel} style={[styles.mstrdaBtn , styles.Width_100 , styles.Radius_0]}>
+                <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('cancelOrder') }</Text>
+            </TouchableOpacity>
+        );
+
+    }
+
+    const onCancel = () => {
+        setIsSubmitted(true);
+        dispatch(orderCancel(lang , id , token , navigation , 'myOrders')).then(() => {setIsSubmitted(false)});
+    }
 
 
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('orderDetails') } />
 
-                <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100, {overflow:'hidden'}]}>
+                {
+                    orderDetails ?
+                        <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100, {overflow:'hidden'}]}>
 
-                    <View style={[styles.marginTop_10,styles.paddingHorizontal_20]}>
-                        <View style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
-                            <View style={[styles.directionRow , {flex:1}]}>
-                                <Image source={require("../../assets/images/banner1.png")} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
-                                <View style={[styles.paddingHorizontal_10]}>
-                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.alignStart , styles.marginBottom_5]}>اسم الاسره</Text>
-                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , styles.alignStart]}>9/7/2019</Text>
-                                </View>
-                            </View>
-                            <View style={[{borderLeftWidth:1 , borderLeftColor:'#ddd' , paddingLeft:15} , styles.heightFull , styles.centerContext]}>
-                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.marginBottom_5]}>{i18n.t('orderNum') }</Text>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>12345</Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 ,  styles.directionRow  , styles.height_45]}>
-                        <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('followOrder') }</Text>
-                    </View>
-                    <View style={[styles.marginTop_20,styles.paddingHorizontal_20 , styles.Width_100]}>
-                        <View style={styles.followStep}>
-                            <View style={[styles.skyCircle ,
-                                {backgroundColor: orderStatus === 0 || orderStatus === 1 || orderStatus === 2 || orderStatus === 3  ? COLORS.mstarda : '#fff',
-                                    borderColor:  orderStatus === 0 || orderStatus === 1 || orderStatus === 2 || orderStatus === 3  ? COLORS.mstarda : COLORS.gray}]}>
-                                <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
-                            </View>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('orderHasReceived')}</Text>
-                            <View style={[styles.stepLine ,
-                                {backgroundColor: orderStatus === 0 || orderStatus === 1 || orderStatus === 2 || orderStatus === 3 ? COLORS.mstarda :COLORS.gray,}]}/>
-                        </View>
-
-                        <View style={[styles.followStep ]}>
-                            <View style={[styles.skyCircle ,
-                                {backgroundColor:orderStatus === 1 || orderStatus === 2  || orderStatus === 3 ? COLORS.mstarda :'#fff',
-                                    borderColor:orderStatus === 1 || orderStatus === 2  || orderStatus === 3 ? COLORS.mstarda :COLORS.gray}]}>
-                                <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
-                            </View>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('prepCompleted')}</Text>
-                            <View style={[styles.stepLine ,
-                                {backgroundColor:orderStatus === 1 || orderStatus === 2 || orderStatus === 3 ? COLORS.mstarda :COLORS.gray,}]}/>
-                        </View>
-
-                        <View style={[styles.followStep ]}>
-                            <View style={[styles.skyCircle ,
-                                {backgroundColor:orderStatus === 2 || orderStatus === 3 ? COLORS.mstarda : '#fff',
-                                    borderColor:orderStatus === 2 || orderStatus === 3   ? COLORS.mstarda : COLORS.gray}]}>
-                                <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
-                            </View>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('orderDelegate')}</Text>
-                            <View style={[styles.stepLine ,
-                                {backgroundColor:orderStatus === 2 || orderStatus === 3 ? COLORS.mstarda :COLORS.gray,}]}/>
-                        </View>
-
-                        <View style={[styles.followStep ]}>
-                            <View style={[styles.skyCircle ,
-                                {backgroundColor:orderStatus === 3  ? COLORS.mstarda : '#fff',
-                                    borderColor:orderStatus === 3  ? COLORS.mstarda : COLORS.gray}]}>
-                                <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
-                            </View>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('orderDelivered')}</Text>
-                        </View>
-                    </View>
-
-
-
-                    <TouchableOpacity onPress={() => setShowDetails(!showDetails)} style={[styles.marginTop_20 , styles.bg_light_gray , styles.directionRowSpace ,styles.paddingHorizontal_20 , styles.height_45]}>
-                        <Text style={[styles.textBold , showDetails ? styles.text_mstarda : styles.text_gray , styles.textSize_14 ]}>{i18n.t('orderDetails') }</Text>
-                        <Icon type={'AntDesign'} name={showDetails ?  'caretup' : 'caretdown'} style={[styles.textSize_12 , showDetails ? styles.text_mstarda : styles.text_gray]} />
-                    </TouchableOpacity>
-
-                    {
-                        showDetails?
-                            <View style={[styles.marginTop_5]}>
-
-                                <View style={[styles.borderGray ,styles.paddingHorizontal_20 , styles.paddingVertical_10 , styles.marginBottom_5 , styles.directionRowSpace]}>
-                                    <View style={[styles.directionRow]}>
-                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12 , styles.alignStart , {marginRight:5}]}>اسم المنتج</Text>
-                                        <TouchableOpacity onPress={toggleModal}>
-                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12 , styles.alignStart]}>( {i18n.t('details') } )</Text>
-                                        </TouchableOpacity>
-                                    </View>
-
-                                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12]}>25 ر.س</Text>
-                                </View>
-
-                                <View style={[styles.borderGray ,styles.paddingHorizontal_20 , styles.paddingVertical_10 , styles.marginBottom_5 , styles.directionRowSpace]}>
-                                    <View style={[styles.directionRow]}>
-                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12 , styles.alignStart , {marginRight:5}]}>اسم المنتج</Text>
-                                        <TouchableOpacity onPress={toggleModal}>
-                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12 , styles.alignStart]}>( {i18n.t('details') } )</Text>
-                                        </TouchableOpacity>
-                                    </View>
-
-                                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12]}>25 ر.س</Text>
-                                </View>
-
-
-                                <View style={[styles.marginTop_20 , styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
-                                    <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('payMethod') }</Text>
-                                </View>
-                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>الدفع عند الاستلام</Text>
-                                <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 ,  styles.directionRow  , styles.height_45]}>
-                                    <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('deliveryDetails') }</Text>
-                                </View>
-                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 , styles.alignStart]}>{i18n.t('deliveryLoc') }</Text>
-                                <View style={[styles.directionRow,styles.paddingHorizontal_20 , styles.marginBottom_25]}>
-                                    <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />
-                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>السعودية - الرياض</Text>
-                                    <TouchableOpacity onPress={() =>  navigation.navigate('getLocation' , {pathName:'orderDetails'})} style={{marginLeft:5}}>
-                                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_13]}>( { i18n.t('seeLocation') } )</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            :
-                             null
-                    }
-
-
-                    {
-                        orderStatus === 1 || orderStatus === 2  || orderStatus === 3 ?
-
-                            <View>
-
-                                <TouchableOpacity onPress={() => setShowDelegateDetails(!showDelegateDetails)} style={[styles.marginTop_20 , styles.bg_light_gray , styles.directionRowSpace ,styles.paddingHorizontal_20 , styles.height_45]}>
-                                    <Text style={[styles.textBold , showDelegateDetails ? styles.text_mstarda : styles.text_gray , styles.textSize_14 ]}>{i18n.t('delegateInfo') }</Text>
-                                    <Icon type={'AntDesign'} name={showDelegateDetails ?  'caretup' : 'caretdown'} style={[styles.textSize_12 , showDelegateDetails ? styles.text_mstarda : styles.text_gray]} />
-                                </TouchableOpacity>
-
-                                {
-                                    showDelegateDetails?
-                                        <View style={[styles.marginTop_5 ,styles.marginBottom_25]}>
-
-                                            <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{i18n.t('delegateName') }</Text>
-
-                                            <View style={[styles.marginTop_5 ,styles.flexCenter , styles.bg_light_gray , styles.Width_90 ,styles.paddingHorizontal_20 , styles.directionRowSpace  , styles.height_45]}>
-                                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12]}>أماني قاسم</Text>
-                                                <TouchableOpacity onPress={() => Communications.phonecall('01023456789', true)}>
-                                                    <Image source={require("../../assets/images/phone-ringing.png")} style={[styles.icon17]} resizeMode={'contain'} />
-                                                </TouchableOpacity>
+                            {
+                                orderDetails.provider ?
+                                    <View style={[styles.marginTop_10,styles.paddingHorizontal_20]}>
+                                        <View style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+                                            <View style={[styles.directionRow , {flex:1}]}>
+                                                <Image source={{uri:orderDetails.provider.avatar}} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
+                                                <View style={[styles.paddingHorizontal_10  , {flex:1}]}>
+                                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.alignStart , styles.marginBottom_5 , {lineHeight:20}]}>{orderDetails.provider.name}</Text>
+                                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , styles.alignStart]}>{orderDetails.date}</Text>
+                                                </View>
                                             </View>
-
-                                            <TouchableOpacity style={[styles.flexCenter]}>
-                                                <Text style={[styles.textRegular,styles.text_mstarda,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.textSize_14 ]}>( {i18n.t('delegateTracking') } )</Text>
-                                            </TouchableOpacity>
-
+                                            <View style={[{borderLeftWidth:1 , borderLeftColor:'#ddd' , paddingLeft:15} , styles.heightFull , styles.centerContext]}>
+                                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.marginBottom_5]}>{i18n.t('orderNum') }</Text>
+                                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{orderDetails.order_id}</Text>
+                                            </View>
                                         </View>
-                                        :
-                                        null
-                                }
+                                    </View>
+                                    :
+                                    null
+                            }
 
+
+                            <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 ,  styles.directionRow  , styles.height_45]}>
+                                <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('followOrder') }</Text>
                             </View>
-                            :
-                            null
-                    }
+                            <View style={[styles.marginTop_20,styles.paddingHorizontal_20 , styles.Width_100]}>
+                                <View style={styles.followStep}>
+                                    <View style={[styles.skyCircle ,
+                                        {backgroundColor: checkOrderStatus(orderDetails.status, 'PROGRESS')  ? COLORS.mstarda : '#fff',
+                                            borderColor:  checkOrderStatus(orderDetails.status, 'PROGRESS')  ? COLORS.mstarda : COLORS.gray}]}>
+                                        <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
+                                    </View>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('orderHasReceived')}</Text>
+                                    <View style={[styles.stepLine ,
+                                        {backgroundColor: checkOrderStatus(orderDetails.status, 'PROGRESS') ? COLORS.mstarda :COLORS.gray,}]}/>
+                                </View>
+
+                                <View style={[styles.followStep ]}>
+                                    <View style={[styles.skyCircle ,
+                                        {backgroundColor:checkOrderStatus(orderDetails.status, 'READY') ? COLORS.mstarda :'#fff',
+                                            borderColor:checkOrderStatus(orderDetails.status, 'READY') ? COLORS.mstarda :COLORS.gray}]}>
+                                        <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
+                                    </View>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('prepCompleted')}</Text>
+                                    <View style={[styles.stepLine ,
+                                        {backgroundColor:checkOrderStatus(orderDetails.status, 'READY')? COLORS.mstarda :COLORS.gray,}]}/>
+                                </View>
+
+                                <View style={[styles.followStep ]}>
+                                    <View style={[styles.skyCircle ,
+                                        {backgroundColor:checkOrderStatus(orderDetails.status, 'DELEGATEACCEPT') ? COLORS.mstarda : '#fff',
+                                            borderColor:checkOrderStatus(orderDetails.status, 'DELEGATEACCEPT')   ? COLORS.mstarda : COLORS.gray}]}>
+                                        <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
+                                    </View>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('orderDelegate')}</Text>
+                                    <View style={[styles.stepLine ,
+                                        {backgroundColor:checkOrderStatus(orderDetails.status, 'DELEGATEACCEPT') ? COLORS.mstarda :COLORS.gray,}]}/>
+                                </View>
+
+                                <View style={[styles.followStep ]}>
+                                    <View style={[styles.skyCircle ,
+                                        {backgroundColor:checkOrderStatus(orderDetails.status, 'DELEGATEARRIVED')? COLORS.mstarda : '#fff',
+                                            borderColor:checkOrderStatus(orderDetails.status, 'DELEGATEARRIVED')? COLORS.mstarda : COLORS.gray}]}>
+                                        <Icon type={'Feather'} name={'check'} style={[styles.checkCircle]} />
+                                    </View>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{i18n.t('orderDelivered')}</Text>
+                                </View>
+                            </View>
+
+
+
+                            <TouchableOpacity onPress={() => setShowDetails(!showDetails)} style={[styles.marginTop_20 , styles.bg_light_gray , styles.directionRowSpace ,styles.paddingHorizontal_20 , styles.height_45]}>
+                                <Text style={[styles.textBold , showDetails ? styles.text_mstarda : styles.text_gray , styles.textSize_14 ]}>{i18n.t('orderDetails') }</Text>
+                                <Icon type={'AntDesign'} name={showDetails ?  'caretup' : 'caretdown'} style={[styles.textSize_12 , showDetails ? styles.text_mstarda : styles.text_gray]} />
+                            </TouchableOpacity>
+
+                            {
+                                showDetails?
+                                    <View style={[styles.marginTop_5]}>
+
+                                        {
+                                            orderDetails.products ?
+                                                orderDetails.products.map((pro, i) => {
+                                                    return (
+                                                        <View style={[styles.borderGray ,styles.paddingHorizontal_20 , styles.paddingVertical_10 , styles.marginBottom_5 , styles.directionRowSpace]}>
+                                                            <View style={[styles.directionRow]}>
+                                                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12 , styles.alignStart , {marginRight:5}]}>{pro.name}</Text>
+
+                                                                {
+                                                                    pro.extras && ( pro.extras).length > 0?
+                                                                        <TouchableOpacity onPress={() => toggleModal(pro.extras)}>
+                                                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12 , styles.alignStart]}>( {i18n.t('details') } )</Text>
+                                                                        </TouchableOpacity>
+                                                                        :
+                                                                        null
+                                                                }
+
+
+                                                            </View>
+
+                                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12]}>{pro.price} {i18n.t('RS') }</Text>
+                                                        </View>)
+                                                })
+                                                :
+                                                null
+                                        }
+
+
+
+                                        <View style={[styles.marginTop_20 , styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                            <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('payMethod') }</Text>
+                                        </View>
+                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{orderDetails.payment}</Text>
+
+                                        <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                            <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('orderStatus') }</Text>
+                                        </View>
+                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{orderDetails.status_text}</Text>
+
+                                        <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 ,  styles.directionRow  , styles.height_45]}>
+                                            <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('deliveryDetails') }</Text>
+                                        </View>
+
+                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 , styles.alignStart]}>{i18n.t('receiptLoc') }</Text>
+
+                                        {
+                                            orderDetails.address ?
+                                                <View style={[styles.directionRow,styles.paddingHorizontal_20 , styles.marginBottom_5 , {flexWrap:'wrap'}]}>
+                                                    <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />
+                                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{orderDetails.address.address_from}</Text>
+                                                    <TouchableOpacity onPress={() =>  navigation.navigate('getLocation' , {pathName:'orderDetails' , latitude:orderDetails.address.latitude_from , longitude : orderDetails.address.longitude_from})} style={{marginLeft:5}}>
+                                                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_13]}>( { i18n.t('seeLocation') } )</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                                :
+                                                null
+                                        }
+
+
+                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 , styles.alignStart]}>{i18n.t('deliveryLoc') }</Text>
+
+                                        {
+                                            orderDetails.address ?
+                                                <View style={[styles.directionRow,styles.paddingHorizontal_20 , styles.marginBottom_25, {flexWrap:'wrap'}]}>
+                                                    <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_14 , styles.text_mstarda , {marginRight:5}]} />
+                                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{orderDetails.address.address_to}</Text>
+                                                    <TouchableOpacity onPress={() =>  navigation.navigate('getLocation' , {pathName:'orderDetails' , latitude:orderDetails.address.latitude_to , longitude : orderDetails.address.longitude_to})} style={{marginLeft:5}}>
+                                                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_13]}>( { i18n.t('seeLocation') } )</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                                :
+                                                null
+                                        }
+
+                                    </View>
+                                    :
+                                    null
+                            }
+
+
+                            {
+                                checkOrderStatus(orderDetails.status, 'READY') ?
+
+                                    <View>
+
+                                        <TouchableOpacity onPress={() => setShowDelegateDetails(!showDelegateDetails)} style={[styles.marginTop_20 , styles.bg_light_gray , styles.directionRowSpace ,styles.paddingHorizontal_20 , styles.height_45]}>
+                                            <Text style={[styles.textBold , showDelegateDetails ? styles.text_mstarda : styles.text_gray , styles.textSize_14 ]}>{i18n.t('delegateInfo') }</Text>
+                                            <Icon type={'AntDesign'} name={showDelegateDetails ?  'caretup' : 'caretdown'} style={[styles.textSize_12 , showDelegateDetails ? styles.text_mstarda : styles.text_gray]} />
+                                        </TouchableOpacity>
+
+                                        {
+                                            showDelegateDetails && orderDetails.delegate?
+                                                <View style={[styles.marginTop_5 ,styles.marginBottom_25]}>
+
+                                                    <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{i18n.t('delegateName') }</Text>
+
+                                                    <View style={[styles.marginTop_5 ,styles.flexCenter , styles.bg_light_gray , styles.Width_90 ,styles.paddingHorizontal_20 , styles.directionRowSpace  , styles.height_45]}>
+                                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12]}>{orderDetails.delegate.name}</Text>
+                                                        <TouchableOpacity onPress={() => Communications.phonecall(orderDetails.delegate.phone, true)}>
+                                                            <Image source={require("../../assets/images/phone-ringing.png")} style={[styles.icon17]} resizeMode={'contain'} />
+                                                        </TouchableOpacity>
+                                                    </View>
+
+                                                    <TouchableOpacity style={[styles.flexCenter]}>
+                                                        <Text style={[styles.textRegular,styles.text_mstarda,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.textSize_14 ]}>( {i18n.t('delegateTracking') } )</Text>
+                                                    </TouchableOpacity>
+
+                                                </View>
+                                                :
+                                                null
+                                        }
+
+                                    </View>
+                                    :
+                                    null
+                            }
 
 
 
 
-                </View>
+                        </View>
+                        :
+                        null
+                }
+
+
 
             </Content>
 
             {
-                orderStatus === 0 ?
-                    <TouchableOpacity onPress={() => navigation.navigate('myOrders')} style={[styles.mstrdaBtn , styles.Width_100 , styles.Radius_0]}>
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('cancelOrder') }</Text>
-                    </TouchableOpacity>
+                orderDetails && orderDetails.status === 'WAITING' ?
+
+                    renderCancelOrder()
                     :
-                    orderStatus === 3 ?
+                    orderDetails &&  orderDetails.status === 'DELIVERED' ?
                         <TouchableOpacity onPress={() => navigation.navigate('addUrRate')} style={[styles.mstrdaBtn , styles.Width_100 , styles.Radius_0]}>
                             <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('addUrRate') }</Text>
                         </TouchableOpacity>
@@ -220,8 +365,8 @@ function OrderDetails({navigation,route}) {
 
 
             <Modal
-                onBackdropPress                 ={toggleModal}
-                onBackButtonPress               = {toggleModal}
+                onBackdropPress                 ={() => setShowModal(false)}
+                onBackButtonPress               = {() => setShowModal(false)}
                 isVisible                       = {showModal}
                 style                           = {styles.bgModel}
                 avoidKeyboard                    = {true}
@@ -234,9 +379,13 @@ function OrderDetails({navigation,route}) {
                     </View>
 
                     <View style={[styles.paddingHorizontal_20 , styles.paddingVertical_20]}>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- كولا</Text>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- بطاطس</Text>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- صوص جبنة</Text>
+                        {
+                            extras  && extras.map((extra, i) => {
+                                return (
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- {extra.name}</Text>
+                                )
+                            })
+                        }
                     </View>
 
 

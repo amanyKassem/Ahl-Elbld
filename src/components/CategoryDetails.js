@@ -14,10 +14,11 @@ import {Container, Content, Form, Icon, Input, Item, Label, Textarea} from 'nati
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useDispatch, useSelector} from "react-redux";
-import {getProviderDetails , getProviderProducts} from '../actions';
+import {getProviderDetails, getProviderProducts, setFavourite} from '../actions';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import StarRating from "react-native-star-rating";
+import FavItem from "./FavItem";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -42,6 +43,7 @@ function CategoryDetails({navigation,route}) {
     const dispatch = useDispatch();
 
     function fetchData(){
+        setDetails('');
         setScreenLoader(true);
         dispatch(getProviderDetails(lang , id));
         dispatch(getProviderProducts(lang ,null , null , id));
@@ -58,6 +60,12 @@ function CategoryDetails({navigation,route}) {
     useEffect(() => {
         setScreenLoader(false)
     }, [providerDetails, providerProducts]);
+
+
+    function onToggleFavorite (id){
+        dispatch(setFavourite(lang , id, token)).then(() => dispatch(getProviderDetails(lang, id)))
+    }
+
 
     function renderLoader(){
         if (screenLoader){
@@ -124,7 +132,7 @@ function CategoryDetails({navigation,route}) {
                         <ImageBackground source={{uri:providerDetails.cover}} resizeMode={'cover'} style={[styles.Width_100 ,  activeType != '0'? styles.height_340 : styles.height_300]}>
                             <View style={[styles.overlay_black , styles.heightFull , styles.Width_100]}>
 
-                                <Header navigation={navigation} title={ i18n.t('details') } likeIcon={providerDetails.is_favourite} />
+                                <Header navigation={navigation} title={ i18n.t('details') }  onToggleFavorite={() => onToggleFavorite(id)} likeIcon={providerDetails.is_favourite} />
 
                                 <View style={[styles.directionColumnCenter , styles.marginTop_10]}>
                                     <View style={[styles.icon70 , styles.Radius_50 , styles.overlay_white, styles.marginBottom_7 ,{ padding: 5 }]}>
@@ -225,9 +233,19 @@ function CategoryDetails({navigation,route}) {
                                             value={details}
                                         />
 
-                                        <TouchableOpacity onPress={() => navigation.navigate('orderData')} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginVertical_20]}>
-                                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('confirm') }</Text>
-                                        </TouchableOpacity>
+                                        {
+                                            details ?
+                                                <TouchableOpacity onPress={() => navigation.navigate('orderData' , {type , details , provider_id : id})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginVertical_20]}>
+                                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('confirm') }</Text>
+                                                </TouchableOpacity>
+                                                :
+                                                <View style={[styles.mstrdaBtn , styles.Width_100 , styles.marginVertical_20, {
+                                                    backgroundColor:'#ddd'
+                                                }]}>
+                                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('confirm') }</Text>
+                                                </View>
+                                        }
+
 
                                     </View>
                             }

@@ -222,6 +222,8 @@ const en = {
     'banks'                     : 'Banks',
     'soon'                      : 'Soon',
     'hwalaImg'                  : 'Hawala image',
+    'orderStatus'               : 'Order status',
+    'receiptLoc'                : 'Location of receipt',
 };
 
 export default en;

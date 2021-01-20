@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 
-const latitudeDelta = 0.0922;
-const longitudeDelta = 0.0421;
+const latitudeDelta = 0.922;
+const longitudeDelta = 0.521;
 const isIOS      = Platform.OS === 'ios';
 const { width }  = Dimensions.get('window')
 const { height } = Dimensions.get('window')

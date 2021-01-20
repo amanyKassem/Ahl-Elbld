@@ -1,4 +1,4 @@
-const INITIAL_STATE = {banks : null , loader : false };
+const INITIAL_STATE = {banks : [] , loader : false };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {

@@ -222,6 +222,8 @@ const ar = {
     'banks'                     : 'البنوك',
     'soon'                      : 'قريبا',
     'hwalaImg'                  : 'صورة الحوالة',
+    'orderStatus'               : 'حالة الطلب',
+    'receiptLoc'                : 'موقع الاستلام',
 };
 
 export default ar;

@@ -138,7 +138,7 @@ function BasketDetails({navigation,route}) {
                                 <Text style={[styles.textBold , styles.text_gray , styles.textSize_14]}>{cartDetails.prices ? cartDetails.prices.added_value : '0'} {i18n.t('RS') }</Text>
                             </View>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('orderData' , {type:cartDetails.provider.type})} style={[styles.mstrdaBtn , styles.Width_90 , styles.SelfCenter  , styles.marginTop_40 , styles.marginBottom_25]}>
+                            <TouchableOpacity onPress={() => navigation.navigate('orderData' , {type:cartDetails.provider.type , provider_id:cartDetails.provider.id , coupon})} style={[styles.mstrdaBtn , styles.Width_90 , styles.SelfCenter  , styles.marginTop_40 , styles.marginBottom_25]}>
                                 <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('confirm') }</Text>
                             </TouchableOpacity>
 

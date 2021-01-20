@@ -17,6 +17,7 @@ import cart from './CartReducer';
 import banks from './BanksReducer';
 import offers from './OffersReducer';
 import favourites from './FavouritesReducer';
+import orders from './OrdersReducer';
 
 export default combineReducers({
     lang,
@@ -37,4 +38,5 @@ export default combineReducers({
     banks,
     offers,
     favourites,
+    orders,
 });
