@@ -5,7 +5,7 @@ import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Swiper from 'react-native-swiper';
 import {useSelector, useDispatch} from 'react-redux';
-import Header from '../common/Header';
+import Header from './Header';
 import COLORS from "../consts/colors";
 import { chooseLang } from '../actions';
 

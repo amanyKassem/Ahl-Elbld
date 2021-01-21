@@ -236,6 +236,7 @@ function Profile({navigation,route}) {
                                         <Input style={[styles.input , {borderTopRightRadius :25 ,borderTopLeftRadius :25 , borderColor:phone ? COLORS.mstarda : '#eee', borderWidth:1 , backgroundColor:phone ? '#fff' : '#eee'}]}
                                                onChangeText={(phone) => setPhone(phone)}
                                                value={phone}
+                                               keyboardType={'number-pad'}
                                                editable={editPhone}
                                         />
                                         <TouchableOpacity onPress={() =>setEditPhone(!editPhone)} style={{position:'absolute' , right:10 , bottom:10}}>

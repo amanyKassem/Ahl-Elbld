@@ -12,7 +12,7 @@ import {
 import {Container, Content, Form, Icon, Input, Item, Label, Textarea} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Header from '../common/Header';
+import Header from './Header';
 import COLORS from "../consts/colors";
 import {useSelector, useDispatch} from 'react-redux';
 import {getAppInfo, contactUs} from '../actions';

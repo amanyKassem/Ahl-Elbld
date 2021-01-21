@@ -1,4 +1,4 @@
-const INITIAL_STATE = {specialOrders : [] , orders : [] , orderDetails:null , specialOrderDetails:null , loader : false };
+const INITIAL_STATE = {specialOrders : [] , orders : []  , delegateOrders : [] , orderDetails:null , specialOrderDetails:null , loader : false };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -20,6 +20,11 @@ export default (state = INITIAL_STATE, action) => {
         case 'getSpecialOrderDetails':
             return {
                 specialOrderDetails: action.payload.data,
+                loader: action.payload.success
+            };
+        case 'getDelegateOrders':
+            return {
+                delegateOrders: action.payload.data,
                 loader: action.payload.success
             };
         default:

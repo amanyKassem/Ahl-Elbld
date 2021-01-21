@@ -224,6 +224,17 @@ const en = {
     'hwalaImg'                  : 'Hawala image',
     'orderStatus'               : 'Order status',
     'receiptLoc'                : 'Location of receipt',
+    'manufacturingYear'         : 'manufacturing year',
+    'carType'                   : 'Car type',
+    'editProfile'               : 'Edit profile',
+    'carNumber'                 : 'Car plate numbers (in English)',
+    'carChars'                  : 'Car Plate Letters (in English)',
+    'area'                      : 'Area',
+    'city'                      : 'City',
+    'attachment'                : 'Attachment photos',
+    'carFrontImg'               : 'Image of the car from the front',
+    'carBackImg'                : 'Image of the car from the back',
+    'carNumbers'                : 'License plate numbers',
 };
 
 export default en;

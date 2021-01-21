@@ -5,7 +5,7 @@ import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {getBanks} from '../actions';
-import Header from '../common/Header';
+import Header from './Header';
 import COLORS from "../consts/colors";
 
 const height = Dimensions.get('window').height;

@@ -11,26 +11,27 @@ import {useDispatch, useSelector} from "react-redux";
 import {logout, tempAuth} from '../actions';
 
 
-import SelectLoc 				        from "../components/delegate/SelectLoc";
+import SelectLoc 				        from "../common/SelectLoc";
 import Home                             from "../components/delegate/Home";
 import Profile 					        from "../components/delegate/Profile";
-import NewLocation 				        from "../components/delegate/NewLocation";
+import NewLocation 				        from "../common/NewLocation";
 import Orders 				            from "../components/delegate/Orders";
 import Comments 				        from "../components/delegate/Comments";
-import AboutApp                         from "../components/delegate/AboutApp";
-import AppPolicy                        from "../components/delegate/AppPolicy";
-import ContactUs                        from "../components/delegate/ContactUs";
-import CompAndSug                       from "../components/delegate/CompAndSug";
-import Wallet                           from "../components/delegate/Wallet";
+import AboutApp                         from "../common/AboutApp";
+import AppPolicy                        from "../common/AppPolicy";
+import ContactUs                        from "../common/ContactUs";
+import CompAndSug                       from "../common/CompAndSug";
+import Wallet                           from "../common/Wallet";
 import OrderDetails                     from "../components/delegate/OrderDetails";
 import GetLocation                      from "../components/delegate/GetLocation";
 import OrderDeliveredSuccessfully       from "../components/delegate/OrderDeliveredSuccessfully";
 import SpecialOrderDetails              from "../components/delegate/SpecialOrderDetails";
 import NormalOrderDetails               from "../components/delegate/NormalOrderDetails";
 import Notifications                    from "../components/delegate/Notifications";
-import Recharge                         from "../components/delegate/Recharge";
-import BankTransfer                     from "../components/delegate/BankTransfer";
-import Settings                         from "../components/delegate/Settings";
+import Recharge                         from "../common/Recharge";
+import BankTransfer                     from "../common/BankTransfer";
+import Settings                         from "../common/Settings";
+import Banks 					        from "../common/Banks";
 
 
 const MainStack  	= createStackNavigator();
@@ -131,6 +132,12 @@ function MyDrawer() {
             }}
             drawerContent={(props) => <CustomDrawerContent {...props} />}>
             <Drawer.Screen name="tabs" component={TabsScreen}/>
+            <Drawer.Screen name='selectLoc' component={SelectLoc} options={() => ({
+                gestureEnabled: false
+            })}/>
+            <Drawer.Screen name='newLocation' component={NewLocation} options={() => ({
+                gestureEnabled: false
+            })}/>
             <Drawer.Screen name='aboutApp' component={AboutApp}/>
             <Drawer.Screen name='appPolicy' component={AppPolicy}/>
             <Drawer.Screen name='contactUs' component={ContactUs}/>
@@ -143,6 +150,7 @@ function MyDrawer() {
             <Drawer.Screen name='normalOrderDetails' component={NormalOrderDetails}/>
             <Drawer.Screen name='notifications' component={Notifications}/>
             <Drawer.Screen name='recharge' component={Recharge}/>
+            <Drawer.Screen name='banks' component={Banks}/>
             <Drawer.Screen name='bankTransfer' component={BankTransfer}/>
             <Drawer.Screen name='settings' component={Settings}/>
         </Drawer.Navigator>
@@ -154,8 +162,6 @@ function MyDrawer() {
 export function DelegateStackNavigator()  {
     return(
         <MainStack.Navigator mode={'card'} screenOptions={{headerShown: false}}  >
-            <MainStack.Screen name='selectLoc' component={SelectLoc}/>
-            <MainStack.Screen name='newLocation' component={NewLocation}/>
             <MainStack.Screen name='myDrawer' component={MyDrawer}/>
         </MainStack.Navigator>
     );

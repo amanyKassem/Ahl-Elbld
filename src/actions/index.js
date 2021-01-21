@@ -18,3 +18,4 @@ export * from './BanksAction';
 export * from './OffersAction';
 export * from './FavouritesAction';
 export * from './OrdersAction';
+export * from './PlacesAction';

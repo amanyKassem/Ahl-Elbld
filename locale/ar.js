@@ -224,6 +224,17 @@ const ar = {
     'hwalaImg'                  : 'صورة الحوالة',
     'orderStatus'               : 'حالة الطلب',
     'receiptLoc'                : 'موقع الاستلام',
+    'manufacturingYear'         : 'سنه الصنع',
+    'carType'                   : 'نوع السيارة',
+    'editProfile'               : 'تعديل الملف الشخصي',
+    'carNumber'                 : 'ارقام لوحة المركبة ( باللغة الانجليزية )',
+    'carChars'                  : 'حروف لوحة المركبة ( باللغة الانجليزية )',
+    'area'                      : 'المنطقة',
+    'city'                      : 'المدينة',
+    'attachment'                : 'صور المرفقات',
+    'carFrontImg'               : 'صورة السيارة من الامام',
+    'carBackImg'                : 'صورة السيارة من الخلف',
+    'carNumbers'                : 'ارقام لوحة السيارة',
 };
 
 export default ar;

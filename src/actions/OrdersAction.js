@@ -59,6 +59,21 @@ export const getSpecialOrderDetails = (lang , id , token) => {
     }
 };
 
+
+export const getDelegateOrders = (lang , latitude , longitude , status , token) => {
+    return async (dispatch) => {
+        await axios({
+            url         : CONST.url + 'delegates/orders',
+            method      : 'POST',
+            params      : { lang },
+            data        : {latitude , longitude , status},
+            headers     : {Authorization: 'Bearer ' + token}
+        }).then(response => {
+            dispatch({type: 'getDelegateOrders', payload: response.data});
+        });
+    }
+};
+
 export const orderCancel = (lang , id , token , navigation , path) => {
     return async (dispatch) => {
         await axios({
