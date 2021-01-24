@@ -19,3 +19,4 @@ export * from './OffersAction';
 export * from './FavouritesAction';
 export * from './OrdersAction';
 export * from './PlacesAction';
+export * from './ProviderCommentsAction';

@@ -36,17 +36,7 @@ import Banks 					        from "../common/Banks";
 
 const MainStack  	= createStackNavigator();
 const Drawer 	 	= createDrawerNavigator();
-const DelegateStack  	= createStackNavigator();
 const Tabs   	 	= createBottomTabNavigator();
-
-export function delegateStackStackNavigator()  {
-    return(
-        <DelegateStack.Navigator mode={'card'} screenOptions={{headerShown: false}} initialRouteName="home" >
-            <DelegateStack.Screen name='home' component={Home}/>
-            <DelegateStack.Screen name='profile' component={Profile}/>
-        </DelegateStack.Navigator>
-    );
-}
 
 
 
@@ -54,7 +44,7 @@ function TabsScreen() {
 
     return (
         <Tabs.Navigator
-            initialRouteName="delegateStack"
+            initialRouteName="home"
             tabBarOptions={{
                 activeTintColor: COLORS.mstarda,
                 style: [styles.footerStyle],
@@ -63,8 +53,8 @@ function TabsScreen() {
         >
 
             <Tabs.Screen
-                name="delegateStack"
-                component={delegateStackStackNavigator}
+                name="home"
+                component={Home}
                 options={{
                     tabBarLabel: ({ color, focused }) => (
                         <Text style={[styles.textBold , color === COLORS.mstarda ? styles.text_mstarda : styles.text_gray, styles.textCenter , styles.textSize_11]}>{i18n.t('home')}</Text>

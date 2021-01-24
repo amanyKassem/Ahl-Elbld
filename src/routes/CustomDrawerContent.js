@@ -54,7 +54,7 @@ export default function CustomDrawerContent(props) {
                 <Image source={require('../../assets/images/bg_menu.png')} style={[styles.Width_100 , styles.height_230]} resizeMode={'cover'} />
 
                 <View style={[styles.flexCenter , {position:'absolute' , top:45 }]}>
-                    <TouchableOpacity style={[styles.icon70 , styles.marginBottom_5 , styles.Radius_50 , {overflow:'hidden' , borderWidth:5 , borderColor:'#6f6a6a1a'}]}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('profile')} style={[styles.icon70 , styles.marginBottom_5 , styles.Radius_50 , {overflow:'hidden' , borderWidth:5 , borderColor:'#6f6a6a1a'}]}>
                         <Image source={{uri:user.avatar}} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
                     </TouchableOpacity>
                     <Text style={[styles.textBold , styles.text_White , styles.textSize_17, styles.textCenter ]}>{user.name}</Text>

@@ -131,3 +131,34 @@ export const orderAccept = (lang , id , token , navigation ) => {
 
     }
 };
+
+export const updateOrder = (lang , id , token , navigation , status) => {
+    return async (dispatch) => {
+        await axios({
+            url         : CONST.url + 'delegates/update-orders',
+            method      : 'POST',
+            params      : { lang },
+            data        : {id },
+            headers     : {Authorization: 'Bearer ' + token}
+        }).then(response => {
+
+            if (response.data.success && status === 'READY') {
+                navigation.navigate('orderDetails' , {id});
+            } else if (response.data.success && status === 'DELEGATEARRIVED') {
+                navigation.navigate('orderDeliveredSuccessfully');
+            }
+
+            Toast.show({
+                text        : response.data.message,
+                type        : response.data.success ? "success" : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'flatRegular',
+                    textAlign   : 'center'
+                }
+            });
+        });
+
+    }
+};

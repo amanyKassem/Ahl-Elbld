@@ -11,9 +11,6 @@ import Communications from 'react-native-communications';
 import Modal from "react-native-modal";
 import {useIsFocused} from "@react-navigation/native";
 
-const height = Dimensions.get('window').height;
-const isIOS = Platform.OS === 'ios';
-
 function OrderDetails({navigation,route}) {
 
     const lang = useSelector(state => state.lang.lang);
@@ -224,7 +221,7 @@ function OrderDetails({navigation,route}) {
                                             orderDetails.products ?
                                                 orderDetails.products.map((pro, i) => {
                                                     return (
-                                                        <View style={[styles.borderGray ,styles.paddingHorizontal_20 , styles.paddingVertical_10 , styles.marginBottom_5 , styles.directionRowSpace]}>
+                                                        <View key={i} style={[styles.borderGray ,styles.paddingHorizontal_20 , styles.paddingVertical_10 , styles.marginBottom_5 , styles.directionRowSpace]}>
                                                             <View style={[styles.directionRow]}>
                                                                 <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12 , styles.alignStart , {marginRight:5}]}>{pro.name}</Text>
 

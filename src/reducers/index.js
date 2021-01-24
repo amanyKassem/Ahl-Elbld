@@ -19,6 +19,7 @@ import offers from './OffersReducer';
 import favourites from './FavouritesReducer';
 import orders from './OrdersReducer';
 import places from './PlacesReducer';
+import comments from './CommentsReducer';
 
 export default combineReducers({
     lang,
@@ -41,4 +42,5 @@ export default combineReducers({
     favourites,
     orders,
     places,
+    comments,
 });
