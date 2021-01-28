@@ -352,7 +352,7 @@ function OrderDetails({navigation,route}) {
                     renderCancelOrder()
                     :
                     orderDetails &&  orderDetails.status === 'DELIVERED' ?
-                        <TouchableOpacity onPress={() => navigation.navigate('addUrRate')} style={[styles.mstrdaBtn , styles.Width_100 , styles.Radius_0]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('addUrRate' , {provider:orderDetails.provider , delegate:orderDetails.delegate})} style={[styles.mstrdaBtn , styles.Width_100 , styles.Radius_0]}>
                             <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('addUrRate') }</Text>
                         </TouchableOpacity>
                         :

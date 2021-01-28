@@ -1,5 +1,6 @@
 import axios from "axios";
 import CONST from "../consts";
+import {AsyncStorage} from "react-native";
 
 
 export const getBanners = (lang) => {
@@ -13,3 +14,4 @@ export const getBanners = (lang) => {
         });
     }
 };
+

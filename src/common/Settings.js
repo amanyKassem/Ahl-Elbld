@@ -7,7 +7,7 @@ import Swiper from 'react-native-swiper';
 import {useSelector, useDispatch} from 'react-redux';
 import Header from './Header';
 import COLORS from "../consts/colors";
-import { chooseLang } from '../actions';
+import { chooseLang , getNoti} from '../actions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -15,21 +15,19 @@ const isIOS = Platform.OS === 'ios';
 function Settings({navigation,route}) {
 
     const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
-    // let isNotify = useSelector(state => state.auth.isNotify);
+    let isNotify = useSelector(state => state.auth.isNotify);
 
-    // const [switchValue, setSwitchValue] = useState(isNotify);
-    const [switchValue, setSwitchValue] = useState(false);
-
-    //
-    // useEffect(() => {
-    //     setSwitchValue(isNotify);
-    // }, [isNotify]);
+    const [switchValue, setSwitchValue] = useState(isNotify);
+    
+    useEffect(() => {
+        setSwitchValue(isNotify);
+    }, [isNotify]);
 
     function toggleSwitch(value) {
         setSwitchValue(value);
-        // dispatch(getNoti(lang , value , token))
+        dispatch(getNoti(lang , token))
     }
 
     const dispatch = useDispatch()

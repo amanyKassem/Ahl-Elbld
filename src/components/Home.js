@@ -5,7 +5,7 @@ import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Swiper from 'react-native-swiper';
 import {useDispatch, useSelector} from "react-redux";
-import {getBanners , getCategories} from '../actions';
+import {getBanners , getCategories , getCartCount} from '../actions';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 
@@ -19,7 +19,9 @@ function Home({navigation,route}) {
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const banners = useSelector(state => state.banners.banners);
     const bannersLoader = useSelector(state => state.banners.loader);
+    const cartCount = useSelector(state => state.cart.cartCount);
     const categories = useSelector(state => state.categories.categories);
+    const categoriesExtra = useSelector(state => state.categories.categoriesExtra);
     const categoriesLoader = useSelector(state => state.categories.loader);
     const [screenLoader , setScreenLoader ] = useState(true);
 
@@ -29,6 +31,7 @@ function Home({navigation,route}) {
         setScreenLoader(true);
         dispatch(getBanners(lang)).then(() => setScreenLoader(false));
         dispatch(getCategories(lang)).then(() => setScreenLoader(false));
+        dispatch(getCartCount(lang , token));
     }
     useEffect(() => {
         fetchData();
@@ -65,7 +68,7 @@ function Home({navigation,route}) {
             { renderLoader() }
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ i18n.t('home') }/>
+                <Header navigation={navigation} title={ i18n.t('home') } cartCount={cartCount.count}/>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.marginTop_55 , {paddingBottom:35}]}>
 
@@ -112,14 +115,21 @@ function Home({navigation,route}) {
                            columnWrapperStyle={[styles.directionRowSpace , styles.paddingHorizontal_15]}
                        />
 
-                       <View style={[styles.paddingHorizontal_15]}>
-                           <TouchableOpacity onPress={() => navigation.navigate('fastingBreakfast')} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
-                               <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:7}]}>
-                                   <Text style={[styles.textBold , styles.text_White , styles.textSize_13, styles.textCenter ]}>{i18n.t('fastingBreakfast')}</Text>
+                       {
+                           categoriesExtra && categoriesExtra.open_section?
+                               <View style={[styles.paddingHorizontal_15]}>
+                                   <TouchableOpacity onPress={() => navigation.navigate('fastingBreakfast')} style={[styles.height_130,styles.marginBottom_10 , styles.Radius_5 , styles.marginHorizontal_5 , {flex:1 , overflow:'hidden'}]}>
+                                       <View style={[styles.flexCenter , styles.overlay_black , styles.Width_100 , {position:'absolute' , bottom :0,zIndex:1 , padding:7}]}>
+                                           <Text style={[styles.textBold , styles.text_White , styles.textSize_13, styles.textCenter ]}>{i18n.t('fastingBreakfast')}</Text>
+                                       </View>
+                                       <Image source={require("../../assets/images/banner4.png")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
+                                   </TouchableOpacity>
                                </View>
-                               <Image source={require("../../assets/images/banner4.png")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
-                           </TouchableOpacity>
-                       </View>
+                               :
+                               null
+                       }
+
+
                    </View>
 
                 </View>

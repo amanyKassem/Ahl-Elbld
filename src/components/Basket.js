@@ -85,19 +85,6 @@ function Basket({navigation,route}) {
 
                 <Header navigation={navigation} title={ i18n.t('basket') } />
 
-                <View style={[styles.Width_90,styles.SelfCenter , styles.marginBottom_20 , styles.marginTop_15]}>
-                    <Input style={[styles.inputSearch , styles.Width_100 , {flex:0}]}
-                           placeholder={i18n.t('search')}
-                           placeholderTextColor={'#fff'}
-                           onChangeText={(search) => setSearch(search)}
-                           value={search}
-                    />
-
-                    <TouchableOpacity onPress={() => navigation.push('searchResults' , {keyword:search})} style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
-                        <Image source={require("../../assets/images/search.png")} style={[styles.icon17]} resizeMode={'cover'} />
-                    </TouchableOpacity>
-                </View>
-
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100,styles.paddingHorizontal_20, {overflow:'hidden'}]}>
 
                         {

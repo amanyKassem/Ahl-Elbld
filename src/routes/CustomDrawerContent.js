@@ -55,9 +55,9 @@ export default function CustomDrawerContent(props) {
 
                 <View style={[styles.flexCenter , {position:'absolute' , top:45 }]}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('profile')} style={[styles.icon70 , styles.marginBottom_5 , styles.Radius_50 , {overflow:'hidden' , borderWidth:5 , borderColor:'#6f6a6a1a'}]}>
-                        <Image source={{uri:user.avatar}} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
+                        <Image source={token ? {uri:user.avatar} : require('../../assets/images/image_placeholder_gray.png')} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textBold , styles.text_White , styles.textSize_17, styles.textCenter ]}>{user.name}</Text>
+                    <Text style={[styles.textBold , styles.text_White , styles.textSize_17, styles.textCenter ]}>{ token ? user.name : i18n.t('visitor')}</Text>
                 </View>
 
                 <DrawerItem
@@ -79,81 +79,90 @@ export default function CustomDrawerContent(props) {
                     onPress={() => props.navigation.navigate('home')}
                 />
 
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('profile') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/user_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('profile')}
-                />
+                {
+                    token ?
+                       <>
+                           <DrawerItem
+                               style={[styles.justifyCenter , {marginHorizontal:20 }]}
+                               label={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('profile') }</Text>
+                                       )
+                                   }
+                               }
+                               icon={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Image source={require('../../assets/images/user_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                       )
+                                   }
+                               }
+                               onPress={() => props.navigation.navigate('profile')}
+                           />
 
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('myOrders') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/order_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('myOrders')}
-                />
+                           <DrawerItem
+                               style={[styles.justifyCenter , {marginHorizontal:20 }]}
+                               label={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('myOrders') }</Text>
+                                       )
+                                   }
+                               }
+                               icon={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Image source={require('../../assets/images/order_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                       )
+                                   }
+                               }
+                               onPress={() => props.navigation.navigate('myOrders')}
+                           />
 
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('specialOrders') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/special_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('specialOrders')}
-                />
+                           <DrawerItem
+                               style={[styles.justifyCenter , {marginHorizontal:20 }]}
+                               label={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('specialOrders') }</Text>
+                                       )
+                                   }
+                               }
+                               icon={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Image source={require('../../assets/images/special_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                       )
+                                   }
+                               }
+                               onPress={() => props.navigation.navigate('specialOrders')}
+                           />
 
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('wallet') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/account_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('wallet')}
-                />
+                           <DrawerItem
+                               style={[styles.justifyCenter , {marginHorizontal:20 }]}
+                               label={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('wallet') }</Text>
+                                       )
+                                   }
+                               }
+                               icon={
+                                   ({ focused, color }) => {
+                                       return (
+                                           <Image source={require('../../assets/images/account_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                       )
+                                   }
+                               }
+                               onPress={() => props.navigation.navigate('wallet')}
+                           />
+
+                       </>
+                        :
+                        null
+                }
+
 
                 <DrawerItem
                     style={[styles.justifyCenter , {marginHorizontal:20 }]}
@@ -269,31 +278,38 @@ export default function CustomDrawerContent(props) {
                     onPress={() => onShare()}
                 />
 
-                <DrawerItem
-                    style={[styles.justifyCenter , {marginHorizontal:20 }]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('settings') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/settings_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('settings')}
-                />
+                {
+                    token ?
+                        <DrawerItem
+                            style={[styles.justifyCenter , {marginHorizontal:20 }]}
+                            label={
+                                ({ focused, color }) => {
+                                    return (
+                                        <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('settings') }</Text>
+                                    )
+                                }
+                            }
+                            icon={
+                                ({ focused, color }) => {
+                                    return (
+                                        <Image source={require('../../assets/images/settings_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                    )
+                                }
+                            }
+                            onPress={() => props.navigation.navigate('settings')}
+                        />
+                        :
+                        null
+
+                }
+
 
                 <DrawerItem
                     style={[styles.justifyCenter , {marginHorizontal:20 }]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ i18n.t('logout') }</Text>
+                                <Text style={[styles.textRegular, focused ? styles.text_midGray : styles.text_gray , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr', marginLeft:-10}]}>{ token ? i18n.t('logout') : i18n.t('login') }</Text>
                             )
                         }
                     }
@@ -304,7 +320,9 @@ export default function CustomDrawerContent(props) {
                             )
                         }
                     }
-                    onPress={() => logoutFunc()}
+                    onPress={() => {
+                        token ? logoutFunc() : props.navigation.navigate('login')
+                    }}
                 />
 
             </View>

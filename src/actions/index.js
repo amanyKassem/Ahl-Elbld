@@ -20,3 +20,4 @@ export * from './FavouritesAction';
 export * from './OrdersAction';
 export * from './PlacesAction';
 export * from './ProviderCommentsAction';
+export * from './RateAction';

@@ -48,3 +48,28 @@ const Notifications = (lang , token , dispatch ) => {
         dispatch({type: 'getNotifications', payload: response.data});
     });
 };
+
+
+export const getNoti = (lang , token ) => {
+    return (dispatch) => {
+        axios({
+            url         : CONST.url + 'allow-notifications',
+            method      : 'POST',
+            headers     : {Authorization: 'Bearer ' + token},
+            params      : { lang },
+        }).then(response => {
+            dispatch({type: 'isNotify'});
+            Toast.show({
+                text        : response.data.message,
+                type        : response.data.success ? "success" : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'flatRegular',
+                    textAlign   : 'center'
+                }
+            });
+        });
+
+    }
+};

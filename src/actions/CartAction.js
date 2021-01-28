@@ -20,6 +20,25 @@ export const getCart = (lang) => {
     }
 };
 
+
+
+export const getCartCount = (lang , token) => {
+    return async (dispatch) => {
+        await AsyncStorage.getItem('deviceID').then(device_id => {
+            axios({
+                url         : CONST.url + 'cart-count',
+                method      : 'POST',
+                params      : {lang},
+                data        : { device_id },
+                headers     : {Authorization: 'Bearer ' + token},
+            }).then(response => {
+                dispatch({type: 'getCartCount', payload: response.data});
+            });
+        })
+
+    }
+};
+
 export const getCartDetails = (lang , id, coupon , token) => {
     return async (dispatch) => {
         await AsyncStorage.getItem('deviceID').then(device_id => {

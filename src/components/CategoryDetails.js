@@ -18,7 +18,6 @@ import {getProviderDetails, getProviderProducts, setFavourite} from '../actions'
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import StarRating from "react-native-star-rating";
-import FavItem from "./FavItem";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -29,7 +28,6 @@ function CategoryDetails({navigation,route}) {
 
     const {type , id} = route.params;
     const [activeType, setActiveType] = useState(null);
-    const [search, setSearch] = useState('');
     const [details, setDetails] = useState('');
 
     const lang = useSelector(state => state.lang.lang);
@@ -158,7 +156,7 @@ function CategoryDetails({navigation,route}) {
                                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, {marginLeft:10}]}>{i18n.t('away')} {providerDetails.distance}</Text>
                                     </View>
                                     {
-                                        activeType != '0'?
+                                        activeType != '0' && token?
                                             <TouchableOpacity onPress={() => setActiveType('0')} style={[styles.mstrdaBtn , styles.Width_50 , styles.marginVertical_20]}>
                                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('addSpecialOrder') }</Text>
                                             </TouchableOpacity>

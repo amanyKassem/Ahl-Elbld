@@ -1,33 +1,72 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, FlatList, I18nManager, ActivityIndicator} from "react-native";
 import {Container, Content, Form, Icon, Input, Item, Radio, Textarea} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Swiper from 'react-native-swiper';
 import {useSelector, useDispatch} from 'react-redux';
+import {userRate} from '../actions';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import StarRating from "react-native-star-rating";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function AddUrRate({navigation,route}) {
 
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const [restStarCount, setRestStarCount] = useState(3);
+    const dispatch = useDispatch()
+
+    const {provider , delegate} = route.params;
+
+    const [restStarCount, setRestStarCount] = useState(0);
     const [msgRest, setMsgRest] = useState('');
-    const [quality, setQuality] = useState('0');
-    const [cleanliness, setCleanliness] = useState('0');
+    const [quality, setQuality] = useState('1');
+    const [cleanliness, setCleanliness] = useState('1');
 
-    const [delegateStarCount, setDelegateStarCount] = useState(4);
+    const [delegateStarCount, setDelegateStarCount] = useState(0);
     const [msgDelegate, setMsgDelegate] = useState('');
-    // const [quality, setQuality] = useState('0');
-    // const [cleanliness, setCleanliness] = useState('0');
+    const [handlingWay, setHandlingWay] = useState('1');
+    const [deliverySpeed, setDeliverySpeed] = useState('1');
+
+    function renderSubmit() {
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_20]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        if (msgRest == '' || msgDelegate == '') {
+            return (
+                <View
+                    style={[styles.mstrdaBtn , styles.Width_95 , styles.SelfCenter , styles.marginTop_40 , styles.marginBottom_35 , {
+                        backgroundColor:'#ddd'
+                    }]}
+                >
+                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_15]}>{ i18n.t('rate') }</Text>
+                </View>
+            );
+        }
+
+        return (
+            <TouchableOpacity onPress={onConfirm} style={[styles.mstrdaBtn , styles.Width_95 , styles.SelfCenter , styles.marginTop_40 , styles.marginBottom_35]}>
+                <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('rate') }</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    function onConfirm() {
+        setIsSubmitted(true);
+        dispatch(userRate(lang , restStarCount , msgRest , quality , cleanliness , handlingWay , deliverySpeed , provider.id , token)).
+        then(() => dispatch(userRate(lang , delegateStarCount , msgDelegate , quality , cleanliness , handlingWay , deliverySpeed , delegate.id , token)).
+        then(() => {setIsSubmitted(false) ; navigation.navigate('rateSuccessfully')}));
+    }
 
     return (
         <Container style={[styles.bg_gray]}>
@@ -42,8 +81,8 @@ function AddUrRate({navigation,route}) {
                     </View>
 
                     <View style={[ styles.flexCenter , styles.Width_100 , styles.marginVertical_20 , styles.paddingHorizontal_20 ]}>
-                        <Image source={require("../../assets/images/banner1.png")} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
-                        <Text style={[styles.textRegular , styles.text_gray , styles.marginVertical_10 , styles.textSize_14]}>اسم المطعم</Text>
+                        <Image source={{uri:provider.avatar}} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
+                        <Text style={[styles.textRegular , styles.text_gray , styles.marginVertical_10 , styles.textSize_14]}>{provider.name}</Text>
                         <StarRating
                             maxStars={5}
                             rating={restStarCount}
@@ -69,15 +108,6 @@ function AddUrRate({navigation,route}) {
                         <View style={[styles.directionRowSpace , styles.Width_100 , styles.marginTop_10]}>
                             <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ i18n.t('quality') }</Text>
                             <View style={[styles.directionRowSpace , {flex:1 , marginLeft:50}]}>
-                                <TouchableOpacity onPress={() => setQuality('0')} style={[styles.directionRow]}>
-                                    <Radio
-                                        color={quality === '0' ? COLORS.mstarda : COLORS.midGray}
-                                        selectedColor={COLORS.mstarda}
-                                        selected={quality === '0'}
-                                        onPress={() => setQuality('0')}
-                                    />
-                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('good') }</Text>
-                                </TouchableOpacity>
                                 <TouchableOpacity onPress={() => setQuality('1')} style={[styles.directionRow]}>
                                     <Radio
                                         color={quality === '1' ? COLORS.mstarda : COLORS.midGray}
@@ -85,7 +115,7 @@ function AddUrRate({navigation,route}) {
                                         selected={quality === '1'}
                                         onPress={() => setQuality('1')}
                                     />
-                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('excellent') }</Text>
+                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('good') }</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => setQuality('2')} style={[styles.directionRow]}>
                                     <Radio
@@ -94,6 +124,15 @@ function AddUrRate({navigation,route}) {
                                         selected={quality === '2'}
                                         onPress={() => setQuality('2')}
                                     />
+                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('excellent') }</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setQuality('3')} style={[styles.directionRow]}>
+                                    <Radio
+                                        color={quality === '3' ? COLORS.mstarda : COLORS.midGray}
+                                        selectedColor={COLORS.mstarda}
+                                        selected={quality === '3'}
+                                        onPress={() => setQuality('3')}
+                                    />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('bad') }</Text>
                                 </TouchableOpacity>
                             </View>
@@ -101,15 +140,6 @@ function AddUrRate({navigation,route}) {
                         <View style={[styles.directionRowSpace , styles.Width_100 , styles.marginTop_15]}>
                             <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ i18n.t('cleanliness') }</Text>
                             <View style={[styles.directionRowSpace , {flex:1 , marginLeft:50}]}>
-                                <TouchableOpacity onPress={() => setCleanliness('0')} style={[styles.directionRow]}>
-                                    <Radio
-                                        color={cleanliness === '0' ? COLORS.mstarda : COLORS.midGray}
-                                        selectedColor={COLORS.mstarda}
-                                        selected={cleanliness === '0'}
-                                        onPress={() => setCleanliness('0')}
-                                    />
-                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('good') }</Text>
-                                </TouchableOpacity>
                                 <TouchableOpacity onPress={() => setCleanliness('1')} style={[styles.directionRow]}>
                                     <Radio
                                         color={cleanliness === '1' ? COLORS.mstarda : COLORS.midGray}
@@ -117,7 +147,7 @@ function AddUrRate({navigation,route}) {
                                         selected={cleanliness === '1'}
                                         onPress={() => setCleanliness('1')}
                                     />
-                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('excellent') }</Text>
+                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('good') }</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => setCleanliness('2')} style={[styles.directionRow]}>
                                     <Radio
@@ -125,6 +155,15 @@ function AddUrRate({navigation,route}) {
                                         selectedColor={COLORS.mstarda}
                                         selected={cleanliness === '2'}
                                         onPress={() => setCleanliness('2')}
+                                    />
+                                    <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('excellent') }</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setCleanliness('3')} style={[styles.directionRow]}>
+                                    <Radio
+                                        color={cleanliness === '3' ? COLORS.mstarda : COLORS.midGray}
+                                        selectedColor={COLORS.mstarda}
+                                        selected={cleanliness === '3'}
+                                        onPress={() => setCleanliness('3')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('bad') }</Text>
                                 </TouchableOpacity>
@@ -138,8 +177,8 @@ function AddUrRate({navigation,route}) {
                     </View>
 
                     <View style={[ styles.flexCenter , styles.Width_100 , styles.marginVertical_20 , styles.paddingHorizontal_20 ]}>
-                        <Image source={require("../../assets/images/banner1.png")} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
-                        <Text style={[styles.textRegular , styles.text_gray , styles.marginVertical_10 , styles.textSize_14]}>اسم المندوب</Text>
+                        <Image source={{uri:delegate.avatar}} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
+                        <Text style={[styles.textRegular , styles.text_gray , styles.marginVertical_10 , styles.textSize_14]}>{delegate.name}</Text>
                         <StarRating
                             maxStars={5}
                             rating={delegateStarCount}
@@ -165,30 +204,30 @@ function AddUrRate({navigation,route}) {
                         <View style={[styles.directionRowSpace , styles.Width_100 , styles.marginTop_10]}>
                             <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ i18n.t('handlingWay') }</Text>
                             <View style={[styles.directionRowSpace , {flex:1 , marginLeft:50}]}>
-                                <TouchableOpacity onPress={() => setQuality('0')} style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={() => setHandlingWay('1')} style={[styles.directionRow]}>
                                     <Radio
-                                        color={quality === '0' ? COLORS.mstarda : COLORS.midGray}
+                                        color={handlingWay === '1' ? COLORS.mstarda : COLORS.midGray}
                                         selectedColor={COLORS.mstarda}
-                                        selected={quality === '0'}
-                                        onPress={() => setQuality('0')}
+                                        selected={handlingWay === '1'}
+                                        onPress={() => setHandlingWay('1')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('good') }</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setQuality('1')} style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={() => setHandlingWay('2')} style={[styles.directionRow]}>
                                     <Radio
-                                        color={quality === '1' ? COLORS.mstarda : COLORS.midGray}
+                                        color={handlingWay === '2' ? COLORS.mstarda : COLORS.midGray}
                                         selectedColor={COLORS.mstarda}
-                                        selected={quality === '1'}
-                                        onPress={() => setQuality('1')}
+                                        selected={handlingWay === '2'}
+                                        onPress={() => setHandlingWay('2')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('excellent') }</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setQuality('2')} style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={() => setHandlingWay('3')} style={[styles.directionRow]}>
                                     <Radio
-                                        color={quality === '2' ? COLORS.mstarda : COLORS.midGray}
+                                        color={handlingWay === '3' ? COLORS.mstarda : COLORS.midGray}
                                         selectedColor={COLORS.mstarda}
-                                        selected={quality === '2'}
-                                        onPress={() => setQuality('2')}
+                                        selected={handlingWay === '3'}
+                                        onPress={() => setHandlingWay('3')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('bad') }</Text>
                                 </TouchableOpacity>
@@ -197,30 +236,30 @@ function AddUrRate({navigation,route}) {
                         <View style={[styles.directionRowSpace , styles.Width_100 , styles.marginTop_15]}>
                             <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ i18n.t('deliverySpeed') }</Text>
                             <View style={[styles.directionRowSpace , {flex:1 , marginLeft:50}]}>
-                                <TouchableOpacity onPress={() => setCleanliness('0')} style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={() => setDeliverySpeed('1')} style={[styles.directionRow]}>
                                     <Radio
-                                        color={cleanliness === '0' ? COLORS.mstarda : COLORS.midGray}
+                                        color={deliverySpeed === '1' ? COLORS.mstarda : COLORS.midGray}
                                         selectedColor={COLORS.mstarda}
-                                        selected={cleanliness === '0'}
-                                        onPress={() => setCleanliness('0')}
+                                        selected={deliverySpeed === '1'}
+                                        onPress={() => setDeliverySpeed('1')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('good') }</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setCleanliness('1')} style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={() => setDeliverySpeed('2')} style={[styles.directionRow]}>
                                     <Radio
-                                        color={cleanliness === '1' ? COLORS.mstarda : COLORS.midGray}
+                                        color={deliverySpeed === '2' ? COLORS.mstarda : COLORS.midGray}
                                         selectedColor={COLORS.mstarda}
-                                        selected={cleanliness === '1'}
-                                        onPress={() => setCleanliness('1')}
+                                        selected={deliverySpeed === '2'}
+                                        onPress={() => setDeliverySpeed('2')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('excellent') }</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setCleanliness('2')} style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={() => setDeliverySpeed('3')} style={[styles.directionRow]}>
                                     <Radio
-                                        color={cleanliness === '2' ? COLORS.mstarda : COLORS.midGray}
+                                        color={deliverySpeed === '3' ? COLORS.mstarda : COLORS.midGray}
                                         selectedColor={COLORS.mstarda}
-                                        selected={cleanliness === '2'}
-                                        onPress={() => setCleanliness('2')}
+                                        selected={deliverySpeed === '3'}
+                                        onPress={() => setDeliverySpeed('3')}
                                     />
                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , {marginLeft:10}]}>{ i18n.t('bad') }</Text>
                                 </TouchableOpacity>
@@ -229,9 +268,9 @@ function AddUrRate({navigation,route}) {
 
                     </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('rateSuccessfully')} style={[styles.mstrdaBtn , styles.Width_95 , styles.SelfCenter , styles.marginTop_40 , styles.marginBottom_35]}>
-                        <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('rate') }</Text>
-                    </TouchableOpacity>
+                    {
+                        renderSubmit()
+                    }
 
                 </View>
 

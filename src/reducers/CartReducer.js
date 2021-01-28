@@ -1,4 +1,4 @@
-const INITIAL_STATE = {cart : [] , cartDetails:null ,validationCoupon:0 , deliveryPrice:0 , loader : false };
+const INITIAL_STATE = {cart : [] , cartDetails:null ,validationCoupon:0 , deliveryPrice:0 , cartCount:null , loader : false };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -22,6 +22,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 deliveryPrice: action.payload.data,
+                loader: action.payload.success
+            };
+        case 'getCartCount':
+            return {
+                cartCount: action.payload.data,
                 loader: action.payload.success
             };
         default:

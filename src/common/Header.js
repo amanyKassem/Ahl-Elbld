@@ -11,10 +11,10 @@ import {Textarea} from "native-base";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function Header({navigation , title , onToggleFavorite , filteration , onNearProvider ,onFarProvider, onRateProvider, likeIcon , delegate}) {
+function Header({navigation , title , cartCount , onToggleFavorite , filteration , onNearProvider ,onFarProvider, onRateProvider, likeIcon , delegate}) {
 
     // const lang          = useSelector(state => state.lang.lang);
-    // const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     // const user          = useSelector(state => state.auth.user ? state.auth.user.data :  {avatar: null});
     const notifications = useSelector(state => state.notifications.notifications);
 
@@ -68,7 +68,7 @@ function Header({navigation , title , onToggleFavorite , filteration , onNearPro
                                 <Image source={require('../../assets/images/basket.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                             </View>
                             <View style={[styles.icon15 , styles.Radius_50 , styles.bg_mstarda , styles.justifyCenter ,{position:'absolute' , left:12 , top:0}]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_10 , styles.flexCenter]}>1</Text>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_10 , styles.flexCenter]}>{cartCount}</Text>
                             </View>
                         </TouchableOpacity>
 
@@ -118,9 +118,15 @@ function Header({navigation , title , onToggleFavorite , filteration , onNearPro
                         title === i18n.t('providerDetails') ||  title ===  i18n.t('details')  ?
                             <View style={[styles.directionRow]}>
 
-                                <TouchableOpacity onPress={onToggleFavorite}>
-                                    <Icon style={[likeIcon ? styles.text_red : styles.text_White, styles.textSize_20]} type="AntDesign" name={ 'heart' } />
-                                </TouchableOpacity>
+                                {
+                                    token ?
+                                        <TouchableOpacity onPress={onToggleFavorite}>
+                                            <Icon style={[likeIcon ? styles.text_red : styles.text_White, styles.textSize_20]} type="AntDesign" name={ 'heart' } />
+                                        </TouchableOpacity>
+                                        :
+                                        null
+                                }
+
 
                                 <TouchableOpacity onPress={() => navigation.goBack()} style={{marginLeft:10}} >
                                     <Image source={require('../../assets/images/arrow_left.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />

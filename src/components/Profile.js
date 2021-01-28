@@ -213,7 +213,7 @@ function Profile({navigation,route}) {
                                         <Image source={require('../../assets/images/camera.png')} style={[styles.icon25]} resizeMode='contain' />
                                     </TouchableOpacity>
                                 </View>
-                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , styles.marginBottom_5]}>{userData.name}</Text>
+                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , styles.marginBottom_5]}>{username}</Text>
                             </View>
 
                             <KeyboardAvoidingView style={[styles.Width_100 , styles.marginTop_35 , styles.marginBottom_25]}>
