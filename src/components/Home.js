@@ -68,7 +68,7 @@ function Home({navigation,route}) {
             { renderLoader() }
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ i18n.t('home') } cartCount={cartCount.count}/>
+                <Header navigation={navigation} title={ i18n.t('home') } cartCount={cartCount && cartCount.count ? cartCount.count : '0'}/>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.marginTop_55 , {paddingBottom:35}]}>
 
