@@ -156,6 +156,33 @@ export const resetPassword = (password , code , token, lang, navigation) => {
 	}
 };
 
+
+
+export const getDelegateAvailable = (lang , token ) => {
+	return (dispatch) => {
+		axios({
+			url         : CONST.url + 'delegate-availability',
+			method      : 'POST',
+			headers     : {Authorization: 'Bearer ' + token},
+			params      : { lang },
+		}).then(response => {
+			dispatch({type: 'delegateIsAvailable'});
+			Toast.show({
+				text        : response.data.message,
+				type        : response.data.success ? "success" : "danger",
+				duration    : 3000,
+				textStyle   : {
+					color       : "white",
+					fontFamily  : 'flatRegular',
+					textAlign   : 'center'
+				}
+			});
+		});
+
+	}
+};
+
+
 export const tempAuth = () => {
     return (dispatch) => {
         dispatch({type: 'temp_auth'});
@@ -188,7 +215,7 @@ const loginSuccess = (dispatch, data , navigation) => {
 };
 
 const loginFailed = (dispatch, error , navigation) => {
-	if(!error.data.active) {
+	if(error.data.active === false) {
 		navigation.navigate('activationCode', {
 			token: error.data.token
 		});

@@ -109,7 +109,7 @@ function OfferPrice({navigation,route}) {
                                         <View style={[styles.borderGray , styles.directionRow , styles.Radius_5 , {flex:1 , padding:15}]}>
                                             <View style={[styles.directionRow , {flex:1}]}>
                                                 <Image source={{uri:specialOrderDetails.provider.avatar}} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
-                                                <View style={[styles.paddingHorizontal_10]}>
+                                                <View style={[styles.paddingHorizontal_10 , {flex:1}]}>
                                                     <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.alignStart , styles.marginBottom_5]}>{specialOrderDetails.provider.name}</Text>
                                                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14 , styles.alignStart]}>{specialOrderDetails.date}</Text>
                                                 </View>
@@ -148,7 +148,10 @@ function OfferPrice({navigation,route}) {
                                         <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow , styles.marginTop_35  , styles.height_45]}>
                                             <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('orderStatus') }</Text>
                                         </View>
-                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.status_text}</Text>
+                                        <View style={[styles.directionRow , styles.paddingHorizontal_20 , styles.marginVertical_15 ]}>
+                                            <Icon type={'Entypo'} name={'back-in-time'} style={[styles.textSize_17 , styles.text_red , {marginRight:5}]} />
+                                            <Text style={[styles.textRegular, styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.status_text}</Text>
+                                        </View>
 
                                     </>
                                     :

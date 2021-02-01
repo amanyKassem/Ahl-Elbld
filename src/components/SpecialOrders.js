@@ -75,7 +75,7 @@ function SpecialOrders({navigation,route}) {
             <TouchableOpacity onPress={() => navigation.navigate(active === 0 ? 'offerPrice' : 'specialOrderDetails', {orderType:active , pathName:'specialOrders' , id})} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <View style={[styles.directionRow , {flex:1}]}>
                     <Image source={{uri:image}} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
-                    <View style={[styles.paddingHorizontal_10]}>
+                    <View style={[styles.paddingHorizontal_10 , {flex:1}]}>
                         <Text style={[styles.textRegular , styles.text_black , styles.textSize_14 , styles.marginBottom_10 , styles.alignStart]}>{ name }</Text>
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14]}>{ date }</Text>
                     </View>

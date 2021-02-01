@@ -44,7 +44,7 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
                         null
                 }
                 {
-                    title === i18n.t('home') ?
+                    token && title === i18n.t('home') ?
                         <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={[styles.icon30 , {marginRight:15 , padding:5}]}>
                             <Image source={notifications.length > 0 ? require('../../assets/images/notication_acctive.png') : require('../../assets/images/notification_non_active.png')} style={[styles.transform , styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
                         </TouchableOpacity>

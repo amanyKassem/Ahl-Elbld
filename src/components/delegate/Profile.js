@@ -15,7 +15,7 @@ import Header from '../../common/Header';
 import COLORS from "../../consts/colors";
 import  Modal  from "react-native-modal";
 import {useSelector, useDispatch} from "react-redux";
-import {profile, updateProfile , changePass} from "../../actions";
+import {profile , changePass} from "../../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';

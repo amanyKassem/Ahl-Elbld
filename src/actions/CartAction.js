@@ -56,14 +56,14 @@ export const getCartDetails = (lang , id, coupon , token) => {
     }
 };
 
-export const addToCart = (lang , product_id , quantity ,price , token , navigation , orderTime) => {
+export const addToCart = (lang , product_id , quantity ,price ,extras , token , navigation , orderTime) => {
     return async (dispatch) => {
         await AsyncStorage.getItem('deviceID').then(device_id => {
             axios({
                 url         : CONST.url + 'add-cart',
                 method      : 'POST',
                 params      : {lang},
-                data        : { device_id , product_id , quantity ,price},
+                data        : { device_id , product_id , quantity ,price ,extras},
                 headers     : {Authorization: 'Bearer ' + token}
             }).then(response => {
                 if (response.data.success && orderTime === 'now'){
@@ -176,7 +176,7 @@ export const deleteProduct = (cart_id, id, lang, token , navigation) => {
 }
 
 
-export const sendOrder = ( lang, provider_id, latitude , longitude , address , payment_type , coupon , time, token , navigation) => {
+export const sendOrder = ( lang, provider_id, latitude , longitude , address , payment_type, shipping_price , coupon , time, token , navigation) => {
     return async (dispatch,) => {
 
 
@@ -184,7 +184,7 @@ export const sendOrder = ( lang, provider_id, latitude , longitude , address , p
             method      : 'POST',
             url         : CONST.url + 'send-order',
             params      : {lang},
-            data        : {provider_id, latitude , longitude , address , payment_type , coupon, time},
+            data        : {provider_id, latitude , longitude , address , payment_type , shipping_price , coupon, time},
             headers     : {Authorization: 'Bearer ' + token}
 
         }).then(response => {

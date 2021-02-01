@@ -64,7 +64,7 @@ function OrderData({navigation,route}) {
             )
         }
 
-        if (mapRegion.latitude == null && timeDelivery == '') {
+        if (mapRegion.latitude == null || timeDelivery == '') {
             return (
                 <View
                     style={[styles.mstrdaBtn , styles.Width_100  , styles.marginTop_55, styles.marginBottom_10 , {
@@ -95,7 +95,7 @@ function OrderData({navigation,route}) {
             })});
         }
         else{
-            dispatch(sendOrder(lang, provider_id, mapRegion.latitude , mapRegion.longitude , cityName , payType , coupon , timeDelivery, token , navigation)).
+            dispatch(sendOrder(lang, provider_id, mapRegion.latitude , mapRegion.longitude , cityName , payType, deliveryPrice.delivery , coupon , timeDelivery, token , navigation)).
             then(() => {setIsSubmitted(false) ; setTimeDelivery('') ; setPayType('cash') ; setCityName('') ; setMapRegion({
                 latitude: null,
                 longitude: null,

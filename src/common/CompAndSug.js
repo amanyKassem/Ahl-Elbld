@@ -69,7 +69,14 @@ function CompAndSug({navigation,route}) {
 
     function onConfirm() {
         setIsSubmitted(true);
-        dispatch(sendComplaint(lang , username , mail , subject , msg , token)).then(() => {setIsSubmitted(false)});
+        dispatch(sendComplaint(lang , username , mail , subject , msg , token)).
+        then(() => {
+            setIsSubmitted(false);
+            setMsg('');
+            setUsername('');
+            setMail('');
+            setSubject('')
+        });
     }
 
 

@@ -38,8 +38,10 @@ function BasketDetails({navigation,route}) {
     useEffect(() => {
         if (isFocused) {
             fetchData();
+            if(cartDetails && cartDetails.count == 0)
+                navigation.navigate('basket')
         }
-    }, [isFocused])
+    }, [isFocused , cartDetails && cartDetails.count ? cartDetails.count : null])
 
     function DeleteProducts(CartId, ProviderId) {
         dispatch(deleteProduct(CartId, ProviderId, lang, token , navigation)).then(() => dispatch(getCartDetails(lang , id, coupon , token)))

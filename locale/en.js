@@ -235,6 +235,7 @@ const en = {
     'carFrontImg'               : 'Image of the car from the front',
     'carBackImg'                : 'Image of the car from the back',
     'carNumbers'                : 'License plate numbers',
+    'totalPrice'                : 'The total price of the order',
 };
 
 export default en;

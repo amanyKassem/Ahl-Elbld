@@ -108,7 +108,7 @@ function OrderDetails({navigation,route}) {
 
         return (
             <TouchableOpacity onPress={onUpdate} style={[styles.mstrdaBtn , styles.marginVertical_35 , styles.flexCenter , styles.Width_90]}>
-                <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('orderHasReceived') }</Text>
+                <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('orderHasDelivered') }</Text>
             </TouchableOpacity>
         );
 

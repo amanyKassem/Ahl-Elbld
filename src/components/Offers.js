@@ -38,37 +38,37 @@ function Offers({navigation,route}) {
         }
     }, [isFocused])
 
-    function ItemOrder({ name , image , location , id , type , rate, index }) {
-        return (
-            <TouchableOpacity onPress={() => {navigation.navigate('categoryDetails', {id , type}) ; setShowModal(false)}} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
-                <Image source={{uri:image}} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
-                <View style={[{marginLeft:15 , flex:1}]}>
-                    <View style={styles.directionRowSpace}>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12]}>{ name.substr(0,20) }</Text>
-                        <View style={[styles.directionRow]}>
-                            <StarRating
-                                disabled={false}
-                                maxStars={5}
-                                rating={rate}
-                                fullStarColor={'#fec104'}
-                                starSize={10}
-                                starStyle={{ marginHorizontal: 2 }}
-                            />
-                        </View>
-                    </View>
-                    <View style={[styles.directionRow , styles.marginTop_5]}>
-                        <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_13 , styles.text_mstarda , {marginRight:5}]} />
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12, {lineHeight:20}]}>{ location }</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
+    // function ItemOrder({ name , image , location , id , type , rate, index }) {
+    //     return (
+    //         <TouchableOpacity onPress={() => {navigation.navigate('categoryDetails', {id , type}) ; setShowModal(false)}} style={[styles.borderGray,styles.marginBottom_20 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
+    //             <Image source={{uri:image}} style={[styles.icon50 , styles.Radius_7]} resizeMode={'cover'} />
+    //             <View style={[{marginLeft:15 , flex:1}]}>
+    //                 <View style={styles.directionRowSpace}>
+    //                     <Text style={[styles.textRegular , styles.text_gray , styles.textSize_12]}>{ name.substr(0,20) }</Text>
+    //                     <View style={[styles.directionRow]}>
+    //                         <StarRating
+    //                             disabled={false}
+    //                             maxStars={5}
+    //                             rating={rate}
+    //                             fullStarColor={'#fec104'}
+    //                             starSize={10}
+    //                             starStyle={{ marginHorizontal: 2 }}
+    //                         />
+    //                     </View>
+    //                 </View>
+    //                 <View style={[styles.directionRow , styles.marginTop_5]}>
+    //                     <Icon type={'MaterialIcons'} name={'location-on'} style={[styles.textSize_13 , styles.text_mstarda , {marginRight:5}]} />
+    //                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12, {lineHeight:20}]}>{ location }</Text>
+    //                 </View>
+    //             </View>
+    //         </TouchableOpacity>
+    //     );
+    // }
 
 
-    function Item({ image , id , index }) {
+    function Item({ image , id , type, index }) {
         return (
-            <TouchableOpacity onPress={() => toggleModal(id)} style={[styles.Width_100 , styles.height_150 , styles.marginBottom_15]}>
+            <TouchableOpacity onPress={() => navigation.navigate('categoryDetails', {id , type})} style={[styles.Width_100 , styles.height_150 , styles.marginBottom_15]}>
                 <Image source={{uri:image}} style={styles.swiperImg} resizeMode={'cover'}/>
             </TouchableOpacity>
         );
@@ -122,6 +122,7 @@ function Offers({navigation,route}) {
                                     renderItem={({ item , index}) => <Item
                                         id={item.id}
                                         image={item.image}
+                                        type={item.type}
                                         index={index}
                                     />}
                                     keyExtractor={item => item.id}
@@ -133,52 +134,52 @@ function Offers({navigation,route}) {
                     </View>
 
 
-                    <Modal
-                        onBackdropPress                 ={() => setShowModal(false)}
-                        onBackButtonPress               = {() => setShowModal(false)}
-                        isVisible                       = {showModal}
-                        style                           = {styles.bgModel}
-                        avoidKeyboard                    = {true}
-                    >
+                    {/*<Modal*/}
+                    {/*    onBackdropPress                 ={() => setShowModal(false)}*/}
+                    {/*    onBackButtonPress               = {() => setShowModal(false)}*/}
+                    {/*    isVisible                       = {showModal}*/}
+                    {/*    style                           = {styles.bgModel}*/}
+                    {/*    avoidKeyboard                    = {true}*/}
+                    {/*>*/}
 
-                        <View style={[styles.bg_White, styles.overHidden, styles.Width_100, styles.flexCenter , {borderTopStartRadius:5 , borderTopEndRadius:5}]}>
+                    {/*    <View style={[styles.bg_White, styles.overHidden, styles.Width_100, styles.flexCenter , {borderTopStartRadius:5 , borderTopEndRadius:5}]}>*/}
 
-                            <View style={[styles.bg_gray , styles.paddingHorizontal_15 , styles.Width_100 , styles.paddingVertical_15 , styles.directionRowSpace]}>
-                                <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('declaredFamilies') }</Text>
-                                <TouchableOpacity onPress={() => setShowModal(false)}>
-                                    <Icon type={'AntDesign'} name={'close'} style={[styles.textSize_20 , styles.text_White ]} />
-                                </TouchableOpacity>
-                            </View>
+                    {/*        <View style={[styles.bg_gray , styles.paddingHorizontal_15 , styles.Width_100 , styles.paddingVertical_15 , styles.directionRowSpace]}>*/}
+                    {/*            <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('declaredFamilies') }</Text>*/}
+                    {/*            <TouchableOpacity onPress={() => setShowModal(false)}>*/}
+                    {/*                <Icon type={'AntDesign'} name={'close'} style={[styles.textSize_20 , styles.text_White ]} />*/}
+                    {/*            </TouchableOpacity>*/}
+                    {/*        </View>*/}
 
-                           <View style={[styles.Width_100 , styles.paddingHorizontal_15 , styles.marginTop_20]}>
+                    {/*       <View style={[styles.Width_100 , styles.paddingHorizontal_15 , styles.marginTop_20]}>*/}
 
-                               {
-                                   offerProvider?
-                                       <FlatList
-                                           data={offerProvider}
-                                           horizontal={false}
-                                           showsVerticalScrollIndicator={false}
-                                           renderItem={({ item , index}) => <ItemOrder
-                                               id={item.id}
-                                               name={item.name}
-                                               image={item.avatar}
-                                               location={item.address}
-                                               type={item.type}
-                                               rate={item.rate}
-                                               index={index}
-                                           />}
-                                           keyExtractor={item => item.id}
-                                       />
-                                       :
-                                       null
-                               }
+                    {/*           {*/}
+                    {/*               offerProvider?*/}
+                    {/*                   <FlatList*/}
+                    {/*                       data={offerProvider}*/}
+                    {/*                       horizontal={false}*/}
+                    {/*                       showsVerticalScrollIndicator={false}*/}
+                    {/*                       renderItem={({ item , index}) => <ItemOrder*/}
+                    {/*                           id={item.id}*/}
+                    {/*                           name={item.name}*/}
+                    {/*                           image={item.avatar}*/}
+                    {/*                           location={item.address}*/}
+                    {/*                           type={item.type}*/}
+                    {/*                           rate={item.rate}*/}
+                    {/*                           index={index}*/}
+                    {/*                       />}*/}
+                    {/*                       keyExtractor={item => item.id}*/}
+                    {/*                   />*/}
+                    {/*                   :*/}
+                    {/*                   null*/}
+                    {/*           }*/}
 
 
-                           </View>
+                    {/*       </View>*/}
 
-                        </View>
+                    {/*    </View>*/}
 
-                    </Modal>
+                    {/*</Modal>*/}
 
                 </View>
 

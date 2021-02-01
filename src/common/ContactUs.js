@@ -68,7 +68,13 @@ function ContactUs({navigation,route}) {
 
     function onConfirm() {
         setIsSubmitted(true);
-        dispatch(contactUs(lang , username , phone , msg)).then(() => {setIsSubmitted(false)});
+        dispatch(contactUs(lang , username , phone , msg)).
+        then(() => {
+            setIsSubmitted(false);
+            setUsername('');
+            setPhone('');
+            setMsg('')
+        });
     }
 
 

@@ -1,12 +1,11 @@
-import React , {useState} from "react";
+import React , {useState , useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {chooseLang} from "../actions";
 import {DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
 import styles from "../../assets/styles";
 import {Dimensions, I18nManager, Image, Platform, Text, TouchableOpacity, View, Share, Switch} from "react-native";
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
-import {logout, tempAuth} from '../actions';
+import {logout, tempAuth , getDelegateAvailable} from '../actions';
 
 
 const height = Dimensions.get('window').height;
@@ -19,7 +18,18 @@ export default function CustomDrawerContent(props) {
     const auth = useSelector(state => state.auth);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const user  = useSelector(state => state.auth.user ? state.auth.user.data : { avatar: '', name: null});
-    const [switchValue, setSwitchValue] = useState(user && user.data? user.data.active : false);
+    let delegateIsAvailable = useSelector(state => state.auth.delegateIsAvailable);
+    // const [switchValue, setSwitchValue] = useState(user && user.delegate? user.delegate.available : false);
+    const [switchValue, setSwitchValue] = useState(delegateIsAvailable);
+
+    useEffect(() => {
+        setSwitchValue(delegateIsAvailable);
+    }, [delegateIsAvailable]);
+
+    function toggleSwitch(value) {
+        setSwitchValue(value);
+        dispatch(getDelegateAvailable(lang , token))
+    }
 
     const dispatch  = useDispatch();
 
@@ -28,9 +38,6 @@ export default function CustomDrawerContent(props) {
         dispatch(tempAuth(token));
     }
 
-    function toggleSwitch(value) {
-        setSwitchValue(value);
-    }
 
     const onShare = async () => {
         try {

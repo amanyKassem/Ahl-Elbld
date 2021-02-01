@@ -3,25 +3,15 @@ import {View, Text, Image, TouchableOpacity, Dimensions, ScrollView, I18nManager
 import {Container, Content, Form, Icon, Input, Item, Label} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import Swiper from 'react-native-swiper';
-import {useSelector, useDispatch} from 'react-redux';
-import Header from '../common/Header';
-import COLORS from "../consts/colors";
 import  Modal  from "react-native-modal";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
 
 function BasketProduct({pro, DeleteProducts, Decrease, Increase}) {
-
-    // const lang = useSelector(state => state.lang.lang);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const [showModal, setShowModal] = useState(false);
 
     const [count, setCount] = useState(0);
-    // const [total, setTotal] = useState(0);
 
 
     function toggleModal () {
@@ -30,24 +20,8 @@ function BasketProduct({pro, DeleteProducts, Decrease, Increase}) {
 
     useEffect(() => {
         setCount(pro.quantity);
-        // setTotal(pro.total);
     }, [])
 
-    // const increment = () => {
-    //     setCount(count + 1);
-    //     setTotal((pro.price) * (count + 1))
-    // }
-    //
-    // const decrement = () => {
-    //     if (count === 1) {
-    //         setCount(1);
-    //     } else {
-    //         setCount(count - 1);
-    //         setTotal((pro.price) * (count - 1))
-    //
-    //     }
-    //
-    // }
 
     const increment = () => {
         Increase()
@@ -92,7 +66,7 @@ function BasketProduct({pro, DeleteProducts, Decrease, Increase}) {
                 </View>
 
                 <View style={[styles.directionRow]}>
-                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12]}>{pro.total} {i18n.t('RS')}</Text>
+                    <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_12]}>{pro.price} {i18n.t('RS')}</Text>
                     <TouchableOpacity onPress={DeleteProducts}>
                         <Image source={require('../../assets/images/delete_red.png')} style={[styles.icon25 , {marginLeft:10}]} resizeMode={'contain'} />
                     </TouchableOpacity>
