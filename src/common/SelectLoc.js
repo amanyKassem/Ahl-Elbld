@@ -20,7 +20,6 @@ import COLORS from "../consts/colors";
 import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 import {useIsFocused} from "@react-navigation/native";
-import {getDelegateOrders} from "../actions";
 const latitudeDelta = 0.922;
 const longitudeDelta = 0.521;
 

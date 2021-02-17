@@ -112,7 +112,7 @@ function ProductDetails({navigation,route}) {
 
     const AddToCart = (orderTime) => {
         setScreenLoader(true)
-        dispatch(addToCart(lang , id , count ,total == 0 ? product.price : total , GetID , token , navigation , orderTime)).then(() => setScreenLoader(false))
+        dispatch(addToCart(lang , id , count ,total == 0 ? product.price : total/count , GetID , token , navigation , orderTime)).then(() => setScreenLoader(false))
     }
 
 

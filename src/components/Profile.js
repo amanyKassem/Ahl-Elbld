@@ -26,23 +26,23 @@ function Profile({navigation,route}) {
 
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
-
+    const user = useSelector(state =>  state.auth.user ? state.auth.user.data : {});
 
     const userData = useSelector(state => state.profile.user);
     const userDataLoader = useSelector(state => state.profile.loader);
-    const [spinner, setSpinner] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [screenLoader , setScreenLoader ] = useState(true);
 
     const [base64, setBase64] = useState(null);
     const [userImage, setUserImage] = useState("");
 
-    const [username, setUsername] = useState(userData && userData.name ? userData.name : '');
+    const [username, setUsername] = useState(user.name);
     const [editName, setEditName] = useState(false);
 
-    const [phone, setPhone] = useState(userData && userData.phone ? userData.phone : '');
+    const [phone, setPhone] = useState(user.phone);
     const [editPhone, setEditPhone] = useState(false);
 
-    const [mail, setMail] = useState(userData && userData.email ? userData.email : '');
+    const [mail, setMail] = useState(user.email);
     const [editMail, setEditMail] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
@@ -59,7 +59,8 @@ function Profile({navigation,route}) {
     const dispatch = useDispatch();
 
     function fetchData(){
-        dispatch(profile(lang, token))
+        setScreenLoader(true)
+        dispatch(profile(lang, token)).then(() => {setScreenLoader(false)});
     }
 
     useEffect(() => {
@@ -69,6 +70,17 @@ function Profile({navigation,route}) {
         });
         return unsubscribe;
     }, [navigation , userDataLoader]);
+
+
+    function renderLoader(){
+        if (screenLoader){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
 
     function toggleModal () {
         setShowModal(!showModal);
@@ -118,8 +130,8 @@ function Profile({navigation,route}) {
     }
 
     function onConfirm() {
-        setSpinner(true);
-        dispatch(updateProfile(lang , username , phone ,mail , base64 , token)).then(() => {setSpinner(false) ; setUserImage(null)});
+        setScreenLoader(true);
+        dispatch(updateProfile(lang , username , phone ,mail , base64 , token)).then(() => {setScreenLoader(false) ; setUserImage(null)});
     }
 
     function renderSubmitPass() {
@@ -183,16 +195,6 @@ function Profile({navigation,route}) {
             dispatch(changePass(lang , password , newpass , token)).then(() => {setIsSubmitted(false) ; setShowModal(false)});
         }
 
-    }
-
-    function renderLoader(){
-        if (spinner){
-            return(
-                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
-                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
-                </View>
-            );
-        }
     }
 
     return (

@@ -257,9 +257,19 @@ function OrderDetails({navigation,route}) {
                                         <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{orderDetails.status_text}</Text>
 
                                         <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                            <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('purchasePrice') }</Text>
+                                        </View>
+                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{orderDetails.sum} {i18n.t('RS') }</Text>
+
+                                        <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
                                             <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('totalPrice') }</Text>
                                         </View>
                                         <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{orderDetails.total} {i18n.t('RS') }</Text>
+
+                                        <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                            <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('deliveryPrice') }</Text>
+                                        </View>
+                                        <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{orderDetails.shipping} {i18n.t('RS') }</Text>
 
                                         <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 ,  styles.directionRow  , styles.height_45]}>
                                             <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('deliveryDetails') }</Text>
@@ -325,7 +335,7 @@ function OrderDetails({navigation,route}) {
                                                         </TouchableOpacity>
                                                     </View>
 
-                                                    <TouchableOpacity style={[styles.flexCenter]}>
+                                                    <TouchableOpacity onPress={() =>  navigation.navigate('getLocation' , {pathName:'orderDetails' , latitude:orderDetails.delegate.latitude , longitude : orderDetails.delegate.longitude})} style={[styles.flexCenter]}>
                                                         <Text style={[styles.textRegular,styles.text_mstarda,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.textSize_14 ]}>( {i18n.t('delegateTracking') } )</Text>
                                                     </TouchableOpacity>
 
@@ -384,7 +394,10 @@ function OrderDetails({navigation,route}) {
                         {
                             extras  && extras.map((extra, i) => {
                                 return (
-                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- {extra.name}</Text>
+                                    <View style={[styles.directionRowSpace]}>
+                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- {extra.name}</Text>
+                                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.marginBottom_10 , styles.alignStart]}>{extra.price} { i18n.t('RS') }</Text>
+                                    </View>
                                 )
                             })
                         }

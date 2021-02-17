@@ -7,7 +7,7 @@ import Swiper from 'react-native-swiper';
 import {useSelector, useDispatch} from 'react-redux';
 import Header from '../../common/Header';
 import COLORS from "../../consts/colors";
-import {getDelegateOrders} from "../../actions";
+import {getDelegateOrders , updateLocation} from "../../actions";
 import {useIsFocused} from "@react-navigation/native";
 
 const height = Dimensions.get('window').height;
@@ -29,7 +29,7 @@ function Home({navigation,route}) {
 
     const fetchData = () => {
         setScreenLoader(true);
-        dispatch(getDelegateOrders(lang , route.params ? route.params.latitude : null, route.params ? route.params.longitude : null, 'READY' , token)).then(() => setScreenLoader(false));
+        dispatch(getDelegateOrders(lang , route.params ? route.params.latitude : null, route.params ? route.params.longitude : null, 'READY' , token)).then(() => {dispatch(updateLocation(lang , route.params ? route.params.latitude : null, route.params ? route.params.longitude : null , token)) ; setScreenLoader(false)});
     }
 
     useEffect(() => {

@@ -132,7 +132,30 @@ function SpecialOrderDetails({navigation,route}) {
                                 <View style={[styles.marginTop_20 , styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
                                     <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('payMethod') }</Text>
                                 </View>
-                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.payment}</Text>
+                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.payment_text}</Text>
+
+                                <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                    <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('orderStatus') }</Text>
+                                </View>
+                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.status_text}</Text>
+
+                                <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                    <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('purchasePrice') }</Text>
+                                </View>
+                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.sum} {i18n.t('RS') }</Text>
+
+                                <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                    <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('totalPrice') }</Text>
+                                </View>
+                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.total} {i18n.t('RS') }</Text>
+
+                                <View style={[ styles.bg_light_gray ,styles.paddingHorizontal_20 , styles.directionRow  , styles.height_45]}>
+                                    <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('deliveryPrice') }</Text>
+                                </View>
+                                <Text style={[styles.textRegular,styles.paddingHorizontal_20 , styles.marginVertical_15 , styles.text_gray , styles.textSize_14 ,styles.alignStart]}>{specialOrderDetails.shipping} {i18n.t('RS') }</Text>
+
+
+
                                 <View style={[styles.bg_light_gray ,styles.paddingHorizontal_20 ,  styles.directionRow  , styles.height_45]}>
                                     <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_14]}>{i18n.t('deliveryDetails') }</Text>
                                 </View>
@@ -183,11 +206,17 @@ function SpecialOrderDetails({navigation,route}) {
             </Content>
 
             {
-                specialOrderDetails && specialOrderDetails.status === 'PROGRESS'?
+                specialOrderDetails && (specialOrderDetails.status === 'READY' || specialOrderDetails.status === 'WAITING_OFFER' )?
                     renderCancelOrder()
                     :
-                    null
+                    specialOrderDetails &&  specialOrderDetails.status === 'DELIVERED' ?
+                        <TouchableOpacity onPress={() => navigation.navigate('addUrRate' , {provider:specialOrderDetails.provider , delegate:specialOrderDetails.delegate})} style={[styles.mstrdaBtn , styles.Width_100 , styles.Radius_0]}>
+                            <Text style={[styles.textBold , styles.text_White , styles.textSize_15]}>{ i18n.t('addUrRate') }</Text>
+                        </TouchableOpacity>
+                        :
+                        null
             }
+
 
         </Container>
     );

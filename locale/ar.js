@@ -236,6 +236,7 @@ const ar = {
     'carBackImg'                : 'صورة السيارة من الخلف',
     'carNumbers'                : 'ارقام لوحة السيارة',
     'totalPrice'                : 'اجمالي سعر الطلب',
+    'purchasePrice'             : 'سعر المشتريات',
 };
 
 export default ar;

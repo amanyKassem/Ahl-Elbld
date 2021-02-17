@@ -1,3 +1,3 @@
 export default {
-    url: 'https://ahlalbalad.aait-sa.com/api/v1/',
+    url: 'https://ahlalbalad.aait-sa.com/backend/api/v1/',
 };

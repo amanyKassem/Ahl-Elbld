@@ -83,7 +83,7 @@ function Notifications({navigation,route}) {
 
                             notifications.map((noty, i) => {
                                     return (
-                                        <TouchableOpacity key={i} onPress={() => navigation.navigate(noty.status === 'CANCELED' ? 'restWithdrawal' : noty.type === 'normal' ? 'orderDetails' : 'offerPrice', {pathName:'notifications' , id : noty.order_id})} style={[styles.borderGray, styles.directionRow  , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
+                                        <TouchableOpacity key={i} onPress={() => navigation.navigate(noty.status === 'CANCELED' ? 'restWithdrawal' : noty.type === 'normal' ? 'orderDetails' : noty.type === 'wallet' ? 'wallet' : 'offerPrice', {pathName:'notifications' , id : noty.order_id})} style={[styles.borderGray, styles.directionRow  , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>
                                             <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.writingDir , {marginRight:15 , lineHeight:22, flex:1}]}>{noty.body}</Text>
                                             <TouchableOpacity onPress = {() => deleteNotify(noty.id)} style={[styles.paddingVertical_5 , styles.paddingHorizontal_5, styles.Radius_50]}>
                                                 <Image source={require('../../assets/images/delete_red.png')} style={[styles.icon23]} resizeMode={'contain'} />
@@ -95,10 +95,6 @@ function Notifications({navigation,route}) {
                             renderNoData()
                     }
 
-                    {/*<TouchableOpacity onPress={() => navigation.navigate('restWithdrawal')} style={[styles.borderGray , styles.directionRow , styles.Radius_5 , styles.marginTop_15 , styles.paddingVertical_5 , styles.paddingHorizontal_10]}>*/}
-                    {/*    <Image source={require("../../assets/images/image_placeholder.png")} style={[styles.icon45 , styles.Radius_50]} resizeMode={'cover'}/>*/}
-                    {/*    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.writingDir , {marginLeft:10 , lineHeight:22, flex:1}]}>انسحاب المطعم من الطلب</Text>*/}
-                    {/*</TouchableOpacity>*/}
 
                 </View>
 

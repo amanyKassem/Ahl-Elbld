@@ -75,15 +75,21 @@ function CategoryDetails({navigation,route}) {
         }
     }
 
-    function Item({ name , desc , image , price , id , index }) {
+    function Item({ name , desc , image , price , price_discount , id , index }) {
         return (
             <TouchableOpacity onPress={() => navigation.navigate('productDetails' , {pathName:'categoryDetails' , id , type})} style={[styles.bg_light_gray,styles.marginBottom_10 , styles.directionRow , styles.Radius_5 , {flex:1 , padding:10}]}>
                 <Image source={{uri:image}} style={[styles.icon70 , styles.Radius_7]} resizeMode={'cover'} />
                 <View style={[{marginLeft:15 , flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.marginBottom_5]}>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14]}>{ name }</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {flex:1 , marginRight:5}]}>{ name }</Text>
                         <View style={[styles.directionRow]}>
-                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_13 , {marginLeft:5}]}>{ price } { i18n.t('RS') }</Text>
+                            {
+                                price_discount != 0 ?
+                                    <Text style={[styles.textRegular , styles.text_mstarda , price_discount ? styles.linethrough : '' , styles.textSize_13 , {marginLeft:5}]}>{ price } { i18n.t('RS') }</Text>
+                                    :
+                                    null
+                            }
+                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_13 , {marginLeft:5}]}>{ price_discount } { i18n.t('RS') }</Text>
                         </View>
                     </View>
                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12 , styles.alignStart , styles.writingDir , {lineHeight:18}]}>{ desc }</Text>
@@ -212,6 +218,7 @@ function CategoryDetails({navigation,route}) {
                                                         desc={item.details}
                                                         image={item.image}
                                                         price={item.price}
+                                                        price_discount={item.price_discount}
                                                         index={index}
                                                     />}
                                                     keyExtractor={item => item.id}

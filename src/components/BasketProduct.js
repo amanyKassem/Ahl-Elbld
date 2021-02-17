@@ -91,7 +91,10 @@ function BasketProduct({pro, DeleteProducts, Decrease, Increase}) {
                             {
                                 pro.details.extras.map((extra, i) => {
                                     return (
-                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- {extra.name}</Text>
+                                        <View style={[styles.directionRowSpace]}>
+                                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.marginBottom_10 , styles.alignStart]}>- {extra.name}</Text>
+                                            <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.marginBottom_10 , styles.alignStart]}>{extra.price} { i18n.t('RS') }</Text>
+                                        </View>
                                     )
                                 })
                             }

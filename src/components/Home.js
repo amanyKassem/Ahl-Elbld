@@ -73,26 +73,33 @@ function Home({navigation,route}) {
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.marginTop_55 , {paddingBottom:35}]}>
 
                    <View style={[styles.marginVertical_20, styles.paddingHorizontal_20 , {top:-70}]}>
-                       <Swiper key={2} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
-                               containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
+
+                       {
+                           banners && (banners).length > 0?
+
+                               <Swiper key={2} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
+                                       containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
 
 
-                           {
-                               banners && (banners).length > 0?
-
-                                   banners.map((banner, i) => {
-                                       return (
-                                           <TouchableOpacity key={i}>
-                                               <Image source={{uri:banner.image}} style={styles.swiperImg} resizeMode={'cover'}/>
-                                           </TouchableOpacity>
-                                       )
-                                   })
-                                   :
-                                   null
-                           }
+                                   {
+                                       banners.map((banner, i) => {
+                                           return (
+                                               <TouchableOpacity key={i}>
+                                                   <Image source={{uri:banner.image}} style={styles.swiperImg} resizeMode={'cover'}/>
+                                               </TouchableOpacity>
+                                           )
+                                       })
+                                   }
 
 
-                       </Swiper>
+                               </Swiper>
+
+                               :
+                               null
+
+                       }
+
+
                    </View>
 
                     <Text style={[styles.textBold , styles.text_gray , styles.textSize_15, styles.marginBottom_15 , styles.marginHorizontal_15 , styles.alignStart , {top:-30}]}>{ i18n.t('categories') }</Text>

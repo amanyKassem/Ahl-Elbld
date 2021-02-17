@@ -30,8 +30,7 @@ export default function CustomDrawerContent(props) {
     const onShare = async () => {
         try {
             const result = await Share.share({
-                message:
-                    'Ahl-Elbld App',
+                message: 'https://ll.sa/ahlalbalad',
             });
 
             if (result.action === Share.sharedAction) {

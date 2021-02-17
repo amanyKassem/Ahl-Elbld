@@ -5,8 +5,8 @@ import {AsyncStorage} from "react-native";
 
 
 export const profile = (lang , token) => {
-    return (dispatch) => {
-        axios({
+    return async (dispatch) => {
+        await axios({
             method      : 'GET',
             url         : CONST.url + 'profile',
             params      : { lang },
