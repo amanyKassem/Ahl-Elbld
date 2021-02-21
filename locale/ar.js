@@ -237,6 +237,9 @@ const ar = {
     'carNumbers'                : 'ارقام لوحة السيارة',
     'totalPrice'                : 'اجمالي سعر الطلب',
     'purchasePrice'             : 'سعر المشتريات',
+    'chooseLocation'            : 'اختر العنوان',
+    'locationName'              : 'اسم العنوان',
+    'save'                      : 'حفظ',
 };
 
 export default ar;

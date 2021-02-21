@@ -190,19 +190,13 @@ function Login({navigation}) {
 
                                    <Item style={[styles.item]}>
                                        <Label style={[styles.label]}>{ i18n.t('phone') }</Label>
-                                       <Input style={[styles.input]}
-                                              onChangeText={(phone) => setPhone(phone)}
-                                              keyboardType={'number-pad'}
-                                       />
+                                       <Input style={[styles.input]} onChangeText={(phone) => setPhone(phone)} keyboardType={'number-pad'} />
 
                                    </Item>
 
                                    <Item style={[styles.item , styles.marginBottom_30]}>
                                        <Label style={[styles.label]}>{ i18n.t('password') }</Label>
-                                       <Input style={[styles.input , {paddingRight:35}]}
-                                              onChangeText={(password) => setPassword(password)}
-                                              secureTextEntry={!showPass}
-                                       />
+                                       <Input style={[styles.input , {paddingRight:35}]} onChangeText={(password) => setPassword(password)} secureTextEntry={!showPass} />
                                        <TouchableOpacity onPress={() => setShowPass(!showPass)} style={[{position:'absolute' , right:10  , bottom:13}]}>
                                            <Icon type={'FontAwesome'} name={showPass ? "eye-slash" : "eye"}
                                                  style={[styles.textSize_18,styles.text_gray]} />

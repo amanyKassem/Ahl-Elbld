@@ -1652,6 +1652,31 @@ const styles = ({
         fontSize:15,
         color:'#fff',
     },
+
+    //    Shams Style ....................
+    mapInputContainer:{
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        width: '85%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        position: 'absolute',
+        zIndex: 1,
+        top: -25
+    },
+    mapInput: {
+        color               : COLORS.gray,
+        // paddingRight        : 15,
+        // paddingLeft         : 15,
+        textAlign           : I18nManager.isRTL ? 'right' : 'left',
+        fontFamily          : 'flatRegular',
+        fontSize            : 14,
+        height              : 45,
+        width               :'100%',
+        marginTop           : 10,
+    }
 });
 
 export default styles;

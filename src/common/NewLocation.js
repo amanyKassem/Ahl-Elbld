@@ -37,6 +37,7 @@ function NewLocation({navigation,route}) {
         setScreenLoader(true)
         dispatch(getPlaces(lang, token))
     }
+
     function deletePla(id){
         dispatch(deletePlace(lang , id, token))
     }
@@ -79,8 +80,6 @@ function NewLocation({navigation,route}) {
 
 
 
-
-
     return (
         <Container >
             {renderLoader()}
@@ -103,7 +102,7 @@ function NewLocation({navigation,route}) {
                                         </View>
 
                                         <View style={[styles.directionRow]}>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={() => navigation.navigate('setLocation', {id: place.id, latitude: place.latitude , longitude:place.longitude, name: place.name, address: place.address, edit: true })}>
                                                 <Image source={require('../../assets/images/edit_orange.png')} style={[styles.icon23]} resizeMode='contain' />
                                             </TouchableOpacity>
                                             <TouchableOpacity onPress={() => deletePla(place.id)} style={{borderLeftWidth:1 , borderLeftColor:'#ddd' , paddingLeft:15 , marginLeft:15}}>
@@ -119,7 +118,7 @@ function NewLocation({navigation,route}) {
                     }
 
 
-                    <TouchableOpacity style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10 , styles.marginTop_55]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('setLocation', { edit: false})} style={[styles.mstrdaBtn , styles.Width_100 , styles.marginBottom_10 , styles.marginTop_55]}>
                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('newLoc') }</Text>
                     </TouchableOpacity>
 
