@@ -4,7 +4,7 @@ import {Container, Content, Icon, Input, Item, Label} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useSelector, useDispatch} from 'react-redux';
-import Header from '../common/Header';
+import Header from './Header';
 import COLORS from "../consts/colors";
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -152,34 +152,40 @@ function SetLocation({navigation,route}) {
     return (
         <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
-                <Header navigation={navigation} title={ i18n.t('home') }/>
+                <Header navigation={navigation} title={ i18n.t('home') } fromLoc={true}/>
+
+                <View style={[styles.mapInputContainer]}>
+                    <Icon type='Entypo' name='location-pin' style={{ color: COLORS.gray, fontSize: 20 }}/>
+                    <Input style={[styles.mapInput]} placeholder={i18n.t('chooseLocation')} value={search} onChangeText={(search) => setSearch(search)} onSubmitEditing={() => onSearch()} />
+                </View>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White, styles.Width_100 , styles.marginTop_40 , {paddingBottom:35}]}>
 
-
-                    <View style={{top:-30}}>
-                        <View style={[styles.mapInputContainer]}>
-                            <Icon type='Entypo' name='location-pin' style={{ color: COLORS.gray, fontSize: 30 }}/>
-                            <Input style={[styles.mapInput]} placeholder={i18n.t('chooseLocation')} value={search} onChangeText={(search) => setSearch(search)} onSubmitEditing={() => onSearch()} />
-                        </View>
+                    <View>
 
                         {
                             searchResult && searchResult.length > 0 ?
-                                searchResult.map((item, i) => (
-                                    <View key={i} style={{ alignSelf: 'center', width: '86%', maxHeight: 200, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, overflow: 'hidden', position: 'absolute', zIndex: 2, top: 30, left: 30, minHeight: 60 }}>
-                                        <TouchableOpacity style={{ position: 'absolute', zIndex: 3, right: -1, top: -1.5 }} onPress={() => setSearchResult([])}>
-                                            <Icon type={'AntDesign'} name={'closecircle'} style={{ color: COLORS.blue }} />
-                                        </TouchableOpacity>
-                                        <View style={{ alignSelf: 'center', width: '100%', height: 220, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, paddingBottom: 20, backgroundColor: '#fff', borderRadius: 10}}>
-                                            <ScrollView style={{ zIndex: 99999999 }}>
-                                                <TouchableOpacity onPress={() => setSelectedLocation(item)} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#ddd', marginHorizontal: 10, width: '95%', height: 50, alignItems: 'center', alignSelf: 'center', overflow: 'hidden', zIndex: 9999 }}>
-                                                    <Icon type={'Entypo'} name={'location'} style={{ marginHorizontal: 10, color: '#000', fontSize: 16 }}/>
-                                                    <Text style={[ styles.text_gray, styles.textBold, styles._alignText, ]}>{ (item.formatted_address).substr(0, 40) + '...' }</Text>
-                                                </TouchableOpacity>
-                                            </ScrollView>
-                                        </View>
+                                <View style={{ alignSelf: 'center', width: '86%', maxHeight: 200, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, overflow: 'hidden', position: 'absolute', zIndex: 2, top: 30, left: 30, minHeight: 60 }}>
+                                    <TouchableOpacity style={{ position: 'absolute', zIndex: 3, right: -1, top: -1.5 }} onPress={() => setSearchResult([])}>
+                                        <Icon type={'AntDesign'} name={'closecircle'} style={{ color: COLORS.blue }} />
+                                    </TouchableOpacity>
+                                    <View style={{ alignSelf: 'center', width: '100%', height: 220, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, paddingBottom: 20, backgroundColor: '#fff', borderRadius: 10}}>
+                                        <ScrollView style={{ zIndex: 99999999 }}>
+                                            {
+                                                searchResult.map((item, i) => (
+
+                                                    <TouchableOpacity key={i} onPress={() => setSelectedLocation(item)} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#ddd', marginHorizontal: 10, width: '95%', height: 50, alignItems: 'center', alignSelf: 'center', overflow: 'hidden', zIndex: 9999 }}>
+                                                        <Icon type={'Entypo'} name={'location'} style={{ marginHorizontal: 10, color: '#000', fontSize: 16 }}/>
+                                                        <Text style={[ styles.text_gray, styles.textBold, styles._alignText, ]}>{ (item.formatted_address).substr(0, 40) + '...' }</Text>
+                                                    </TouchableOpacity>
+                                                ))
+                                            }
+
+                                        </ScrollView>
                                     </View>
-                                )) : null
+                                </View>
+                                :
+                                null
                         }
 
                         {

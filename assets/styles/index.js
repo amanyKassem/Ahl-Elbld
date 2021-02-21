@@ -1664,7 +1664,8 @@ const styles = ({
         paddingHorizontal: 10,
         position: 'absolute',
         zIndex: 1,
-        top: -25
+        top: IS_IPHONE_X ? 97 : 115,
+        height:50
     },
     mapInput: {
         color               : COLORS.gray,
@@ -1675,7 +1676,6 @@ const styles = ({
         fontSize            : 14,
         height              : 45,
         width               :'100%',
-        marginTop           : 10,
     }
 });
 

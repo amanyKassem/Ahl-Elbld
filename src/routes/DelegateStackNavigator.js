@@ -32,6 +32,7 @@ import Recharge                         from "../common/Recharge";
 import BankTransfer                     from "../common/BankTransfer";
 import Settings                         from "../common/Settings";
 import Banks 					        from "../common/Banks";
+import SetLocation 		    	        from "../common/SetLocation";
 
 
 const MainStack  	= createStackNavigator();
@@ -126,6 +127,9 @@ function MyDrawer() {
                 gestureEnabled: false
             })}/>
             <Drawer.Screen name='newLocation' component={NewLocation} options={() => ({
+                gestureEnabled: false
+            })}/>
+            <Drawer.Screen name='setLocation' component={SetLocation} options={() => ({
                 gestureEnabled: false
             })}/>
             <Drawer.Screen name='aboutApp' component={AboutApp}/>

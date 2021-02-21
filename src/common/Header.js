@@ -11,7 +11,7 @@ import {Textarea} from "native-base";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function Header({navigation , title , cartCount , onToggleFavorite , filteration , onNearProvider ,onFarProvider, onRateProvider, likeIcon , delegate}) {
+function Header({navigation , title , cartCount , onToggleFavorite , filteration , onNearProvider ,onFarProvider, onRateProvider, likeIcon , fromLoc , delegate}) {
 
     // const lang          = useSelector(state => state.lang.lang);
     const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
@@ -36,7 +36,7 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
 
             <View style={[styles.directionRow]}>
                 {
-                    title !== i18n.t('selectLoc') && title !== i18n.t('terms') ?
+                    title !== i18n.t('selectLoc') && title !== i18n.t('terms') && !fromLoc ?
                         <TouchableOpacity onPress={() => navigation.openDrawer()} style={{marginRight:15}}>
                             <Image source={require('../../assets/images/menu.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                         </TouchableOpacity>
@@ -44,7 +44,7 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
                         null
                 }
                 {
-                    token && title === i18n.t('home') ?
+                    token && title === i18n.t('home')  && !fromLoc?
                         <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={[styles.icon30 , {marginRight:15 , padding:5}]}>
                             <Image source={notifications.length > 0 ? require('../../assets/images/notication_acctive.png') : require('../../assets/images/notification_non_active.png')} style={[styles.transform , styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
                         </TouchableOpacity>
@@ -55,13 +55,13 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
             </View>
 
             <Text style={[styles.textBold , title === i18n.t('selectNewLoc')  ? styles.text_gray : styles.text_White , styles.textSize_16 , styles.textCenter ,
-                    {flex:title === i18n.t('selectLoc') || delegate ?1:0  , right : title === i18n.t('home') && delegate ? 30 : title === i18n.t('home') ? 10 : 0}]}>
+                    {flex:title === i18n.t('selectLoc') || delegate ?1:0  , right : title === i18n.t('home') && delegate ? 30 : title === i18n.t('home') && fromLoc? -10 : title === i18n.t('home') ? 10 : 0}]}>
                 {title}
             </Text>
 
 
             {
-                title === i18n.t('home') && !delegate  ?
+                title === i18n.t('home') && !delegate && !fromLoc ?
                     <View style={[styles.directionRow]}>
                         <TouchableOpacity onPress={() => navigation.navigate('basket')} >
                             <View style={{marginLeft:15}}>
