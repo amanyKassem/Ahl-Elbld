@@ -99,7 +99,7 @@ function FastingBreakfastDetails({navigation,route}) {
             {
                 providerDetails?
                     <Content contentContainerStyle={[styles.bgFullWidth]} scrollEnabled={false}>
-                        <ImageBackground source={require('../../assets/images/banner1.png')} resizeMode={'cover'} style={[styles.Width_100 ,  styles.height_300]}>
+                        <ImageBackground source={{uri:providerDetails.cover}} resizeMode={'cover'} style={[styles.Width_100 ,  styles.height_300]}>
                             <View style={[styles.overlay_black , styles.heightFull , styles.Width_100]}>
 
                                 <Header navigation={navigation} title={ i18n.t('providerDetails') } onToggleFavorite={() => onToggleFavorite(id)} likeIcon={providerDetails.is_favourite} />
