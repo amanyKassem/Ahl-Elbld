@@ -39,7 +39,7 @@ function MyOrders({navigation,route}) {
         setStatus('WAITING');
         setActive(0);
         setScreenLoader(true);
-        dispatch(getOrders(lang , 'WAITING', token)).then(() => setScreenLoader(false))
+        dispatch(getOrders(lang , 'WAITING', token , 'normal')).then(() => setScreenLoader(false))
     }
 
     useEffect(() => {
@@ -52,7 +52,7 @@ function MyOrders({navigation,route}) {
         setActive(value)
         setStatus(newStatus)
         setScreenLoader(true)
-        dispatch(getOrders(lang , newStatus, token)).then(() => setScreenLoader(false))
+        dispatch(getOrders(lang , newStatus, token ,'normal')).then(() => setScreenLoader(false))
     }
 
     function renderLoader(){

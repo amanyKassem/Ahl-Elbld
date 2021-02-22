@@ -26,8 +26,7 @@ function Basket({navigation,route}) {
         setScreenLoader(true)
         dispatch(getCart(lang))
     }
-
-    useEffect(() => {
+     useEffect(() => {
         fetchData();
         const unsubscribe = navigation.addListener('focus', () => {
             fetchData();

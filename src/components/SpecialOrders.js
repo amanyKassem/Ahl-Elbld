@@ -27,7 +27,7 @@ function SpecialOrders({navigation,route}) {
 
     function fetchData(){
         setScreenLoader(true)
-        dispatch(getSpecialOrders(lang , status, token)).then(() => setScreenLoader(false))
+        dispatch(getSpecialOrders(lang , status, token , 'special')).then(() => setScreenLoader(false))
     }
 
 
@@ -44,7 +44,7 @@ function SpecialOrders({navigation,route}) {
         setActive(value)
         setStatus(newStatus)
         setScreenLoader(true)
-        dispatch(getSpecialOrders(lang , newStatus, token)).then(() => setScreenLoader(false))
+        dispatch(getSpecialOrders(lang , newStatus, token , 'special')).then(() => setScreenLoader(false))
     }
 
     function renderLoader(){

@@ -51,7 +51,7 @@ function ProductDetails({navigation,route}) {
         }
         else {
             setCount(count + 1);
-            setTotal((product.price + AdditoonPrice) * (count + 1))
+            setTotal((product.price_discount !=  product.price ?product.price_discount : product.price  + AdditoonPrice) * (count + 1))
         }
     }
 
@@ -60,7 +60,7 @@ function ProductDetails({navigation,route}) {
             setCount(1);
         } else {
             setCount(count - 1);
-            setTotal((product.price + AdditoonPrice) * (count - 1))
+            setTotal((product.price_discount !=  product.price ?product.price_discount : product.price + AdditoonPrice) * (count - 1))
 
         }
 
@@ -98,7 +98,7 @@ function ProductDetails({navigation,route}) {
         }
 
 
-        let Price = newArr.reduce((a, { price }) => a + price, 0)
+        let Price = newArr.reduce((a, { price }) => a + (price), 0)
         let Id = newArr.map(id => id.id);
 
         setGetID([...Id])
@@ -106,13 +106,13 @@ function ProductDetails({navigation,route}) {
         setAdditoonPrice(Price)
         setExtraArr([...newArr]);
 
-        setTotal((product.price + Price) * count)
+        setTotal(((product.price_discount !=  product.price ?product.price_discount : product.price ) + Price) * count)
 
     };
 
     const AddToCart = (orderTime) => {
         setScreenLoader(true)
-        dispatch(addToCart(lang , id , count ,total == 0 ? product.price : total/count , GetID , token , navigation , orderTime)).then(() => setScreenLoader(false))
+        dispatch(addToCart(lang , id , count ,total == 0 ? (product.price_discount !=  product.price ?product.price_discount : product.price ) : total/count , GetID , token , navigation , orderTime)).then(() => setScreenLoader(false))
     }
 
 
@@ -159,7 +159,7 @@ function ProductDetails({navigation,route}) {
 
                             <View style={[styles.directionRowSpace, styles.marginTop_5]}>
                                 <Text style={[styles.textBold , styles.text_gray , styles.textSize_16]}>{product.name}</Text>
-                                <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_16 ]}>{product.price} { i18n.t('RS') }</Text>
+                                <Text style={[styles.textBold , styles.text_mstarda , styles.textSize_16 ]}>{product.price_discount !=  product.price ?product.price_discount : product.price } { i18n.t('RS') }</Text>
                             </View>
 
                             <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 , styles.marginTop_15 , styles.alignStart , styles.writingDir , {lineHeight:24}]}>
@@ -247,7 +247,7 @@ function ProductDetails({navigation,route}) {
 
                             <View style={[styles.directionRow , styles.centerContext , styles.Width_100 , styles.marginBottom_20]}>
                                 <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>{i18n.t('total') }</Text>
-                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , {marginLeft:10} ]}> {total == 0 ? product.price : total} {i18n.t('RS')}</Text>
+                                <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_15 , {marginLeft:10} ]}> {total == 0 ? (product.price_discount !=  product.price ?product.price_discount : product.price) : total} {i18n.t('RS')}</Text>
                             </View>
 
                             {

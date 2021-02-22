@@ -84,12 +84,13 @@ function CategoryDetails({navigation,route}) {
                         <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , {flex:1 , marginRight:5}]}>{ name }</Text>
                         <View style={[styles.directionRow]}>
                             {
-                                price_discount != 0 ?
-                                    <Text style={[styles.textRegular , styles.text_mstarda , price_discount ? styles.linethrough : '' , styles.textSize_13 , {marginLeft:5}]}>{ price } { i18n.t('RS') }</Text>
+                                price_discount != price ?
+                                    <Text style={[styles.textRegular , styles.text_mstarda , price_discount == price ? styles.linethrough : '' , styles.textSize_13 , {marginLeft:5}]}>{ price_discount } { i18n.t('RS') }</Text>
                                     :
                                     null
                             }
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_13 , {marginLeft:5}]}>{ price_discount } { i18n.t('RS') }</Text>
+                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_13 ,  price_discount != price  ? styles.linethrough : '', {marginLeft:5}]}>{ price } { i18n.t('RS') }</Text>
+
                         </View>
                     </View>
                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12 , styles.alignStart , styles.writingDir , {lineHeight:18}]}>{ desc }</Text>

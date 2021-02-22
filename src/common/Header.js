@@ -26,7 +26,7 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
     }
 
     return (
-        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,  title !== i18n.t('selectNewLoc') ?styles.marginTop_20 : null ,
+        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 , styles.marginTop_20 ,
             isIOS ? styles.height_50 : styles.height_80 ,
             isIOS ? styles.marginBottom_10 : null ,
             ,styles.Width_100 , title === i18n.t('selectNewLoc')  ? styles.shadow : null,  {
