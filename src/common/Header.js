@@ -26,7 +26,7 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
     }
 
     return (
-        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 , styles.marginTop_20 ,
+        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,  title !== i18n.t('selectNewLoc') ?styles.marginTop_20 : null ,
             isIOS ? styles.height_50 : styles.height_80 ,
             isIOS ? styles.marginBottom_10 : null ,
             ,styles.Width_100 , title === i18n.t('selectNewLoc')  ? styles.shadow : null,  {
@@ -137,7 +137,7 @@ function Header({navigation , title , cartCount , onToggleFavorite , filteration
 
                             title !== i18n.t('selectLoc') && !delegate?
                                 <TouchableOpacity onPress={() => navigation.goBack()} >
-                                    <Image source={require('../../assets/images/arrow_left.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
+                                    <Image source={ title === i18n.t('selectNewLoc') ? require('../../assets/images/arrow_gray_side.png'):require('../../assets/images/arrow_left.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                                 </TouchableOpacity>
                                 :
                                 null
